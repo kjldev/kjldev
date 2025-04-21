@@ -1,13 +1,34 @@
 ---
 import SayHello from './SayHello';
 ---
-<nav class="flex justify-between items-center p-2 text-sm font-semibold heading">
-    <div class="flex space-x-6">
-        <a href="/" class="hover:underline">Home</a>
-        <a href="/#what-do-we-do" class="hover:underline">What do we do?</a>
-        <a href="/#our-services" class="hover:underline">Our services</a>
-    </div>
-    <div>
-        <SayHello client:load asLink={true} />
-    </div>
+
+<nav
+	class='flex justify-between items-center p-2 text-sm font-semibold heading'
+>
+	<ul class='flex space-x-6 list-none m-0 p-0'>
+		<li>
+			<a
+				href='/'
+				class='hover:underline'
+				>Home</a>
+		</li>
+		<li>
+			<a
+				href='/#what-do-we-do'
+				class='hover:underline'
+				>What do we do?</a>
+		</li>
+		<li>
+			<a
+				href='/#our-services'
+				class='hover:underline'
+				>Our services</a>
+		</li>
+	</ul>
+	<div>
+		<SayHello
+			client:load
+			asLink={true}
+		/>
+	</div>
 </nav>

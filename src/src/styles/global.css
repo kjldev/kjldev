@@ -3,7 +3,7 @@
 @import 'tailwindcss';
 
 html {
-	font-family: 'Avenir', 'Inter', Arial, Helvetica, sans-serif;
+	font-family: 'Inter', 'Avenir', Arial, Helvetica, sans-serif;
 }
 
 .heading,
@@ -13,5 +13,5 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: 'Raleway', 'Inter', Arial, Helvetica, sans-serif;
+	font-family: 'Raleway', sans-serif;
 }
