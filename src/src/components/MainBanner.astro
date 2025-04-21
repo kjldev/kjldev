@@ -1,0 +1,25 @@
+---
+import SayHello from './SayHello';
+import backgroundImg from '../assets/background.jpg';
+---
+
+<div
+    class="w-full p-8"
+    style={`background: url(${backgroundImg.src}) center/cover no-repeat;`}
+>
+    <div class="flex flex-col justify-center items-center bg-[#f1f1f1] px-6 py-20 text-center max-w-4xl mx-auto">
+        <h1 class="text-5xl font-bold mb-10">Digital Delivery Consultancy</h1>
+        <h2 class="text-xl mb-10 font-semibold">Accelerating your projects and teams.</h2>
+        <p class="mb-5">
+            Providing consultancy services tailored to you and your needs through
+            technology and processes, to accelerate teams and businesses at any stage of
+            growth.
+        </p>
+        <p class="mb-10">
+            With a history of helping companies of all sizes, from start-ups to
+            enterprises, to get their digital deliveries off the whiteboard or get that
+            project back on track.
+        </p>
+        <SayHello client:load />
+    </div>
+</div>
