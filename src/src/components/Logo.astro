@@ -1,28 +1,32 @@
 ---
 import kjlLogo from '../assets/kjl-logo.svg';
+import Separator from './Separator.astro';
 
 const additionalClasses = Astro.props.class || '';
 
 interface Props {
-    class?: string;
+	class?: string;
 }
 ---
 
-<div class="w-full block">
-    <div class={`${additionalClasses}`}>
-        <a href='/' class="flex items-center space-x-2">
-            <div class="pr-1">
-                <img
-                    src={kjlLogo.src}
-                    alt="KJL Logo"
-                    class="h-14 w-auto"
-                />
-            </div>
-            <div class="flex flex-col heading">
-                <span class="font-bold">KJL</span>
-                <span>Digital Delivery Consultancy</span>
-            </div>
-        </a>
-    </div>
-    <div class="w-[90%] mx-auto border-b border-gray-300 mt-2"></div>
+<div class='w-full block'>
+	<div class={`${additionalClasses}`}>
+		<a
+			href='/'
+			class='flex items-center space-x-2'
+		>
+			<div class='pr-1'>
+				<img
+					src={kjlLogo.src}
+					alt='KJL Logo'
+					class='h-14 w-auto'
+				/>
+			</div>
+			<div class='flex flex-col heading'>
+				<span class='font-bold'>KJL</span>
+				<span>Digital Delivery Consultancy</span>
+			</div>
+		</a>
+	</div>
+	<Separator />
 </div>

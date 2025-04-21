@@ -1,6 +1,7 @@
 ---
 import Footer from '../components/Footer';
 import Header from '../components/Header.astro';
+import Separator from '../components/Separator.astro';
 
 import '../styles/global.css';
 
@@ -43,6 +44,7 @@ const defaultTitle = 'KJL Solutions Ltd.';
 		<main>
 			<slot />
 		</main>
+		<Separator />
 		<Footer client:load />
 	</body>
 </html>

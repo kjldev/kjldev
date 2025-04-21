@@ -5,9 +5,8 @@ export default function Footer() {
 	const currentYear = new Date().getFullYear();
 
 	return (
-		<footer className='text-center py-4'>
-			<div class='w-[90%] mx-auto border-b border-gray-300 mt-2'></div>
-			<div className='flex justify-center space-x-8 mb-4 mt-4'>
+		<footer className='text-center p-4'>
+			<div className='flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8 mb-4 mt-4'>
 				<a
 					href='https://www.linkedin.com/kieronlanning'
 					target='_blank'
