@@ -1,45 +1,24 @@
-interface Props {
+interface SayHelloProps {
 	asLink?: boolean;
 }
 
-const encodedEmail = 'c2F5aGVsbG9Aa2psLmRldg==';
-const emailAddress = decodeEmail(encodedEmail);
+export default function SayHello(props: SayHelloProps) {
+	const { asLink = false } = props;
 
-export default function SayHello(props: Props) {
+	const emailAddress = 'sayhello@kjl.dev';
+	const displayText = asLink ? emailAddress : 'Say Hello';
+
+	const classes = asLink
+		? ''
+		: 'inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 active:bg-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 transition';
+
 	return (
-		<div>
-			{props.asLink ? (
-				<a
-					href='#'
-					onClick={sayHello}
-					title='Say Hello'
-				>
-					{emailAddress}
-				</a>
-			) : (
-				<button
-					class='bg-black text-[#f1f1f1] px-3 py-2 rounded-md cursor-pointer font-bold'
-					onClick={sayHello}
-					title='Say Hello'
-				>
-					Say Hello
-				</button>
-			)}
-		</div>
+		<a
+			href={`mailto:${emailAddress}?subject=Hello%20World`}
+			title='Say Hello'
+			class={classes}
+		>
+			{displayText}
+		</a>
 	);
-}
-
-function decodeEmail(encoded: string): string {
-	try {
-		return atob(encoded);
-	} catch (error) {
-		console.error('Failed to decode email', error);
-		return '';
-	}
-}
-
-function sayHello(e: Event) {
-	e.preventDefault();
-	window.location.href = `mailto:${emailAddress}?subject=Hello%20World`;
-	return false;
 }

@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'preact/hooks';
-import SayHello from './SayHello';
+import SayHello from './SayHello.tsx';
 
 export default function Navigation() {
 	const [open, setOpen] = useState(false);
@@ -37,6 +37,7 @@ export default function Navigation() {
 			</div>
 			{/* Right side: SayHello and Hamburger button */}
 			<div class='flex items-center space-x-4'>
+				{/* <SayHello asLink={true} /> */}
 				<SayHello asLink={true} />
 				<button
 					class='md:hidden focus:outline-none cursor-pointer'
