@@ -1,9 +1,9 @@
 ---
 import Logo from '../components/Logo.astro';
-import Navigation from '../components/Navigation.astro';
+import Navigation from '../components/Navigation.tsx';
 ---
 
 <header class='p-2'>
 	<Logo />
-	<Navigation />
+	<Navigation client:load />
 </header>

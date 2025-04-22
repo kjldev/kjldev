@@ -24,15 +24,20 @@ const innerClasses = isRetired
 
 <div class={outerClasses}>
     <div class={innerClasses}>
-        <div class='flex justify-between items-center mb-4'>
-            {isRetired ? (
-                <del class="text-gray-500">
+        {/* Use flex-col on mobile and flex-row on desktop */}
+        <div class='mb-4 flex flex-col md:flex-row md:justify-between md:items-center'>
+            <div>
+                {isRetired ? (
+                    <del class="text-gray-500">
+                        <ComponentTitle title={component.title} link={firstLink} />
+                    </del>
+                ) : (
                     <ComponentTitle title={component.title} link={firstLink} />
-                </del>
-            ) : (
-                <ComponentTitle title={component.title} link={firstLink} />
-            )}
-            <ComponentStatus status={component.status} />
+                )}
+            </div>
+            <div class='mt-2 md:mt-0'>
+                <ComponentStatus status={component.status} />
+            </div>
         </div>
         {component.description && (
             <p class='text-gray-600 mb-4'>{component.description}</p>
