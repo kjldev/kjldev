@@ -1,0 +1,23 @@
+---
+import HeroBanner from '../HeroBanner.astro';
+import SayHello from '../SayHello';
+import backgroundImg from '../../assets/index-bg.jpg';
+---
+
+<HeroBanner
+	backgroundImgSrc={backgroundImg}
+	title='Digital Delivery Consultancy'
+	subtitle='Accelerating your projects and teams.'
+>
+	<p class='mb-5'>
+		Providing consultancy services tailored to you and your needs through
+		technology and processes, to accelerate teams and businesses at any stage of
+		growth.
+	</p>
+	<p class='mb-10'>
+		With a history of helping companies of all sizes, from start-ups to
+		enterprises, to get their digital deliveries off the whiteboard or get that
+		project back on track.
+	</p>
+	<SayHello client:load />
+</HeroBanner>

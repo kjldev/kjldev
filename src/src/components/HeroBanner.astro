@@ -1,0 +1,25 @@
+---
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	backgroundImgSrc: ImageMetadata;
+	title: string;
+	subtitle?: string;
+}
+
+const { backgroundImgSrc, title, subtitle } = Astro.props as Props;
+---
+
+<div
+	class='w-full p-8'
+	style={`background: url(${backgroundImgSrc.src}) center/cover no-repeat;`}
+>
+	<div
+		class='flex flex-col justify-center items-center bg-[#f1f1f1] px-6 py-20 text-center max-w-4xl mx-auto'
+	>
+		<h1 class='text-5xl font-bold mb-10'>{title}</h1>
+		{subtitle && <h2 class='text-2xl mb-10 font-semibold'>{subtitle}</h2>}
+
+		<slot />
+	</div>
+</div>

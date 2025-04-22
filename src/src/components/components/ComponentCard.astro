@@ -1,0 +1,59 @@
+---
+import ComponentLink from './ComponentLink.astro';
+import ComponentTag from './ComponentTag.astro';
+import ComponentTitle from './ComponentTitle';
+import ComponentStatus from './ComponentStatus.astro';
+import type { DevComponent } from '../../scripts/component-types';
+
+interface Props {
+    component: DevComponent;
+}
+
+const { component } = Astro.props;
+const firstLink = component.links?.at(0);
+const isRetired = component.status === 'retired';
+
+const outerClasses = isRetired
+    ? 'h-full bg-gray-100 border border-gray-200 p-1 rounded-lg shadow-md filter brightness-90'
+    : 'h-full bg-gradient-to-r from-blue-300 to-purple-300 p-1 rounded-lg shadow-lg';
+
+const innerClasses = isRetired
+    ? 'h-full bg-white rounded-lg shadow transition-shadow duration-300 p-6 opacity-90'
+    : 'h-full bg-white rounded-lg shadow hover:shadow-xl transition-shadow duration-300 p-6 transform hover:-translate-y-1';
+---
+
+<div class={outerClasses}>
+    <div class={innerClasses}>
+        <div class='flex justify-between items-center mb-4'>
+            {isRetired ? (
+                <del class="text-gray-500">
+                    <ComponentTitle title={component.title} link={firstLink} />
+                </del>
+            ) : (
+                <ComponentTitle title={component.title} link={firstLink} />
+            )}
+            <ComponentStatus status={component.status} />
+        </div>
+        {component.description && (
+            <p class='text-gray-600 mb-4'>{component.description}</p>
+        )}
+        {component.links && (
+            <div class='mb-4'>
+                <div class='flex flex-wrap gap-2'>
+                    {component.links.map((link) => (
+                        <ComponentLink link={link} />
+                    ))}
+                </div>
+            </div>
+        )}
+        {component.tags && (
+            <div>
+                <ul class='flex flex-wrap gap-2'>
+                    {component.tags.map((tag) => (
+                        <ComponentTag tag={tag} />
+                    ))}
+                </ul>
+            </div>
+        )}
+    </div>
+</div>

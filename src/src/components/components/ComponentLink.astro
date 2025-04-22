@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import { type LinkProp } from '../../scripts/component-types';
+
+interface Props {
+	link: LinkProp;
+}
+---
+
+<a
+	href={Astro.props.link.url}
+	target='_blank'
+	rel='noopener noreferrer'
+	class='block bg-gradient-to-r from-blue-400 to-purple-500 p-1 rounded-lg shadow hover:shadow-lg transition-all duration-200'
+>
+	<div class='flex items-center space-x-3 bg-white rounded-lg p-3'>
+		<Image
+			src={Astro.props.link.image}
+			alt={Astro.props.link.name}
+			class='w-8 h-8 rounded-full'
+		/>
+		<span class='text-lg text-gray-900 font-semibold'>
+			{Astro.props.link.name}
+		</span>
+	</div>
+</a>

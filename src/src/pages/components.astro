@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentCard from '../components/components/ComponentCard.astro';
+import HeroBanner from '../components/HeroBanner.astro';
+
+import { getCollection } from 'astro:content';
+import backgroundImg from '../assets/components-bg.jpg';
+
+const devComponents = await getCollection('devComponents');
+const devComponentsSorted = devComponents.sort((a, b) => {
+	return a.data.order - b.data.order;
+});
+---
+
+<Layout title='KJL.dev - Open Source Components & Tools'>
+	<HeroBanner
+		title='Open Source Components & Tools'
+		backgroundImgSrc={backgroundImg}
+	>
+		<p class='mb-4'>
+			Here is a collection of open source tools, utilities, and components — all
+			crafted to solve real-world problems, simplify development workflows, and
+			encourage clean, maintainable code.
+		</p>
+		<p class=''>
+			Everything listed here is MIT licensed, and built with reusability in
+			mind. Whether you're integrating them into a larger project or just
+			looking for inspiration, feel free to fork, contribute, or suggest
+			improvements.
+		</p>
+	</HeroBanner>
+	<div
+		class='w-full px-4 bg-[#f1f1f1] mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch'
+	>
+		{
+			devComponentsSorted.map((component, index, arr) => (
+				<div
+					class={
+						arr.length % 2 === 1 && index === arr.length - 1 ?
+							'sm:col-span-2'
+						:	''
+					}
+				>
+					<ComponentCard component={component.data} />
+				</div>
+			))
+		}
+	</div>
+</Layout>
