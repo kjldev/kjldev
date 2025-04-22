@@ -1,6 +1,6 @@
 // src/components/MailtoLink.tsx
-import { type FunctionalComponent, h } from 'preact';
-import type { JSX } from 'preact';
+import { type JSX } from 'preact';
+import { useRef, useEffect } from 'preact/hooks';
 
 interface MailtoLinkProps {
 	to: string;
@@ -8,76 +8,141 @@ interface MailtoLinkProps {
 	body?: string;
 	className?: string;
 	title?: string;
-	children: JSX.Element | JSX.Element[] | string;
+	children: preact.ComponentChildren;
 }
 
-function MailtoLink(props: MailtoLinkProps) {
+export default function MailtoLink(props: MailtoLinkProps) {
 	const { to, subject, body, className, title, children } = props;
+	const dialogRef = useRef<HTMLDialogElement>(null);
+	const formRef = useRef<HTMLFormElement>(null);
 
-	const handleClick = (e: JSX.TargetedMouseEvent<HTMLAnchorElement>) => {
+	const openDialog = (e: JSX.TargetedMouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
-		const encode = encodeURIComponent;
-		const params = [
-			subject && `subject=${encode(subject)}`,
-			body && `body=${encode(body)}`,
-		]
-			.filter(Boolean)
-			.join('&');
-
-		const mailtoHref = `mailto:${to}${params ? `?${params}` : ''}`;
-
-		// 1. Web Share API (modern mobile browsers)
-		if (navigator.share) {
-			navigator.share({ title: subject, text: body }).catch(() => {
-				window.location.href = mailtoHref;
-			});
-			return;
-		}
-
-		const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
-		if (isIOS) {
-			const gmailScheme = `googlegmail:///co?to=${to}${
-				params ? `&${params}` : ''
-			}`;
-			const outlookScheme = `ms-outlook://compose?to=${to}${
-				params ? `&${params}` : ''
-			}`;
-			window.location.href = gmailScheme;
-			setTimeout(() => {
-				window.location.href = outlookScheme;
-			}, 300);
-			setTimeout(() => {
-				window.location.href = mailtoHref;
-			}, 600);
-			return;
-		}
-
-		// 3. Default fallback
-		window.location.href = mailtoHref;
+		document.body.style.overflow = 'hidden';
+		dialogRef.current?.showModal();
 	};
 
-	// HREF for non-JS fallback
-	const href = `mailto:${to}${
-		subject || body
-			? `?${[
-					subject && `subject=${encodeURIComponent(subject)}`,
-					body && `body=${encodeURIComponent(body)}`,
-			  ]
-					.filter(Boolean)
-					.join('&')}`
-			: ''
-	}`;
+	/**
+	 * Closes the dialog, restores scrolling, and
+	 * optionally submits the form.
+	 */
+	const closeDialog = (submitForm = false) => {
+		if (submitForm) {
+			formRef.current?.submit();
+		}
+		dialogRef.current?.close();
+		document.body.style.overflow = '';
+	};
+
+	// ensure overflow is reset if unmounted
+	useEffect(() => {
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, []);
 
 	return (
-		<a
-			href={href}
-			onClick={handleClick as any}
-			class={className}
-			title={title ?? `Mail ${to}...`}
-		>
-			{children}
-		</a>
+		<>
+			<a
+				href='#'
+				onClick={openDialog}
+				class={className}
+				title={title ?? 'Contact us...'}
+			>
+				{children}
+			</a>
+
+			<dialog
+				ref={dialogRef}
+				class='modal-dialog'
+			>
+				<form
+					ref={formRef}
+					method='get'
+					encType='text/plain'
+					action={`mailto:${to}`}
+					class='bg-white rounded-lg p-6 space-y-4 max-w-md w-full relative'
+				>
+					<button
+						type='button'
+						class='absolute top-2 right-2 text-gray-600 hover:text-gray-900'
+						onClick={() => closeDialog(false)}
+						aria-label='Close'
+					>
+						×
+					</button>
+
+					<h3 class='text-xl font-bold'>Send a Message</h3>
+
+					<div>
+						<label class='block'>
+							<span class='font-semibold'>Subject</span>
+							<input
+								name='subject'
+								type='text'
+								value={subject}
+								placeholder='How can we help?'
+								required
+								class='mt-1 w-full border rounded px-2 py-1'
+							/>
+						</label>
+					</div>
+
+					<div>
+						<label class='block'>
+							<span class='font-semibold'>Message</span>
+							<textarea
+								name='body'
+								placeholder='How can we help you?'
+								required
+								autofocus
+								class='mt-1 w-full h-24 border rounded p-2'
+							>
+								{body}
+							</textarea>
+						</label>
+					</div>
+
+					<div class='flex justify-end space-x-2'>
+						<button
+							type='button'
+							class='px-4 py-2 rounded border'
+							onClick={() => closeDialog(false)}
+						>
+							Cancel
+						</button>
+						<button
+							type='button'
+							class='px-4 py-2 bg-blue-600 text-white rounded'
+							onClick={() => closeDialog(true)}
+						>
+							Send
+						</button>
+					</div>
+				</form>
+			</dialog>
+
+			<style>
+				{`
+          dialog.modal-dialog {
+            padding: 0;
+            border: none;
+            border-radius: 0.5rem;
+          }
+          dialog.modal-dialog::backdrop {
+            background: rgba(0,0,0,0.5);
+          }
+          dialog:not([open]) {
+            display: none;
+          }
+          dialog.modal-dialog {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        `}
+			</style>
+		</>
 	);
 }
-
-export default MailtoLink;

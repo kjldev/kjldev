@@ -41,12 +41,5 @@ export default function SayHello(props: SayHelloProps) {
 		>
 			{displayText}
 		</MailtoLink>
-		// <a
-		// 	href={`mailto:${emailAddress}?subject=Hello%20World`}
-		// 	title='Say Hello'
-		// 	class={classes}
-		// >
-		// 	{displayText}
-		// </a>
 	);
 }
