@@ -1,3 +1,5 @@
+import MailtoLink from './MailToLink';
+
 interface SayHelloProps {
 	asLink?: boolean;
 }
@@ -31,12 +33,20 @@ export default function SayHello(props: SayHelloProps) {
 	const classes = asLink ? '' : linkClasses;
 
 	return (
-		<a
-			href={`mailto:${emailAddress}?subject=Hello%20World`}
-			title='Say Hello'
-			class={classes}
+		<MailtoLink
+			to={emailAddress}
+			subject='Hello World'
+			className={classes}
+			title='Say Hello...! (:'
 		>
 			{displayText}
-		</a>
+		</MailtoLink>
+		// <a
+		// 	href={`mailto:${emailAddress}?subject=Hello%20World`}
+		// 	title='Say Hello'
+		// 	class={classes}
+		// >
+		// 	{displayText}
+		// </a>
 	);
 }
