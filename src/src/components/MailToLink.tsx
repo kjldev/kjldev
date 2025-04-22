@@ -58,9 +58,9 @@ export default function MailtoLink(props: MailtoLinkProps) {
 			>
 				<form
 					ref={formRef}
-					method='get'
-					encType='text/plain'
-					action={`mailto:${to}`}
+					method='post'
+					enctype='multipart/form-data'
+					action='https://formcarry.com/s/7LBSAyOPWY3'
 					class='bg-white rounded-lg p-6 space-y-4 max-w-md w-full relative'
 				>
 					<button
@@ -90,12 +90,25 @@ export default function MailtoLink(props: MailtoLinkProps) {
 
 					<div>
 						<label class='block'>
+							<span class='font-semibold'>Email</span>
+							<input
+								name='email'
+								type='email'
+								placeholder='Let us know how to contact you...'
+								required
+								autofocus
+								class='mt-1 w-full border rounded px-2 py-1'
+							/>
+						</label>
+					</div>
+
+					<div>
+						<label class='block'>
 							<span class='font-semibold'>Message</span>
 							<textarea
 								name='body'
 								placeholder='How can we help you?'
 								required
-								autofocus
 								class='mt-1 w-full h-24 border rounded p-2'
 							>
 								{body}
