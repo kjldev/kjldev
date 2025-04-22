@@ -12,6 +12,7 @@ export default function SayHello(props: Props) {
 				<a
 					href='#'
 					onClick={sayHello}
+					title='Say Hello'
 				>
 					{emailAddress}
 				</a>
@@ -19,6 +20,7 @@ export default function SayHello(props: Props) {
 				<button
 					class='bg-black text-[#f1f1f1] px-3 py-2 rounded-md cursor-pointer font-bold'
 					onClick={sayHello}
+					title='Say Hello'
 				>
 					Say Hello
 				</button>
@@ -38,8 +40,6 @@ function decodeEmail(encoded: string): string {
 
 function sayHello(e: Event) {
 	e.preventDefault();
-
-	window.open(`mailto:${emailAddress}?subject=Hello%20World`);
-
+	window.location.href = `mailto:${emailAddress}?subject=Hello%20World`;
 	return false;
 }
