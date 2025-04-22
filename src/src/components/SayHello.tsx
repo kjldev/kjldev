@@ -8,9 +8,27 @@ export default function SayHello(props: SayHelloProps) {
 	const emailAddress = 'sayhello@kjl.dev';
 	const displayText = asLink ? emailAddress : 'Say Hello';
 
-	const classes = asLink
-		? ''
-		: 'inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 active:bg-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 transition';
+	// match the styling of tags/status: gradient, rounded, shadow, transform on hover
+	const linkClasses = [
+		'inline-block',
+		'px-4',
+		'py-2',
+		'bg-gradient-to-r',
+		'from-blue-400',
+		'to-purple-500',
+		'text-white',
+		'rounded-full',
+		'shadow-md',
+		'hover:shadow-lg',
+		'transform',
+		'hover:scale-105',
+		'transition',
+		'duration-200',
+		'font-bold',
+	].join(' ');
+
+	//const classes = asLink ? linkClasses : buttonClasses;
+	const classes = asLink ? '' : linkClasses;
 
 	return (
 		<a
