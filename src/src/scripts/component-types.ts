@@ -8,6 +8,7 @@ export interface DevComponent {
 	description?: string;
 	links?: LinkProp[];
 	tags?: string[];
+	hasContent: boolean;
 }
 
 export interface LinkProp {

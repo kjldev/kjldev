@@ -1,19 +1,19 @@
-import { type LinkProp } from '../../scripts/component-types';
-
 export interface ComponentTitleProps {
 	title: string;
-	link?: LinkProp;
+	url?: string;
+	hasContent: boolean;
 }
 
 export default function ComponentTitle(props: ComponentTitleProps) {
-	const { title, link } = props;
-	const url = link?.url;
+	const { title, url, hasContent } = props;
+	const target = hasContent ? '_self' : '_blank';
+	const rel = hasContent ? 'noopener noreferrer' : undefined;
 
 	return url ? (
 		<a
 			href={url}
-			target='_blank'
-			rel='noopener noreferrer'
+			target={target}
+			rel={rel}
 			className={'text-blue-500 hover:underline'}
 		>
 			{generateTitle(title)}

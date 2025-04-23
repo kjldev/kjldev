@@ -26,6 +26,7 @@ const devComponents = defineCollection({
 				)
 				.optional(),
 			tags: z.array(z.string()),
+			hasContent: z.boolean(),
 		}),
 });
 

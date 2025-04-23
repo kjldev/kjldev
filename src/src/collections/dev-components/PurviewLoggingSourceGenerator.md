@@ -8,5 +8,8 @@ links:
     name: GitHub
     image: ../../assets/github-mark.svg
 tags: ['dotnet', 'telemetry', 'logging']
+hasContent: true
 ---
-This is a test page.
+This project was archived on GitHub as it's new bigger, quicker, better, more feature-rich brother was released...!
+
+Go check out [Purview Telemetry Source Generator](https://github.com/kjldev/purview-telemetry-sourcegenerator/) on GitHub.

@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Prose from '../../components/Prose.astro';
+
+export async function getStaticPaths() {
+	const components = await getCollection('devComponents');
+
+	return components.map((component) => ({
+		params: { slug: component.id },
+		props: { component: component },
+	}));
+}
+
+const { component } = Astro.props;
+const { Content } = await render(component);
+---
+
+<ComponentLayout frontmatter={component.data}>
+	<Prose>
+		<Content />
+	</Prose>
+</ComponentLayout>

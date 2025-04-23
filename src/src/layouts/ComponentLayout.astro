@@ -1,0 +1,60 @@
+---
+import Layout from './Layout.astro';
+import ComponentStatus from '../components/components/ComponentStatus.astro';
+import ComponentTag from '../components/components/ComponentTag.astro';
+import ComponentLink from '../components/components/ComponentLink.astro';
+import { type DevComponent } from '../scripts/component-types';
+
+const { frontmatter } = Astro.props as {
+	frontmatter: DevComponent;
+};
+---
+
+<Layout title={frontmatter.title}>
+	<div class='p-4'>
+		<!-- back to list link -->
+		<div class='mb-4'>
+			<a
+				href='/components'
+				class='text-blue-600 hover:underline'
+			>
+				&larr; Back to Components
+			</a>
+		</div>
+
+		<!-- status above the title -->
+		<div class='mb-2'>
+			<ComponentStatus status={frontmatter.status} large />
+		</div>
+
+		<h1 class='text-3xl font-bold mb-6'>{frontmatter.title}</h1>
+
+		{
+			frontmatter.description && (
+				<p class='italic mb-6'>{frontmatter.description}</p>
+			)
+		}
+
+		{
+			frontmatter.links && (
+				<div class='mb-6 flex flex-wrap gap-2'>
+					{frontmatter.links.map((link) => (
+						<ComponentLink link={link} />
+					))}
+				</div>
+			)
+		}
+
+		{
+			frontmatter.tags && frontmatter.tags.length > 0 && (
+				<div class='mb-6 flex flex-wrap gap-2'>
+					{frontmatter.tags.map((tag) => (
+						<ComponentTag tag={tag} />
+					))}
+				</div>
+			)
+		}
+
+		<slot />
+	</div>
+</Layout>

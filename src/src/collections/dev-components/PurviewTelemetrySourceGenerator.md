@@ -22,6 +22,7 @@ tags:
     'distributed-tracing',
     'instrumentation',
   ]
+hasContent: false
 ---
 
 This is a test page.

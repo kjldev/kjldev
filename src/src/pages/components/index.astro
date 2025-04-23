@@ -1,10 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ComponentCard from '../components/components/ComponentCard.astro';
-import HeroBanner from '../components/HeroBanner.astro';
+import Layout from '../../layouts/Layout.astro';
+import ComponentCard from '../../components/components/ComponentCard.astro';
+import HeroBanner from '../../components/HeroBanner.astro';
 
 import { getCollection } from 'astro:content';
-import backgroundImg from '../assets/components-bg.jpg';
+import backgroundImg from '../../assets/components-bg.jpg';
 
 const devComponents = await getCollection('devComponents');
 const devComponentsSorted = devComponents.sort((a, b) => {
@@ -30,7 +30,7 @@ const devComponentsSorted = devComponents.sort((a, b) => {
 		</p>
 	</HeroBanner>
 	<div
-		class='w-full px-4 bg-[#f1f1f1] mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch'
+		class='w-full px-4 py-4 bg-[#f1f1f1] grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch'
 	>
 		{
 			devComponentsSorted.map((component, index, arr) => (
@@ -41,7 +41,10 @@ const devComponentsSorted = devComponents.sort((a, b) => {
 						:	''
 					}
 				>
-					<ComponentCard component={component.data} />
+					<ComponentCard
+						component={component.data}
+						slug={component.id}
+					/>
 				</div>
 			))
 		}

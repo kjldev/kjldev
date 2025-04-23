@@ -1,9 +1,10 @@
 ---
 interface Props {
 	status: string;
+	large?: boolean;
 }
 
-const { status } = Astro.props;
+const { status, large = false } = Astro.props as Props;
 
 const statusMap: Record<
 	string,
@@ -42,12 +43,15 @@ const defaultStatus = {
 
 const { text, emoji, extraClasses } = statusMap[status] || defaultStatus;
 
+const sizeClasses = large
+	? 'text-sm px-2.5 py-1.5'
+	: 'text-xs px-2 py-1';
+
 const baseClasses =
-	'text-xs text-white rounded-full px-3 py-1 shadow-md transition duration-200 font-bold';
-const styleClasses = `${baseClasses} ${extraClasses}`;
+	'text-white rounded-full shadow-md transition duration-200 font-bold';
+const styleClasses = `${baseClasses} ${sizeClasses} ${extraClasses}`;
 ---
 
 <span class={`${styleClasses} whitespace-nowrap`}>
-	{emoji}
-	{text}
+	{emoji} {text}
 </span>
