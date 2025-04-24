@@ -21,19 +21,6 @@ export default function Footer() {
 					<span>LinkedIn</span>
 				</a>
 				<a
-					href='https://github.com/kieronlanning'
-					target='_blank'
-					rel='noopener noreferrer'
-					className='flex items-center space-x-2 hover:underline'
-				>
-					<img
-						src={github.src}
-						alt='GitHub - Kieron Lanning'
-						className='h-5 w-5'
-					/>
-					<span>GitHub - Kieron Lanning</span>
-				</a>
-				<a
 					href='https://github.com/kjldev'
 					target='_blank'
 					rel='noopener noreferrer'
@@ -46,10 +33,25 @@ export default function Footer() {
 					/>
 					<span>GitHub - KJL.dev</span>
 				</a>
+				<a
+					href='https://github.com/kieronlanning'
+					target='_blank'
+					rel='noopener noreferrer'
+					className='flex items-center space-x-2 hover:underline'
+				>
+					<img
+						src={github.src}
+						alt='GitHub - Kieron Lanning'
+						className='h-5 w-5'
+					/>
+					<span>GitHub - Kieron Lanning</span>
+				</a>
 			</div>
-			<div className='mb-4 mt-4 space-y-2'>
+			<div className='mb-4 mt-4 space-y-1 text-gray-500 text-xs'>
 				<p>&copy; {currentYear} KJL Solutions Ltd.</p>
-				<p>Registered in England and Wales: 7455769. All rights reserved.</p>
+				<p className='opacity-75'>
+					Registered in England and Wales: 7455769. All rights reserved.
+				</p>
 			</div>
 		</footer>
 	);

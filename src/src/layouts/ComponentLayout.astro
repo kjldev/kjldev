@@ -11,8 +11,7 @@ const { frontmatter } = Astro.props as {
 ---
 
 <Layout title={frontmatter.title}>
-	<div class='p-4'>
-		<!-- back to list link -->
+	<div class='max-w-screen-lg mx-auto p-4'>
 		<div class='mb-4'>
 			<a
 				href='/components'
@@ -22,9 +21,11 @@ const { frontmatter } = Astro.props as {
 			</a>
 		</div>
 
-		<!-- status above the title -->
 		<div class='mb-2'>
-			<ComponentStatus status={frontmatter.status} large />
+			<ComponentStatus
+				status={frontmatter.status}
+				large
+			/>
 		</div>
 
 		<h1 class='text-3xl font-bold mb-6'>{frontmatter.title}</h1>

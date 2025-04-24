@@ -18,3 +18,15 @@ h5,
 h6 {
 	font-family: 'Raleway', sans-serif;
 }
+
+.prose {
+	max-width: max-content;
+}
+
+.prose ul {
+	margin-top: 0;
+}
+
+.prose ul li {
+	margin: 0;
+}
