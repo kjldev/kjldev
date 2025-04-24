@@ -24,5 +24,3 @@ tags:
   ]
 hasContent: false
 ---
-
-This is a test page.
