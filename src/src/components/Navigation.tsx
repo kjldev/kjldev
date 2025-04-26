@@ -9,7 +9,7 @@ export default function Navigation() {
 	const menuItems = [
 		{ href: '/#what-do-we-do', label: 'What do we do?' },
 		{ href: '/#our-services', label: 'Our services' },
-		{ href: '/components', label: 'Open source' },
+		{ href: '/components', label: 'Components' },
 	];
 
 	return (
