@@ -13,7 +13,7 @@ const devComponents = defineCollection({
 		z.object({
 			title: z.string(),
 			description: z.string().optional(),
-			status: z.enum(['thinking', 'in-progress', 'live', 'retired']),
+			status: z.enum(['thinking', 'in-progress', 'live', 'retired', 'want']),
 			order: z.number(),
 			image: image().optional(),
 			links: z
