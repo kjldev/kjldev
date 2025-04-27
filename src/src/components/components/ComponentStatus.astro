@@ -1,63 +1,66 @@
 ---
 interface Props {
-	status: string;
-	large?: boolean;
+    status: string;
+    large?: boolean;
 }
 
 const { status, large = false } = Astro.props as Props;
 
 const statusMap: Record<
-	string,
-	{ text: string; emoji: string; extraClasses: string }
+    string,
+    { text: string; emoji: string; extraClasses: string }
 > = {
-	thinking: {
-		text: 'Thinking',
-		emoji: '🤔',
-		extraClasses:
-			'bg-gradient-to-r from-yellow-500 to-yellow-600 hover:shadow-lg transform hover:scale-105',
-	},
-	'in-progress': {
-		text: 'In Progress',
-		emoji: '🚧',
-		extraClasses:
-			'bg-gradient-to-r from-blue-500 to-indigo-600 hover:shadow-lg transform hover:scale-105',
-	},
-	live: {
-		text: 'Live',
-		emoji: '🚀',
-		extraClasses:
-			'bg-gradient-to-r from-green-500 to-teal-500 hover:shadow-lg transform hover:scale-105',
-	},
-	retired: {
-		text: 'Retired',
-		emoji: '🪦',
-		extraClasses: 'bg-gradient-to-r from-gray-500 to-gray-700',
-	},
-	want: {
-		text: 'Want',
-		emoji: '💖',
-		extraClasses:
-			'bg-gradient-to-r from-pink-500 to-red-500 hover:shadow-lg transform hover:scale-105',
-	},
+    thinking: {
+        text: 'Thinking',
+        emoji: '🤔',
+        extraClasses:
+            'bg-gradient-to-r from-yellow-500 to-yellow-600 hover:shadow-lg transform hover:scale-105',
+    },
+    'in-progress': {
+        text: 'In Progress',
+        emoji: '🚧',
+        extraClasses:
+            'bg-gradient-to-r from-blue-500 to-indigo-600 hover:shadow-lg transform hover:scale-105',
+    },
+    live: {
+        text: 'Live',
+        emoji: '🚀',
+        extraClasses:
+            'bg-gradient-to-r from-green-500 to-teal-500 hover:shadow-lg transform hover:scale-105',
+    },
+    retired: {
+        text: 'Retired',
+        emoji: '🪦',
+        extraClasses: 'bg-gradient-to-r from-gray-500 to-gray-700',
+    },
+    want: {
+        text: 'Want',
+        emoji: '💖',
+        extraClasses:
+            'bg-gradient-to-r from-pink-500 to-red-500 hover:shadow-lg transform hover:scale-105',
+    },
 };
 
 const defaultStatus = {
-	text: 'Unknown',
-	emoji: '❓',
-	extraClasses: 'bg-gray-500',
+    text: 'Unknown',
+    emoji: '❓',
+    extraClasses: 'bg-gray-500',
 };
 
 const { text, emoji, extraClasses } = statusMap[status] || defaultStatus;
 
 const sizeClasses = large
-	? 'text-sm px-2.5 py-1.5'
-	: 'text-xs px-2 py-1';
+    ? 'text-sm px-3 py-1.5'
+    : 'text-xs px-2.5 py-1';
 
 const baseClasses =
-	'text-white rounded-full shadow-md transition duration-200 font-bold';
+    'text-white rounded-full shadow-md transition duration-200 font-bold';
 const styleClasses = `${baseClasses} ${sizeClasses} ${extraClasses}`;
 ---
 
-<span class={`${styleClasses} whitespace-nowrap`}>
-	{emoji} {text}
+<span class={`${styleClasses} whitespace-nowrap inline-flex items-center`}>
+    <span style="background-color: rgba(255,255,255,0.7);" class="inline-flex items-center justify-center rounded-full w-6 h-6 mr-2">
+        {emoji}
+    </span>
+    {text}
 </span>
