@@ -26,3 +26,8 @@ I contemplated and played with a Go implementation that could parse and execute 
 Now I'm wondering if something like [CS-Script](https://www.cs-script.net/) could fit the bill?
 
 Either host the engine (ideally in AOT build for minimal self-contained executables) or just install the CS-Script app, and use C# as the Taskfile...
+
+Some other alternatives to CS-Script include:
+
+- [dotnet-script](https://github.com/dotnet-script/dotnet-script)
+- [csrun](https://github.com/DamianEdwards/csrun/)
