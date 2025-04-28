@@ -16,6 +16,7 @@ export default function Footer() {
 					<img
 						src={linkedin.src}
 						alt='LinkedIn - Kieron Lanning'
+						loading='lazy'
 						className='h-5 w-5'
 					/>
 					<span>LinkedIn</span>
@@ -29,6 +30,7 @@ export default function Footer() {
 					<img
 						src={github.src}
 						alt='GitHub - KJL.dev'
+						loading='lazy'
 						className='h-5 w-5'
 					/>
 					<span>GitHub - KJL.dev</span>
@@ -42,6 +44,7 @@ export default function Footer() {
 					<img
 						src={github.src}
 						alt='GitHub - Kieron Lanning'
+						loading='lazy'
 						className='h-5 w-5'
 					/>
 					<span>GitHub - Kieron Lanning</span>
