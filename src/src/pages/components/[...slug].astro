@@ -4,7 +4,7 @@ import ComponentLayout from '../../layouts/ComponentLayout.astro';
 import Prose from '../../components/Prose.astro';
 
 export async function getStaticPaths() {
-	const components = await getCollection('devComponents');
+	const components = await getCollection('components');
 
 	return components.map((component) => ({
 		params: { slug: component.id },

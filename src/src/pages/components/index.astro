@@ -5,35 +5,65 @@ import HeroBanner from '../../components/HeroBanner.astro';
 
 import { getCollection } from 'astro:content';
 import backgroundImg from '../../assets/components-bg.jpg';
+import SayHello from '../../components/SayHello';
 
-const devComponents = await getCollection('devComponents');
-const devComponentsSorted = devComponents.sort((a, b) => {
+const components = await getCollection('components');
+const componentsSorted = components.sort((a, b) => {
 	return a.data.order - b.data.order;
 });
 ---
 
-<Layout title='KJL.dev - Open Source Components & Tools'>
+<Layout title='KJL.dev - Open Source Components, tools, and ideas'>
 	<HeroBanner
-		title='Open Source Components & Tools'
+		title='Open Source Components, Tools, & Ideas'
 		backgroundImgSrc={backgroundImg}
 	>
 		<p class='mb-4'>
-			Here is a collection of open source tools, utilities, and components — all
-			crafted to solve real-world problems, simplify development workflows, and
-			encourage clean, maintainable code.
+			Here is a collection of open source components and tools — all crafted to
+			solve real-world problems, simplify development workflows, and encourage
+			clean, maintainable code.
 		</p>
-		<p class=''>
-			Everything listed here is MIT licensed, and built with reusability in
-			mind. Whether you're integrating them into a larger project or just
-			looking for inspiration, feel free to fork, contribute, or suggest
+		<p class='mb-4'>
+			The components & tools listed here is MIT licensed, and built with
+			reusability in mind. Whether you're integrating them into a larger project
+			or just looking for inspiration, feel free to fork, contribute, or suggest
 			improvements.
+		</p>
+		<p>
+			There's also some experimental ideas and concepts that I am working on.
+			These are not production-ready, but they are here to spark discussions and
+			encourage collaboration. If you have any suggestions or ideas, please feel
+			free to reach out via the <SayHello
+				asLink
+				title='email'
+				inline
+				className='text-blue-500 hover:underline font-bold'
+			/>, or by going to the <a
+				href='https://github.com/kjldev/kjldev/'
+				target='_blank'
+				class='text-blue-500 hover:underline font-bold'
+				>GitHub Repository</a
+			>
+			for this site and creating a <a
+				href='https://github.com/kjldev/kjldev/discussions'
+				target='_blank'
+				class='text-blue-500 hover:underline font-bold'
+				>new discussion</a
+			>, or <a
+				href='https://github.com/kjldev/kjldev/issues/'
+				target='_blank'
+				class='text-blue-500 hover:underline font-bold'
+				>issue</a
+			>! 
+			
+			We'd love to hear from you.
 		</p>
 	</HeroBanner>
 	<div
 		class='w-full px-4 py-4 bg-[#f1f1f1] grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch'
 	>
 		{
-			devComponentsSorted.map((component, index, arr) => (
+			componentsSorted.map((component, index, arr) => (
 				<div
 					class={
 						arr.length % 2 === 1 && index === arr.length - 1 ?
@@ -44,6 +74,7 @@ const devComponentsSorted = devComponents.sort((a, b) => {
 					<ComponentCard
 						component={component.data}
 						slug={component.id}
+						filePath={component.filePath}
 					/>
 				</div>
 			))

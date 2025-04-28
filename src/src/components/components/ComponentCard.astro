@@ -8,9 +8,10 @@ import type { DevComponent } from '../../scripts/component-types';
 interface Props {
 	component: DevComponent;
 	slug: string;
+	filePath: string;
 }
 
-const { component, slug } = Astro.props;
+const { component, slug, filePath } = Astro.props;
 const firstLink = component.links?.at(0);
 const isRetired = component.status === 'retired';
 
@@ -25,6 +26,7 @@ const innerClasses =
 	:	'h-full bg-white rounded-lg shadow hover:shadow-xl transition-shadow duration-300 p-6 transform hover:-translate-y-0.25 hover:-translate-x-0.25';
 
 const url = component.hasContent ? `/components/${slug}` : firstLink?.url;
+const githubRef = `https://github.com/kjldev/kjldev/tree/main/${filePath}`;
 ---
 
 <div class={outerClasses}>
@@ -80,5 +82,7 @@ const url = component.hasContent ? `/components/${slug}` : firstLink?.url;
 				</div>
 			)
 		}
+		<a href={githubRef} target='_blank' class='mt-4 inline-block text-blue-500 hover:underline'>
+			Source Code
 	</div>
 </div>
