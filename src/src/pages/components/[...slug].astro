@@ -16,7 +16,7 @@ const { component } = Astro.props;
 const { Content } = await render(component);
 ---
 
-<ComponentLayout frontmatter={component.data}>
+<ComponentLayout frontmatter={component.data} filePath={component.filePath}>
 	<Prose>
 		<Content />
 	</Prose>

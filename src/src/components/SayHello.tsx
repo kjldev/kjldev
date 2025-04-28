@@ -1,4 +1,4 @@
-import MailtoLink from './MailtoLink';
+import MailtoLink from './MailToLink';
 
 interface SayHelloProps {
 	asLink?: boolean;

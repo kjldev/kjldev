@@ -33,12 +33,7 @@ const componentsSorted = components.sort((a, b) => {
 			There's also some experimental ideas and concepts that I am working on.
 			These are not production-ready, but they are here to spark discussions and
 			encourage collaboration. If you have any suggestions or ideas, please feel
-			free to reach out via the <SayHello
-				asLink
-				title='email'
-				inline
-				className='text-blue-500 hover:underline font-bold'
-			/>, or by going to the <a
+			free to reach out by going to the <a
 				href='https://github.com/kjldev/kjldev/'
 				target='_blank'
 				class='text-blue-500 hover:underline font-bold'
@@ -54,10 +49,9 @@ const componentsSorted = components.sort((a, b) => {
 				target='_blank'
 				class='text-blue-500 hover:underline font-bold'
 				>issue</a
-			>! 
-			
-			We'd love to hear from you.
+			>.
 		</p>
+		<p class='p-4'>We'd love to hear from you!</p>
 	</HeroBanner>
 	<div
 		class='w-full px-4 py-4 bg-[#f1f1f1] grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch'
@@ -74,7 +68,6 @@ const componentsSorted = components.sort((a, b) => {
 					<ComponentCard
 						component={component.data}
 						slug={component.id}
-						filePath={component.filePath}
 					/>
 				</div>
 			))

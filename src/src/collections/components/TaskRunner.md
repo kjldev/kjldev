@@ -7,20 +7,20 @@ tags: ['tasks', 'task-runner', 'automation', 'make']
 hasContent: true
 ---
 
-I ❤️ being able to simply run make from a terminal:
+I <span class='text-xl'>❤️</span> being able to simply run `make` from a terminal:
 
 ```powershell
 make build
 
-# or 
+# or
 
 make test
 
 # ... even
-make vs # This is particularly lazy as it just loads Visual Studio with the correct solution for me.
+make vs # <-- This is particularly lazy as it just loads Visual Studio with the correct solution for me.
 ```
 
-I've even got a common Makefile I bring into all my projects to give me some sensible helpers like auto-displaying the available targets etc... you can find that [here](https://gist.github.com/kieronlanning/0bd4dedab604ea401a40452f39033c59).
+I've even got a common Makefile I bring into all my projects to give me some sensible helpers like auto-displaying the available targets etc... you can find that <a href="https://gist.github.com/kieronlanning/0bd4dedab604ea401a40452f39033c59" target="_blank">here</a>.
 
 ---
 
@@ -42,15 +42,15 @@ I _really_ liked the idea of a TypeScript-based one. TS is simple, its approacha
 
 I contemplated, and even played with, a Go implementation that could parse and execute TypeScript within the app. But as you can imagine that got very complex very quickly.
 
-Now I'm wondering if something like [CS-Script](https://www.cs-script.net/) could fit the bill?
+Now I'm wondering if something like <a href="https://www.cs-script.net/" target="_blank">CS-Script</a> could fit the bill?
 
 Either host the engine (ideally in AOT build for minimal self-contained executables) or just install the CS-Script app, and use C# as the `Taskfile`...
 
 Some other alternatives to CS-Script include:
 
-- [dotnet-script](https://github.com/dotnet-script/dotnet-script)
-- [csrun](https://github.com/DamianEdwards/csrun/)
+- <a href="https://github.com/dotnet-script/dotnet-script/" target="_blank">dotnet-script</a>
+- <a href="https://github.com/DamianEdwards/csrun/" target="_blank">csrun</a>
 
 ---
 
-BTW, I have seen [Taskfile](https://taskfile.dev/) but I think there's already too much YAML in the world... and this isn't a nice scripting experience.
+BTW, I have seen <a href="https://taskfile.dev/" target="_blank">Taskfile</a> but I think there's already too much YAML in the world... and this isn't a nice scripting experience.
