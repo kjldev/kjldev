@@ -8,7 +8,7 @@ export default function Footer() {
 		<footer className='text-center p-4'>
 			<div className='flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8 mb-4 mt-4'>
 				<a
-					href='https://www.linkedin.com/kieronlanning'
+					href='https://linkedin.com/in/kieronlanning/'
 					target='_blank'
 					rel='noopener noreferrer'
 					className='flex items-center space-x-2 hover:underline'
