@@ -12,4 +12,4 @@ hasContent: true
 ---
 This project was archived on GitHub as it's new bigger, quicker, better, more feature-rich brother was released...!
 
-Go check out [Purview Telemetry Source Generator](https://github.com/kjldev/purview-telemetry-sourcegenerator/) on GitHub.
+Go check out <a href="https://github.com/kjldev/purview-telemetry-sourcegenerator/" target="_blank">Purview Telemetry Source Generator</a> on GitHub.

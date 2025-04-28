@@ -2,15 +2,17 @@ import MailtoLink from './MailToLink';
 
 interface SayHelloProps {
 	asLink?: boolean;
+	title?: string;
+	inline?: boolean;
+	className?: string;
 }
 
 export default function SayHello(props: SayHelloProps) {
-	const { asLink = false } = props;
-
+	const { asLink = false, title, inline = false, className } = props;
 	const emailAddress = 'sayhello@kjl.dev';
-	const displayText = asLink ? emailAddress : 'Say Hello';
+	const displayText = title ?? (asLink ? emailAddress : 'Say Hello');
 
-	// match the styling of tags/status: gradient, rounded, shadow, transform on hover
+	// Default styling for non-inline badge
 	const linkClasses = [
 		'inline-block',
 		'px-4',
@@ -29,14 +31,27 @@ export default function SayHello(props: SayHelloProps) {
 		'font-bold',
 	].join(' ');
 
-	//const classes = asLink ? linkClasses : buttonClasses;
-	const classes = asLink ? '' : linkClasses;
+	// Minimal styling for inline usage (includes whitespace-nowrap so it doesn't break lines)
+	const inlineClasses = [
+		'inline',
+		'whitespace-nowrap',
+		'p-0',
+		'm-0',
+		'text-blue-500',
+		'hover:underline',
+	].join(' ');
+
+	// Choose appropriate base classes.
+	const baseClasses = inline ? inlineClasses : asLink ? '' : linkClasses;
+
+	// Merge custom classes if provided
+	const computedClasses = [baseClasses, className].filter(Boolean).join(' ');
 
 	return (
 		<MailtoLink
 			to={emailAddress}
 			subject='Hello World'
-			className={classes}
+			className={computedClasses}
 			title='Say Hello...! (:'
 		>
 			{displayText}
