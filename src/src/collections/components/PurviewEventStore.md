@@ -21,9 +21,7 @@ I've got a pluggable one that I've been using for years now, it already supports
 
 ...but I've been thinking a Postgres-based one using the JSONB column type, with GIN-based indexing...
 
-<span class='text-6xl'>
-  🤔
-</span>
+<span class='text-6xl'>🤔</span>
 
 I've been noodling one the variations above for years (and years, and years). I've had it running in production with multiple terabytes of data without issue during all this time - more thanks to Azure's massive scale.
 

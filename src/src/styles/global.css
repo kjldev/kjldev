@@ -4,6 +4,8 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+@import '../../node_modules/rehype-github-alerts/dist/styling/css/index.css';
+
 html {
 	font-family: 'Inter', 'Avenir', Arial, Helvetica, sans-serif;
 	scroll-behavior: smooth;
@@ -31,29 +33,31 @@ h6 {
 	margin: 0;
 }
 
-.admonition {
-	margin: 1.5em 0;
-	padding: 1em 1.25em;
-	border-left: 4px solid var(--admonition-border);
-	border-radius: 0.375rem;
-	background-color: var(--admonition-bg);
+.prose hr {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
 }
 
-.admonition-tip {
-	--admonition-border: var(--color-tip-border);
-	--admonition-bg: var(--color-tip-bg);
+.prose p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 }
-.admonition-info {
-	--admonition-border: var(--color-info-border);
-	--admonition-bg: var(--color-info-bg);
+
+.markdown-alert {
+	padding-left: 0.75em;
 }
-.admonition-warning {
-	--admonition-border: var(--color-warning-border);
-	--admonition-bg: var(--color-warning-bg);
+
+.markdown-alert-title {
+	font-weight: bold;
 }
-.admonition-danger {
-	--admonition-border: var(--color-danger-border);
-	--admonition-bg: var(--color-danger-bg);
+
+.prose .markdown-alert p {
+	margin-top: 0;
+}
+
+svg.octicon {
+	width: 20px;
+	height: 20px;
 }
 
 /* Light theme defaults */

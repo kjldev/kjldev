@@ -5,7 +5,6 @@ import HeroBanner from '../../components/HeroBanner.astro';
 
 import { getCollection } from 'astro:content';
 import backgroundImg from '../../assets/components-bg.jpg';
-import SayHello from '../../components/SayHello';
 
 const components = await getCollection('components');
 const componentsSorted = components.sort((a, b) => {
