@@ -15,6 +15,29 @@ baffling and disjointed the Azure DevOps extensions documentation is, I think I'
 > [!CAUTION]
 > Being forced to use React 16 in 2025 while using _any_ packages is painful! 🩻
 
+All of this is because I wanted some basics..
+
+Like being able use [Mermaid](https://mermaid-js.github.io/mermaid/#/) in Azure DevOps wikis that actually rendera correctly! 😁 (don't ask)
+
+Or the awesome [alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts)!
+
+... like this:
+
+> [!NOTE]
+> This is a note.
+
+> [!TIP]
+> This is a tip.
+
+> [!IMPORTANT]
+> This is important.
+
+> [!WARNING]
+> This is a warning.
+
+> [!CAUTION]
+> This is a caution.
+
 ---
 
 ## 2025-04-29 ... current situation
@@ -31,4 +54,4 @@ Here's the current state of the extension:
 
 ---
 
-As you can see... it's not quite there yet, but solid process so far!
+As you can see... it's not quite there yet, but solid progress so far!
