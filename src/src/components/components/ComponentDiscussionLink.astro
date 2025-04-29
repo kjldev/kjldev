@@ -1,0 +1,65 @@
+---
+const { title, status, filePath, variant } = Astro.props as {
+	title: string;
+	status: string;
+	filePath: string;
+	variant?: string;
+};
+const fileName = filePath.split('/').pop() || '';
+const githubRef = `https://github.com/kjldev/kjldev/tree/main/src/${filePath}`;
+
+const urlTitle = encodeURIComponent(
+	`I'd like to chat about '${title}'`
+);
+const body = encodeURIComponent(`Hi,
+
+I'd like to chat about the component **${title}**.
+
+Component: [${fileName}](${githubRef})
+
+-----
+
+## Description
+
+_What would you like to talk about?_
+`);
+const newGitHubIssues = `https://github.com/kjldev/kjldev/issues/new?title=${urlTitle}&body=${body}&labels=component,${status.toLowerCase()}`;
+
+const isChat = variant === 'chat';
+const text = isChat ? '💬' : '💬 What to chat about this?';
+
+// default (bold) styling
+const defaultClasses = [
+	'block w-full sm:inline-block sm:w-auto',
+	'px-6 py-3',
+	'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600',
+	'text-white font-semibold',
+	'rounded-full shadow-lg',
+	'transition transform hover:scale-105',
+	'focus:outline-none focus:ring-2 focus:ring-blue-400',
+	'mx-auto text-center',
+].join(' ');
+
+// chat (subtle but button-like) styling
+const chatClasses = [
+	'inline-flex items-center justify-center',
+	'px-3 py-1',
+	'text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
+	'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700',
+	'border border-gray-300 dark:border-gray-600',
+	'rounded-full',
+	'transition transform hover:scale-105', // match default hover transition
+	'hover:shadow-sm',
+	'focus:outline-none focus:ring-2 focus:ring-gray-400',
+].join(' ');
+---
+
+<a
+	href={newGitHubIssues}
+	target='_blank'
+	class={isChat ? chatClasses : defaultClasses}
+	title='Discuss this component on GitHub'
+	aria-label='Discuss this component on GitHub'
+>
+	{text}
+</a>

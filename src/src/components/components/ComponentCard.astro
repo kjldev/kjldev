@@ -3,14 +3,16 @@ import ComponentLink from './ComponentLink.astro';
 import ComponentTag from './ComponentTag.astro';
 import ComponentTitle from './ComponentTitle';
 import ComponentStatus from './ComponentStatus.astro';
+import ComponentDiscussionLink from './ComponentDiscussionLink.astro';
 import type { Component } from '../../scripts/component-types';
 
 interface Props {
 	component: Component;
 	slug: string;
+	filePath: string;
 }
 
-const { component, slug } = Astro.props;
+const { component, slug, filePath } = Astro.props;
 const firstLink = component.links?.at(0);
 const isRetired = component.status === 'retired';
 
@@ -29,30 +31,22 @@ const url = component.hasContent ? `/components/${slug}` : firstLink?.url;
 
 <div class={outerClasses}>
 	<div class={innerClasses}>
-		<div
-			class='mb-4 flex flex-col md:flex-row md:justify-between md:items-center'
-		>
-			<div>
-				{
-					isRetired ?
-						<del class='text-gray-500'>
-							<ComponentTitle
-								title={component.title}
-								url={url}
-								hasContent={component.hasContent}
-							/>
-						</del>
-					:	<ComponentTitle
-							title={component.title}
-							url={url}
-							hasContent={component.hasContent}
-						/>
-				}
+			<div class='mb-4 flex flex-col md:flex-row md:items-center'>
+				<!-- Title takes all available space -->
+				<div class='flex-1'>
+					<ComponentTitle component={component} url={url} />
+				</div>
+				<!-- Status and chat button only take the space they need -->
+				<div class='mt-2 md:mt-0 flex items-center space-x-1 flex-none'>
+					<ComponentStatus status={component.status} />
+					<ComponentDiscussionLink
+						title={component.title}
+						status={component.status}
+						filePath={filePath}
+						variant='chat'
+					/>
+				</div>
 			</div>
-			<div class='mt-2 md:mt-0'>
-				<ComponentStatus status={component.status} />
-			</div>
-		</div>
 		{
 			component.description && (
 				<p class='text-gray-600 mb-4'>{component.description}</p>

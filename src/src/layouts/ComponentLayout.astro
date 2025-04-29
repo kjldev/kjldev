@@ -3,39 +3,21 @@ import Layout from './Layout.astro';
 import ComponentStatus from '../components/components/ComponentStatus.astro';
 import ComponentTag from '../components/components/ComponentTag.astro';
 import ComponentLink from '../components/components/ComponentLink.astro';
+import ComponentDiscussionLink from '../components/components/ComponentDiscussionLink.astro';
 import { type Component } from '../scripts/component-types';
 
 const { frontmatter, filePath } = Astro.props as {
 	frontmatter: Component;
 	filePath: string;
 };
-
-const fileName = filePath.split('/').pop() || '';
-const githubRef = `https://github.com/kjldev/kjldev/tree/main/src/${filePath}`;
-
-const urlTitle = encodeURIComponent(`I'd like to chat about '${frontmatter.title}': ${fileName}`);
-const body = encodeURIComponent(`Hi,
-
-I'd like to chat about the component **${frontmatter.title}**.
-
-Component: [${fileName}](${githubRef})
-
------
-
-## Description
-
-_What would you like to talk about?_
-`);
-
-const newGitHubIssues = `https://github.com/kjldev/kjldev/issues/new?title=${urlTitle}&body=${body}&labels=component,${frontmatter.status.toLowerCase()}`;
 ---
 
 <Layout title={frontmatter.title}>
 	<div class='max-w-screen-lg mx-auto p-4'>
 		<div class='mb-4'>
 			<a
-				href="/components"
-				class="inline-block px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-900 text-white font-semibold rounded-full shadow-sm hover:shadow-md transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400"
+				href='/components'
+				class='inline-block px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-900 text-white font-semibold rounded-full shadow-sm hover:shadow-md transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400'
 			>
 				&larr; Back to Components
 			</a>
@@ -47,6 +29,12 @@ const newGitHubIssues = `https://github.com/kjldev/kjldev/issues/new?title=${url
 			<ComponentStatus
 				status={frontmatter.status}
 				large
+			/>
+			<ComponentDiscussionLink
+				title={frontmatter.title}
+				status={frontmatter.status}
+				filePath={filePath}
+				variant='chat'
 			/>
 		</div>
 
@@ -78,14 +66,12 @@ const newGitHubIssues = `https://github.com/kjldev/kjldev/issues/new?title=${url
 
 		<slot />
 
-		<div class="flex mt-6">
-			<a
-				href={newGitHubIssues}
-				target="_blank"
-				class="block w-full sm:inline-block sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full shadow-lg hover:from-blue-600 hover:to-purple-600 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 mx-auto text-center"
-			>
-				 💬 What to chat about this?
-			</a>
+		<div class='flex mt-6'>
+			<ComponentDiscussionLink
+				title={frontmatter.title}
+				status={frontmatter.status}
+				filePath={filePath}
+			/>
 		</div>
 	</div>
 </Layout>

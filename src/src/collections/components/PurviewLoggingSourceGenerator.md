@@ -1,5 +1,5 @@
 ---
-order: 999
+order: 9999
 title: Purview Logging Source Generator
 status: retired
 description: .NET Logging Source Generator, used for generating LoggerMessage-based High Performance logging from a custom interface.

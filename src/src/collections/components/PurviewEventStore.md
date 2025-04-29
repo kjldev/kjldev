@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 200
 title: Postgres-based Event Store
 description: A Postgres-based .NET Event Store...very early days, but built on a solid foundation.
 status: thinking
