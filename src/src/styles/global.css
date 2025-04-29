@@ -4,6 +4,8 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+@import '../../node_modules/rehype-github-alerts/dist/styling/css/index.css';
+
 html {
 	font-family: 'Inter', 'Avenir', Arial, Helvetica, sans-serif;
 	scroll-behavior: smooth;
@@ -29,4 +31,57 @@ h6 {
 
 .prose ul li {
 	margin: 0;
+}
+
+.prose hr {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+}
+
+.prose p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.markdown-alert {
+	padding-left: 0.75em;
+}
+
+.markdown-alert-title {
+	font-weight: bold;
+}
+
+.prose .markdown-alert p {
+	margin-top: 0;
+}
+
+svg.octicon {
+	width: 20px;
+	height: 20px;
+}
+
+/* Light theme defaults */
+:root {
+	--color-tip-border: #3b82f6;
+	--color-tip-bg: #eff6ff;
+	--color-info-border: #10b981;
+	--color-info-bg: #ecfdf5;
+	--color-warning-border: #f59e0b;
+	--color-warning-bg: #fffbeb;
+	--color-danger-border: #ef4444;
+	--color-danger-bg: #fef2f2;
+}
+
+/* Dark theme overrides */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-tip-border: #60a5fa;
+		--color-tip-bg: #1e3a8a;
+		--color-info-border: #34d399;
+		--color-info-bg: #064e3b;
+		--color-warning-border: #fbbf24;
+		--color-warning-bg: #78350f;
+		--color-danger-border: #f87171;
+		--color-danger-bg: #581c1c;
+	}
 }

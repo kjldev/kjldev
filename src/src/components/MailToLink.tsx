@@ -1,4 +1,3 @@
-// src/components/MailtoLink.tsx
 import { type JSX } from 'preact';
 import { useRef, useEffect } from 'preact/hooks';
 
@@ -12,7 +11,7 @@ interface MailtoLinkProps {
 }
 
 export default function MailtoLink(props: MailtoLinkProps) {
-	const { to, subject, body, className, title, children } = props;
+	const { subject, body, className, title, children } = props;
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
 
