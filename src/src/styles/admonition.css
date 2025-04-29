@@ -1,0 +1,46 @@
+.admonition {
+	margin: 1.5em 0;
+    margin-left: 1em;;
+	padding: 1em 1.25em;
+	border-left: 4px solid var(--admonition-border);
+}
+
+.admonition-tip {
+	--admonition-border: var(--color-tip-border);
+}
+
+.admonition-note {
+	--admonition-border: var(--color-note-border);
+}
+
+.admonition-important {
+	--admonition-border: var(--color-important-border);
+}
+
+.admonition-warning {
+	--admonition-border: var(--color-warning-border);
+}
+
+.admonition-critical {
+	--admonition-border: var(--color-critical-border);
+}
+
+/* Light theme defaults */
+:root {
+	--color-tip-border: #28a745;
+	--color-note-border: #0366d6;
+	--color-important-border: #d73a49;
+	--color-warning-border: #ffd33d;
+	--color-critical-border: #6f42c1;
+}
+
+/* Dark theme overrides */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-tip-border: #28a745;
+		--color-note-border: #539bf5;
+		--color-important-border: #d73a49;
+		--color-warning-border: #ffd33d;
+		--color-critical-border: #6f42c1;
+	}
+}

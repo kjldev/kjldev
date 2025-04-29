@@ -17,12 +17,15 @@ make build
 make test
 
 # ... even
-make vs # <-- This is particularly lazy as it just loads Visual Studio with the correct solution for me.
+make vs
+# 👆 This is particularly lazy as it just
+# loads Visual Studio with the correct solution for me...
+# I actually got an alias of 'm' too.
 ```
 
 I've even got a common Makefile I bring into all my projects to give me some sensible helpers like auto-displaying the available targets etc... you can find that <a href="https://gist.github.com/kieronlanning/0bd4dedab604ea401a40452f39033c59" target="_blank">here</a>.
 
----
+***
 
 But... what I'm after is something that can act like `make` does, but has more script-friendliness.
 
@@ -30,13 +33,43 @@ A cross between a task runner and a scripting system.
 
 I've looked at a few JS-based ones which looked good, but nothing really fits the bill...
 
-I wanted something with minimal dependencies - just like `make`, _install it and run_.
+I wanted something with minimal dependencies - just like `make`, *install it and run*.
 
 The problem with any of the JS ones is that you'll need to make sure you're using `node` or `bun` (or even `deno`), and then you've got to make sure its the right version, with the right dependencies.
 
-> All too painful.
+<!-- :::tip
+*It's all too painful*.
+:::
 
-I _really_ liked the idea of a TypeScript-based one. TS is simple, its approachable, its got rich frameworks and massive re-use through functions in the _'Taskfile'_ etc.
+:::note
+It's all too painful.
+::: -->
+
+> [!TIP]
+> ...hi
+> TIP
+
+> [!NOTE]
+> ...hi
+> NOTE
+
+> [!note]
+> ...hi
+> note
+
+> [!IMPORTANT]
+> ...hi
+> IMPORTANT
+
+> [!WARNING]
+> ...hi
+> WARNING
+
+> [!CRITICAL]
+> ...hi
+> CRITICAL
+
+I *really* liked the idea of a TypeScript-based one. TS is simple, its approachable, its got rich frameworks and massive re-use through functions in the *'Taskfile'* etc.
 
 ...but, then I'm back to `node` and `bun`.
 
@@ -48,9 +81,7 @@ Either host the engine (ideally in AOT build for minimal self-contained executab
 
 Some other alternatives to CS-Script include:
 
-- <a href="https://github.com/dotnet-script/dotnet-script/" target="_blank">dotnet-script</a>
-- <a href="https://github.com/DamianEdwards/csrun/" target="_blank">csrun</a>
-
----
+* <a href="https://github.com/dotnet-script/dotnet-script/" target="_blank">dotnet-script</a>
+* <a href="https://github.com/DamianEdwards/csrun/" target="_blank">csrun</a>
 
 BTW, I have seen <a href="https://taskfile.dev/" target="_blank">Taskfile</a> but I think there's already too much YAML in the world... and this isn't a nice scripting experience.
