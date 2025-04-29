@@ -17,26 +17,28 @@ baffling and disjointed the Azure DevOps extensions documentation is, I think I'
 
 All of this is because I wanted some basics..
 
-Like being able use [Mermaid](https://mermaid-js.github.io/mermaid/#/) in Azure DevOps wikis that actually rendera correctly! 😁 (don't ask)
+Like being able use [Mermaid](https://mermaid-js.github.io/mermaid/#/) in Azure DevOps wikis that actually renders correctly! 😁 (don't ask)
 
-Or the awesome [alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts)!
+Or the awesome [alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) feature!
 
 ... like this:
 
 > [!NOTE]
-> This is a note.
+> This is a note 📔.
 
 > [!TIP]
-> This is a tip.
+> This is a tip ℹ️.
 
 > [!IMPORTANT]
-> This is important.
+> This is important 🔔.
 
 > [!WARNING]
-> This is a warning.
+> This is a warning ⚠️.
 
 > [!CAUTION]
-> This is a caution.
+> This is a cautionary tale about trying to use React 16 in 2025 with modern packages.
+> 
+> ☠️ 📎
 
 ---
 
