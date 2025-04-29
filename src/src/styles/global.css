@@ -43,6 +43,11 @@ h6 {
 	margin-bottom: 0.5em;
 }
 
+/* Add drop shadow and rounded corners to images in prose */
+.prose img {
+	@apply rounded-lg shadow-xl;
+}
+
 .markdown-alert {
 	padding-left: 0.75em;
 }
