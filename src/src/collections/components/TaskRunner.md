@@ -1,5 +1,5 @@
 ---
-order: 100
+order: 1000
 title: A replacement to GNU Make with scripting
 description: I'd love a make replacement based on a scripting language, but without loads of dependencies (like  node/ bun etc).
 status: want
