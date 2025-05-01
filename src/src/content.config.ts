@@ -6,7 +6,7 @@ import { z, defineCollection } from 'astro:content';
 // Define a 'loader' and a 'schema' for each collection.
 const components = defineCollection({
 	loader: glob({
-		pattern: '**/[^_]*.md',
+		pattern: '**/[^_]*.{md,mdx}',
 		base: './src/collections/components',
 	}),
 	schema: ({ image }) =>
