@@ -1,20 +1,20 @@
 ---
-import ComponentLink from './ComponentLink.astro';
-import ComponentTag from './ComponentTag.astro';
-import ComponentTitle from './ComponentTitle';
-import ComponentStatus from './ComponentStatus.astro';
-import ComponentDiscussionLink from './ComponentDiscussionLink.astro';
-import type { Component } from '../../scripts/component-types';
+import ProjectLink from './ProjectLink.astro';
+import ProjectTag from './ProjectTag.astro';
+import ProjectTitle from './ProjectTitle';
+import ProjectStatus from './ProjectStatus.astro';
+import ProjectDiscussionLink from './ProjectDiscussionLink.astro';
+import type { Project as Project } from '../../scripts/component-types';
 
 interface Props {
-	component: Component;
+	project: Project;
 	slug: string;
 	filePath: string;
 }
 
-const { component, slug, filePath } = Astro.props;
-const firstLink = component.links?.at(0);
-const isRetired = component.status === 'retired';
+const { project, slug, filePath } = Astro.props;
+const firstLink = project.links?.at(0);
+const isRetired = project.status === 'retired';
 
 const outerClasses =
 	isRetired ?
@@ -26,7 +26,7 @@ const innerClasses =
 		'h-full bg-white rounded-lg shadow transition-shadow duration-300 p-6 opacity-90'
 	:	'h-full bg-white rounded-lg shadow hover:shadow-xl transition-shadow duration-300 p-6 transform hover:-translate-y-0.25 hover:-translate-x-0.25';
 
-const url = component.hasContent ? `/components/${slug}` : firstLink?.url;
+const url = project.hasContent ? `/projects/${slug}` : firstLink?.url;
 ---
 
 <div class={outerClasses}>
@@ -34,41 +34,41 @@ const url = component.hasContent ? `/components/${slug}` : firstLink?.url;
 			<div class='mb-4 flex flex-col md:flex-row md:items-center'>
 				<!-- Title takes all available space -->
 				<div class='flex-1'>
-					<ComponentTitle component={component} url={url} />
+					<ProjectTitle project={project} url={url} />
 				</div>
 				<!-- Status and chat button only take the space they need -->
 				<div class='mt-2 md:mt-0 flex items-center space-x-1 flex-none'>
-					<ComponentStatus status={component.status} />
-					<ComponentDiscussionLink
-						title={component.title}
-						status={component.status}
+					<ProjectStatus status={project.status} />
+					<ProjectDiscussionLink
+						title={project.title}
+						status={project.status}
 						filePath={filePath}
 						variant='chat'
 					/>
 				</div>
 			</div>
 		{
-			component.description && (
-				<p class='text-gray-600 mb-4'>{component.description}</p>
+			project.description && (
+				<p class='text-gray-600 mb-4'>{project.description}</p>
 			)
 		}
 		{
-			component.links && (
+			project.links && (
 				<div class='mb-4'>
 					<div class='flex flex-wrap gap-2'>
-						{component.links.map((link) => (
-							<ComponentLink link={link} />
+						{project.links.map((link) => (
+							<ProjectLink link={link} />
 						))}
 					</div>
 				</div>
 			)
 		}
 		{
-			component.tags && (
+			project.tags && (
 				<div>
 					<ul class='flex flex-wrap gap-2'>
-						{component.tags.map((tag) => (
-							<ComponentTag tag={tag} />
+						{project.tags.map((tag) => (
+							<ProjectTag tag={tag} />
 						))}
 					</ul>
 				</div>

@@ -1,20 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ComponentCard from '../../components/components/ComponentCard.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
 import HeroBanner from '../../components/HeroBanner.astro';
 
 import { getCollection } from 'astro:content';
-import backgroundImg from '../../assets/components-bg.jpg';
+import backgroundImg from '../../assets/projects-bg.jpg';
 
-const components = await getCollection('components');
-const componentsSorted = components.sort((a, b) => {
+const projects = await getCollection('projects');
+const projectsSorted = projects.sort((a, b) => {
 	return a.data.order - b.data.order;
 });
 ---
 
-<Layout title='KJL.dev - Open Source Components, tools, and ideas'>
+<Layout title='KJL.dev - Projects: Open Source Components, Tools, and Ideas'>
 	<HeroBanner
-		title='Open Source Components, Tools, & Ideas'
+		title='Projects: Open Source Components, Tools, and Ideas'
 		backgroundImgSrc={backgroundImg}
 	>
 		<p class='mb-4'>
@@ -56,7 +56,7 @@ const componentsSorted = components.sort((a, b) => {
 		class='w-full px-4 py-4 bg-[#f1f1f1] grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch'
 	>
 		{
-			componentsSorted.map((component, index, arr) => (
+			projectsSorted.map((project, index, arr) => (
 				<div
 					class={
 						arr.length % 2 === 1 && index === arr.length - 1 ?
@@ -64,10 +64,10 @@ const componentsSorted = components.sort((a, b) => {
 						:	''
 					}
 				>
-					<ComponentCard
-						component={component.data}
-						slug={component.id}
-						filePath={component.filePath!}
+					<ProjectCard
+						project={project.data}
+						slug={project.id}
+						filePath={project.filePath!}
 					/>
 				</div>
 			))
