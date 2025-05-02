@@ -9,10 +9,22 @@ tags: ['azure-devops', 'markdown', 'gfm', 'wiki', 'mermaid']
 hasContent: true
 ---
 
+---
+> [!IMPORTANT]
+> **Why is this retried?**
+>
+> What I wanted was not just better markdown and mermaid support, but actually the ability to preform approvals,
+> and to be able to easily share information across the business...
+>
+> ADO, while OK, requires at least a Stakeholder license for access which is an extra layer of management.
+> Its also confusing for people who don't need anything other than the wiki part - digging through projects,
+> boards, etc.
+
+---
+
 I've been noodling on this for a few days, and despite how baffling and disjointed the Azure DevOps extensions documentation is, I think I've got a good start on a workable solution...
 
-> [!CAUTION]
-> Being forced to use React 16 in 2025 while using _any_ packages is painful! 🩻
+_Being forced to use React 16 in 2025 while using _any_ other npm packages is a painful experience! 🩻_
 
 All of this is because I wanted some basics..
 
@@ -43,7 +55,10 @@ Or the awesome [alerts](https://docs.github.com/en/get-started/writing-on-github
 
 ## 2025-05-01 ... Packing up shop... for now
 
-I've been working on this for a few days now, and while I have a working prototype, I think it's time to take a break - while good progress was made. There's a few things I've discovered that need more time/ energy/ effort that I have at the moment:
+I've been working on this for a few days now, and while I have a working prototype, I think it's time to take a break - while good progress was made I realised that this
+wasn't the correct solution.
+
+There's a few things I've discovered that need more time/ energy/ effort that I have at the moment:
 
 ### Functionality
 
@@ -75,10 +90,7 @@ The syntax highlighting ... just doesn't look right...
 
 ### Where I'm leaving it (for now)...
 
-
 [![Movie Time](https://img.youtube.com/vi/8kAyNp6fXZQ/0.jpg)](https://www.youtube.com/watch?v=8kAyNp6fXZQ)
-
-![Movie Time!](https://www.youtube.com/embed?v=8kAyNp6fXZQ)
 
 ## 2025-04-29 ... current situation
 
