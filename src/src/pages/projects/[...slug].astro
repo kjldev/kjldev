@@ -12,13 +12,17 @@ export async function getStaticPaths() {
 	}));
 }
 
-const { project } = Astro.props;
-const { Content } = await render(project);
+const { project } = Astro.props;	
+const { Content, remarkPluginFrontmatter  } = await render(project);
+const { minutesRead } = remarkPluginFrontmatter as {
+	minutesRead: string;
+};
 ---
 
 <ProjectLayout
 	frontmatter={project.data}
 	filePath={project.filePath}
+	minutesRead={minutesRead}
 >
 	<Prose>
 		<Content />

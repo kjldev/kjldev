@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import remarkGfm from 'remark-gfm';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeExternalLinks from 'rehype-external-links';
+import { remarkReadingTime } from './src/modules/reading-time.mts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,7 +26,7 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 	},
 	markdown: {
-		remarkPlugins: [remarkGfm],
+		remarkPlugins: [remarkReadingTime, remarkGfm],
 		rehypePlugins: [
 			rehypeGithubAlerts,
 			[

@@ -1,4 +1,4 @@
-import type { Project } from '../../scripts/component-types';
+import type { Project } from '../../types/component-types';
 
 export interface ProjectTitleProps {
 	project: Project;
