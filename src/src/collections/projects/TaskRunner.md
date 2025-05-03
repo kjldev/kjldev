@@ -58,3 +58,23 @@ Some other alternatives to CS-Script include:
 - [csrun](https://github.com/DamianEdwards/csrun/)
 
 > BTW, I have seen [Taskfile](https://taskfile.dev/) but I think there's already too much YAML in the world... and it isn't a nice scripting experience.
+
+---
+
+### 03/05/2025 ... found Hereby
+
+I've just found [Hereby](https://hereby.js.org/) which looks like a good candidate. It has a few dependencies, but it looks like it could be a good fit... I generally use bun for everything, so that's usually installed anyway.
+
+And it's no drama to install bun in a pipeline, so that satisfies my want for a TypeScript-based task runner...
+
+Looks active on [GitHub](https://github.com/jakebailey/hereby)
+and has a good amount of stars and recent commits.
+
+<!-- prettier-ignore-start -->
+> [!WARNING]
+> It does have some oddities though... it seems it can't find
+> `Herebyfile.mts` or `Herebyfile.ts`, which according
+> to the [Docs](https://hereby.js.org/#typescript-support) it should.
+>
+> If I change the file name to `Herebyfile.js` or `Herebyfile.mjs` it works fine... which is being tracked [here](https://github.com/jakebailey/hereby/issues/205).
+<!-- prettier-ignore-end -->
