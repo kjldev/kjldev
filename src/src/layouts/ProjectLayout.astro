@@ -4,12 +4,13 @@ import ProjectStatus from '../components/projects/ProjectStatus.astro';
 import ProjectTag from '../components/projects/ProjectTag.astro';
 import ProjectLink from '../components/projects/ProjectLink.astro';
 import ProjectDiscussionLink from '../components/projects/ProjectDiscussionLink.astro';
-import { type Project } from '../scripts/component-types';
+import { type Project } from '../types/component-types';
 import Pill from '../components/Pill.astro';
 
-const { frontmatter, filePath } = Astro.props as {
+const { frontmatter, filePath, minutesRead } = Astro.props as {
 	frontmatter: Project;
 	filePath: string;
+	minutesRead: string;
 };
 ---
 
@@ -24,9 +25,18 @@ const { frontmatter, filePath } = Astro.props as {
 			/>
 		</div>
 
-		<h1 class='text-3xl font-bold mb-6'>{frontmatter.title}</h1>
+		<div class='flex items-baseline space-x-4 mb-2'>
+			<h1 class='text-3xl font-bold'>{frontmatter.title}</h1>
+		</div>
 
-		<div class='mb-2'>
+		<span
+			class='text-sm text-gray-500 italic whitespace-nowrap'
+			title='Estimated reading time'
+		>
+			⏱️ {minutesRead}
+		</span>
+		
+		<div class='mb-2 mt-2'>
 			<ProjectStatus
 				status={frontmatter.status}
 				size='large'
