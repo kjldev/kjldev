@@ -1,0 +1,67 @@
+---
+interface Props {
+	emoji?: string;
+	emojiBackground?: boolean;
+	text: string;
+	size?: 'small' | 'large';
+	bgColor?: string;
+	textColor?: string;
+	href?: string;
+	internalLink?: boolean;
+}
+
+const {
+	emoji,
+	emojiBackground = true,
+	text,
+	size = 'small',
+	bgColor = 'bg-blue-500',
+	textColor = 'text-white',
+	href,
+	internalLink,
+} = Astro.props as Props;
+
+const sizeClasses =
+	size === 'large' ? 'text-sm px-3 py-1.5' : 'text-xs px-2.5 py-1';
+
+const baseClasses =
+	'inline-flex items-center whitespace-nowrap rounded-full shadow-md transition duration-200 font-bold';
+
+const hoverClasses =
+	href ?
+		'hover:scale-105 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 hover:shadow-lg transform hover:scale-105'
+	:	'';
+
+const computedClasses = [
+	baseClasses,
+	sizeClasses,
+	bgColor,
+	textColor,
+	hoverClasses,
+].join(' ');
+
+const emojiClasses = [
+	'inline-flex items-center justify-center w-6 h-6',
+	emojiBackground ? ' mr-2 bg-white/70 rounded-full' : 'mr-0/5',
+].join(' ');
+
+const rel = internalLink ? undefined : 'noopener noreferrer';
+const target = internalLink ? '_self' : '_blank';
+---
+
+{
+	href ?
+		<a
+			href={href}
+			target={target}
+			rel={rel}
+			class={computedClasses}
+		>
+			{emoji && <span class={emojiClasses}>{emoji}</span>}
+			{text}
+		</a>
+	:	<span class={computedClasses}>
+			{emoji && <span class={emojiClasses}>{emoji}</span>}
+			{text}
+		</span>
+}

@@ -1,11 +1,13 @@
 ---
+import Pill from '../Pill.astro';
+
 interface Props {
 	tag: string;
 }
 ---
 
-<span
-	class='text-xs text-black bg-gradient-to-r from-green-300 to-blue-300 rounded-full px-3 py-1 shadow-md hover:shadow-lg transform hover:scale-105 transition duration-200 font-bold'
->
-	{Astro.props.tag}
-</span>
+<Pill
+	text={Astro.props.tag}
+	textColor='text-black'
+	bgColor='bg-gradient-to-r from-green-300 to-blue-300'
+/>

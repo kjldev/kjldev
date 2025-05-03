@@ -5,6 +5,7 @@ import ProjectTag from '../components/projects/ProjectTag.astro';
 import ProjectLink from '../components/projects/ProjectLink.astro';
 import ProjectDiscussionLink from '../components/projects/ProjectDiscussionLink.astro';
 import { type Project } from '../scripts/component-types';
+import Pill from '../components/Pill.astro';
 
 const { frontmatter, filePath } = Astro.props as {
 	frontmatter: Project;
@@ -15,12 +16,12 @@ const { frontmatter, filePath } = Astro.props as {
 <Layout title={frontmatter.title}>
 	<div class='max-w-screen-lg mx-auto p-4'>
 		<div class='mb-4'>
-			<a
+			<Pill
+				text='← Back to Projects'
 				href='/projects'
-				class='inline-block px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-900 text-white font-semibold rounded-full shadow-sm hover:shadow-md transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400'
-			>
-				&larr; Back to Projects
-			</a>
+				internalLink={true}
+				size='large'
+			/>
 		</div>
 
 		<h1 class='text-3xl font-bold mb-6'>{frontmatter.title}</h1>
@@ -28,13 +29,13 @@ const { frontmatter, filePath } = Astro.props as {
 		<div class='mb-2'>
 			<ProjectStatus
 				status={frontmatter.status}
-				large
+				size='large'
 			/>
 			<ProjectDiscussionLink
 				title={frontmatter.title}
 				status={frontmatter.status}
 				filePath={filePath}
-				variant='chat'
+				size='large'
 			/>
 		</div>
 
@@ -66,11 +67,13 @@ const { frontmatter, filePath } = Astro.props as {
 
 		<slot />
 
-		<div class='flex mt-6'>
+		<div class='flex justify-center mt-6'>
 			<ProjectDiscussionLink
+				text='What to chat about this project'
 				title={frontmatter.title}
 				status={frontmatter.status}
 				filePath={filePath}
+				size='large'
 			/>
 		</div>
 	</div>

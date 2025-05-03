@@ -32,18 +32,15 @@ const url = project.hasContent ? `/projects/${slug}` : firstLink?.url;
 <div class={outerClasses}>
 	<div class={innerClasses}>
 			<div class='mb-4 flex flex-col md:flex-row md:items-center'>
-				<!-- Title takes all available space -->
 				<div class='flex-1'>
 					<ProjectTitle project={project} url={url} />
 				</div>
-				<!-- Status and chat button only take the space they need -->
 				<div class='mt-2 md:mt-0 flex items-center space-x-1 flex-none'>
 					<ProjectStatus status={project.status} />
 					<ProjectDiscussionLink
 						title={project.title}
 						status={project.status}
 						filePath={filePath}
-						variant='chat'
 					/>
 				</div>
 			</div>

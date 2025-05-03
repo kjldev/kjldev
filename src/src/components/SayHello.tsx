@@ -41,10 +41,7 @@ export default function SayHello(props: SayHelloProps) {
 		'hover:underline',
 	].join(' ');
 
-	// Choose appropriate base classes.
 	const baseClasses = inline ? inlineClasses : asLink ? '' : linkClasses;
-
-	// Merge custom classes if provided
 	const computedClasses = [baseClasses, className].filter(Boolean).join(' ');
 
 	return (
