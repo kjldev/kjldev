@@ -1,0 +1,13 @@
+---
+import Pill from '../Pill.astro';
+
+interface Props {
+	tag: string;
+}
+---
+
+<Pill
+	text={Astro.props.tag}
+	textColor='text-black'
+	bgColor='bg-gradient-to-r from-green-300 to-blue-300'
+/>

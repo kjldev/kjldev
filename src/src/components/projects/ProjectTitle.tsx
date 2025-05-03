@@ -1,13 +1,13 @@
-import type { Component } from '../../scripts/component-types';
+import type { Project } from '../../scripts/component-types';
 
-export interface ComponentTitleProps {
-	component: Component;
+export interface ProjectTitleProps {
+	project: Project;
 	url?: string;
 }
 
-export default function ComponentTitle(props: ComponentTitleProps) {
-	const { component, url } = props;
-	const { title, hasContent, status } = component;
+export default function ProjectTitle(props: ProjectTitleProps) {
+	const { project, url } = props;
+	const { title, hasContent, status } = project;
 	const target = hasContent ? '_self' : '_blank';
 	const rel = hasContent ? 'noopener noreferrer' : undefined;
 

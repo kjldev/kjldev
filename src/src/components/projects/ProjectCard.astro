@@ -1,0 +1,75 @@
+---
+import ProjectLink from './ProjectLink.astro';
+import ProjectTag from './ProjectTag.astro';
+import ProjectTitle from './ProjectTitle';
+import ProjectStatus from './ProjectStatus.astro';
+import ProjectDiscussionLink from './ProjectDiscussionLink.astro';
+import type { Project as Project } from '../../scripts/component-types';
+
+interface Props {
+	project: Project;
+	slug: string;
+	filePath: string;
+}
+
+const { project, slug, filePath } = Astro.props;
+const firstLink = project.links?.at(0);
+const isRetired = project.status === 'retired';
+
+const outerClasses =
+	isRetired ?
+		'h-full bg-gray-100 border border-gray-200 p-1 rounded-lg shadow-md filter brightness-90'
+	:	'h-full bg-gradient-to-r from-blue-300 to-purple-300 p-1 rounded-lg shadow-lg';
+
+const innerClasses =
+	isRetired ?
+		'h-full bg-white rounded-lg shadow transition-shadow duration-300 p-6 opacity-90'
+	:	'h-full bg-white rounded-lg shadow hover:shadow-xl transition-shadow duration-300 p-6 transform hover:-translate-y-0.25 hover:-translate-x-0.25';
+
+const url = project.hasContent ? `/projects/${slug}` : firstLink?.url;
+---
+
+<div class={outerClasses}>
+	<div class={innerClasses}>
+			<div class='mb-4 flex flex-col md:flex-row md:items-center'>
+				<div class='flex-1'>
+					<ProjectTitle project={project} url={url} />
+				</div>
+				<div class='mt-2 md:mt-0 flex items-center space-x-1 flex-none'>
+					<ProjectStatus status={project.status} />
+					<ProjectDiscussionLink
+						title={project.title}
+						status={project.status}
+						filePath={filePath}
+					/>
+				</div>
+			</div>
+		{
+			project.description && (
+				<p class='text-gray-600 mb-4'>{project.description}</p>
+			)
+		}
+		{
+			project.links && (
+				<div class='mb-4'>
+					<div class='flex flex-wrap gap-2'>
+						{project.links.map((link) => (
+							<ProjectLink link={link} />
+						))}
+					</div>
+				</div>
+			)
+		}
+		{
+			project.tags && (
+				<div>
+					<ul class='flex flex-wrap gap-2'>
+						{project.tags.map((tag) => (
+							<ProjectTag tag={tag} />
+						))}
+					</ul>
+				</div>
+			)
+		}
+	</div>
+</div>

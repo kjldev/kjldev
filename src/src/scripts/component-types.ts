@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro';
 
-export interface Component {
+export interface Project {
 	order: number;
 	title: string;
 	status: string;
