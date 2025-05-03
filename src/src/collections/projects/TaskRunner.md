@@ -61,7 +61,7 @@ Some other alternatives to CS-Script include:
 
 ---
 
-### 03/05/2025 ... found Hereby
+### 2025-03-05 ... found Hereby
 
 I've just found [Hereby](https://hereby.js.org/) which looks like a good candidate. It has a few dependencies, but it looks like it could be a good fit... I generally use bun for everything, so that's usually installed anyway.
 
