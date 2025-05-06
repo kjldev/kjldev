@@ -1,27 +1,30 @@
 ---
 import { Image } from 'astro:assets';
 import { type LinkProp } from '../../types/component-types';
+import Tooltip from '../Tooltip.astro';
 
 interface Props {
 	link: LinkProp;
 }
 
-const { link } = Astro.props;
+const { link } = Astro.props as Props;
 ---
 
-<a
-	href={link.url}
-	target='_blank'
-	class='block bg-gradient-to-r from-blue-400 to-purple-500 p-1 rounded-lg shadow hover:shadow-lg transition-all duration-200'
->
-	<div class='flex items-center space-x-3 bg-white rounded-lg p-3'>
-		<Image
-			src={link.image}
-			alt={link.name}
-			class='w-8 h-8 rounded-full'
-		/>
-		<span class='text-lg text-gray-900 font-semibold'>
-			{link.name}
-		</span>
-	</div>
-</a>
+<Tooltip tooltip={`Open ${link.name} in a new tab`}>
+	<a
+		href={link.url}
+		target='_blank'
+		class='block bg-gradient-to-r from-blue-400 to-purple-500 p-1 rounded-xl shadow hover:shadow-lg transition-all duration-200'
+	>
+		<div class='flex items-center space-x-1 bg-white rounded-lg px-2 py-1.5'>
+			<Image
+				src={link.image}
+				alt={link.name}
+				class='w-5 h-5 rounded-full'
+			/>
+			<span class='text-base text-gray-900 font-semibold'>
+				{link.name}
+			</span>
+		</div>
+	</a>
+</Tooltip>
