@@ -5,8 +5,7 @@ status: collaborator
 description: |
   Visualize, collaborate, and evolve the software architecture with always actual and live diagrams from your code.
 
-  I helped to collaborate on this project, albeit in a minor way. But its
-  such as awesome project that I wanted to share it with you.
+  I collaborated on this project in a minor way, but it's such an awesome project that I wanted to share it with you.
 links:
   - url: https://likec4.dev/
     name: LikeC4.dev
