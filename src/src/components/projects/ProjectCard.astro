@@ -13,6 +13,7 @@ interface Props {
 }
 
 const { project, slug, filePath } = Astro.props;
+
 const firstLink = project.links?.at(0);
 const isRetired = project.status === 'retired';
 
@@ -31,19 +32,22 @@ const url = project.hasContent ? `/projects/${slug}` : firstLink?.url;
 
 <div class={outerClasses}>
 	<div class={innerClasses}>
-			<div class='mb-4 flex flex-col md:flex-row md:items-center'>
-				<div class='flex-1'>
-					<ProjectTitle project={project} url={url} />
-				</div>
-				<div class='mt-2 md:mt-0 flex items-center space-x-1 flex-none'>
-					<ProjectStatus status={project.status} />
-					<ProjectDiscussionLink
-						title={project.title}
-						status={project.status}
-						filePath={filePath}
-					/>
-				</div>
+		<div class='mb-4 flex flex-col md:flex-row md:items-center'>
+			<div class='flex-1'>
+				<ProjectTitle
+					project={project}
+					url={url}
+				/>
 			</div>
+			<div class='mt-2 md:mt-0 flex items-center space-x-1 flex-none'>
+				<ProjectStatus status={project.status} />
+				<ProjectDiscussionLink
+					title={project.title}
+					status={project.status}
+					filePath={filePath}
+				/>
+			</div>
+		</div>
 		{
 			project.description && (
 				<p class='text-gray-600 mb-4'>{project.description}</p>

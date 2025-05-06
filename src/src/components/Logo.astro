@@ -2,11 +2,12 @@
 import kjlLogo from '../assets/kjl-logo.svg';
 import Separator from './Separator.astro';
 
-const additionalClasses = Astro.props.class || '';
-
 interface Props {
-	class?: string;
+	className?: string;
 }
+
+const { className } = Astro.props;
+const additionalClasses = className || '';
 ---
 
 <div class='w-full block'>
