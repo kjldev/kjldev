@@ -1,0 +1,26 @@
+---
+interface Props {
+	tooltip: string;
+}
+
+const { tooltip } = Astro.props;
+---
+
+<div
+	tabindex='0'
+	class='relative inline-block group focus:outline-none'
+>
+	<slot />
+	<div
+		class='pointer-events-none
+      absolute bottom-full left-1/2 mb-2 w-max
+      transform -translate-x-1/2
+      rounded-md bg-gray-800 text-white text-xs
+      py-1 px-2 text-center
+      opacity-0
+      transition-opacity duration-200
+      group-hover:opacity-100 group-focus:opacity-100'
+	>
+		{tooltip}
+	</div>
+</div>

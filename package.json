@@ -1,26 +1,29 @@
 {
-  "name": "kjldev",
-  "module": "index.ts",
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@commitlint/config-conventional": "^19.8.0",
-    "@types/bun": "latest",
-    "commit-and-tag-version": "^12.5.1",
-    "commitlint": "^19.8.0",
-    "execa": "^9.5.2",
-    "hereby": "^1.10.0",
-    "husky": "^9.1.7"
-  },
-  "peerDependencies": {
-    "typescript": "^5.8.3"
-  },
-  "scripts": {
-    "release": "commit-and-tag-version"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  }
+	"name": "kjldev",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"devDependencies": {
+		"@commitlint/config-conventional": "^19.8.0",
+		"@types/bun": "latest",
+		"commit-and-tag-version": "^12.5.1",
+		"commitlint": "^19.8.0",
+		"execa": "^9.5.2",
+		"hereby": "^1.10.0",
+		"husky": "^9.1.7"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.3"
+	},
+	"scripts": {
+		"release": "commit-and-tag-version"
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		]
+	},
+	"workspaces": [
+		"src/"
+	]
 }

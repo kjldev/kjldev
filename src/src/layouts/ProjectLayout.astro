@@ -6,23 +6,28 @@ import ProjectLink from '../components/projects/ProjectLink.astro';
 import ProjectDiscussionLink from '../components/projects/ProjectDiscussionLink.astro';
 import { type Project } from '../types/component-types';
 import Pill from '../components/Pill.astro';
+import Tooltip from '../components/Tooltip.astro';
 
-const { frontmatter, filePath, minutesRead } = Astro.props as {
+interface Props {
 	frontmatter: Project;
 	filePath: string;
 	minutesRead: string;
-};
+}
+
+const { frontmatter, filePath, minutesRead } = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
 	<div class='max-w-screen-lg mx-auto p-4'>
 		<div class='mb-4'>
-			<Pill
-				text='← Back to Projects'
-				href='/projects'
-				internalLink={true}
-				size='large'
-			/>
+			<Tooltip tooltip='Go back to the list of projects...'>
+				<Pill
+					text='← Back to Projects'
+					href='/projects'
+					internalLink={true}
+					size='large'
+				/>
+			</Tooltip>
 		</div>
 
 		<div class='flex items-baseline space-x-4 mb-2'>
@@ -35,7 +40,7 @@ const { frontmatter, filePath, minutesRead } = Astro.props as {
 		>
 			⏱️ {minutesRead}
 		</span>
-		
+
 		<div class='mb-2 mt-2'>
 			<ProjectStatus
 				status={frontmatter.status}
