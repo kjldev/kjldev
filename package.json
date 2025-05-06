@@ -22,8 +22,5 @@
 		"extends": [
 			"@commitlint/config-conventional"
 		]
-	},
-	"workspaces": [
-		"src/"
-	]
+	}
 }
