@@ -5,6 +5,7 @@ import HeroBanner from '../../components/HeroBanner.astro';
 
 import { getCollection } from 'astro:content';
 import backgroundImg from '../../assets/projects-bg.jpg';
+import SayHello from '../../components/SayHello';
 
 const projects = await getCollection('projects');
 const projectsSorted = projects.sort((a, b) => {
@@ -50,7 +51,11 @@ const projectsSorted = projects.sort((a, b) => {
 				>issue</a
 			>.
 		</p>
-		<p class='p-4'>We'd love to hear from you!</p>
+		<p class='p-4 mb-4'>
+			There are also some collaborations with other developers on other excellent
+			projects!
+		</p>
+		<SayHello />
 	</HeroBanner>
 	<div
 		class='w-full px-4 py-4 bg-[#f1f1f1] grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch'
