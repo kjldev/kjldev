@@ -7,14 +7,17 @@ import ProjectDiscussionLink from '../components/projects/ProjectDiscussionLink.
 import { type Project } from '../types/component-types';
 import Pill from '../components/Pill.astro';
 import Tooltip from '../components/Tooltip.astro';
+import type { MarkdownHeading } from 'astro';
+import TableOfContents from '../components/TableOfContents.astro';
 
 interface Props {
 	frontmatter: Project;
+	headings: MarkdownHeading[];
 	filePath: string;
 	minutesRead: string;
 }
 
-const { frontmatter, filePath, minutesRead } = Astro.props;
+const { frontmatter, headings, filePath, minutesRead } = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
@@ -56,13 +59,22 @@ const { frontmatter, filePath, minutesRead } = Astro.props;
 
 		{
 			frontmatter.description && (
-				<p class='italic mb-6'>{frontmatter.description}</p>
+				<blockquote
+					class='
+						bg-gray-50 
+						border-l-4 border-gray-300
+						italic p-4 mb-4 mt-4
+						text-gray-700
+					'
+				>
+					{frontmatter.description}
+				</blockquote>
 			)
 		}
 
 		{
 			frontmatter.links && (
-				<div class='mb-6 flex flex-wrap gap-2'>
+				<div class='mb-4 flex flex-wrap gap-2'>
 					{frontmatter.links.map((link) => (
 						<ProjectLink link={link} />
 					))}
@@ -72,7 +84,7 @@ const { frontmatter, filePath, minutesRead } = Astro.props;
 
 		{
 			frontmatter.tags && frontmatter.tags.length > 0 && (
-				<div class='mb-6 flex flex-wrap gap-2'>
+				<div class='mb-4 flex flex-wrap gap-2'>
 					{frontmatter.tags.map((tag) => (
 						<ProjectTag tag={tag} />
 					))}
@@ -80,9 +92,11 @@ const { frontmatter, filePath, minutesRead } = Astro.props;
 			)
 		}
 
+		<TableOfContents headings={headings} />
+
 		<slot />
 
-		<div class='flex justify-center mt-6'>
+		<div class='flex justify-center mt-4'>
 			<ProjectDiscussionLink
 				text='What to chat about this project'
 				title={frontmatter.title}
