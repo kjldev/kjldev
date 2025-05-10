@@ -37,10 +37,9 @@ I wanted something with minimal dependencies - just like `make`, _install it and
 
 The problem with any of the JS ones is that you'll need to make sure you're using `node` or `bun` (or even `deno`), and then you've got to make sure its the right version, with the right dependencies.
 
-<!-- prettier-ignore-start -->
 > [!IMPORTANT]
+>
 > _It's all too painful..._
-<!-- prettier-ignore-end -->
 
 I _really_ liked the idea of a TypeScript-based one. TS is simple, its approachable, its got rich frameworks and massive re-use through functions in the _'Taskfile'_ etc.
 
@@ -61,7 +60,7 @@ Some other alternatives to CS-Script include:
 
 ---
 
-### 2025-03-05 ... found Hereby
+## 2025-03-05 ... found Hereby
 
 I've just found [Hereby](https://hereby.js.org/) which looks like a good candidate. It has a few dependencies, but it looks like it could be a good fit... I generally use bun for everything, so that's usually installed anyway.
 
@@ -69,12 +68,3 @@ And it's no drama to install bun in a pipeline, so that satisfies my want for a 
 
 Looks active on [GitHub](https://github.com/jakebailey/hereby)
 and has a good amount of stars and recent commits.
-
-<!-- prettier-ignore-start -->
-> [!WARNING]
-> It does have some oddities though... it seems it can't find
-> `Herebyfile.mts` or `Herebyfile.ts`, which according
-> to the [Docs](https://hereby.js.org/#typescript-support) it should.
->
-> If I change the file name to `Herebyfile.js` or `Herebyfile.mjs` it works fine... which is being tracked [here](https://github.com/jakebailey/hereby/issues/205).
-<!-- prettier-ignore-end -->

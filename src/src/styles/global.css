@@ -43,9 +43,32 @@ h6 {
 	margin-bottom: 0.5em;
 }
 
-/* Add drop shadow and rounded corners to images in prose */
+/* Constrain and center prose images without stretching */
 .prose img {
-	@apply rounded-lg shadow-xl;
+	@apply block mx-auto rounded-lg shadow-2xl border-2 border-gray-200 dark:border-gray-200;
+	max-width: 80%;
+	max-height: 60vh;
+	width: auto;
+	height: auto;
+}
+
+.prose h1 {
+	@apply text-4xl sm:text-5xl font-extrabold mt-8 mb-4 tracking-tight text-gray-900;
+}
+.prose h2 {
+	@apply text-3xl sm:text-4xl font-bold mt-7 mb-3 tracking-tight text-gray-800;
+}
+.prose h3 {
+	@apply text-2xl sm:text-3xl font-semibold mt-6 mb-2 text-gray-700;
+}
+.prose h4 {
+	@apply text-xl sm:text-2xl font-semibold mt-5 mb-1 text-gray-600;
+}
+.prose h5 {
+	@apply text-lg font-medium mt-4 mb-1 text-gray-500;
+}
+.prose h6 {
+	@apply text-base font-medium mt-3 mb-1 uppercase tracking-wide text-gray-400;
 }
 
 .markdown-alert {

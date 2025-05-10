@@ -1,18 +1,31 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import Prose from '../../components/Prose.astro';
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  headings: MarkdownHeading[];
+};
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
 
-	return projects.map((project) => ({
+	const headings = await Promise.all(
+		projects.map(async (project) => {
+			const data = await render(project);
+			return data.headings;
+		})
+	);
+
+	return projects.map((project, index) => ({
 		params: { slug: project.id },
-		props: { project: project },
+		props: { project: project, headings: headings[index] },
 	}));
 }
 
-const { project } = Astro.props;
+const { project, headings } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(project);
 const { minutesRead } = remarkPluginFrontmatter as {
 	minutesRead: string;
@@ -21,6 +34,7 @@ const { minutesRead } = remarkPluginFrontmatter as {
 
 <ProjectLayout
 	frontmatter={project.data}
+	headings={headings}
 	filePath={project.filePath!}
 	minutesRead={minutesRead}
 >

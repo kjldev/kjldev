@@ -1,0 +1,47 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+	maxDepth?: number;
+}
+
+const { headings, maxDepth } = Astro.props;
+const filteredHeadings = headings.filter(
+	(heading) => heading.depth <= (maxDepth ?? 2)
+);
+
+// map each heading depth to a Tailwind indent and font size
+const indentMap: Record<number, string> = {
+	2: 'ml-0',
+	3: 'ml-4',
+	4: 'ml-8',
+	5: 'ml-12',
+};
+const fontMap: Record<number, string> = {
+	2: 'text-base',
+	3: 'text-sm',
+	4: 'text-xs',
+	5: 'text-xs',
+};
+---
+
+{
+	filteredHeadings.length > 0 && (
+		<nav class='bg-gray-50 p-4 rounded-lg border border-gray-200'>
+			<h2 class='text-lg font-semibold mb-3'>Table of Contents</h2>
+			<ul class='space-y-2'>
+				{filteredHeadings.map((heading) => (
+					<li class={`flex ${indentMap[heading.depth]}`}>
+						<a
+							href={`#${heading.slug}`}
+							class={`${fontMap[heading.depth]} text-gray-700 hover:text-gray-900 transition-colors`}
+						>
+							{heading.text}
+						</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+	)
+}
