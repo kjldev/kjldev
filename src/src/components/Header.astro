@@ -1,9 +1,14 @@
 ---
 import Logo from '../components/Logo.astro';
 import Navigation from '../components/Navigation.tsx';
+import ThemeIcon from './ThemeIcon.astro';
 ---
 
 <header class='p-2'>
 	<Logo />
-	<Navigation client:load />
+	<Navigation client:load>
+		<div slot='theme'>
+			<ThemeIcon client:load />
+		</div>
+	</Navigation>
 </header>

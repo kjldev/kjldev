@@ -2,8 +2,14 @@
 
 import { useState } from 'preact/hooks';
 import SayHello from './SayHello.tsx';
+import type { JSX } from 'preact/jsx-runtime';
 
-export default function Navigation() {
+interface NavigationProps {
+	theme?: JSX.Element;
+}
+
+export default function Navigation(props: NavigationProps) {
+	const { theme } = props;
 	const [open, setOpen] = useState(false);
 
 	// Menu items excluding Home (which is always visible)
@@ -82,6 +88,7 @@ export default function Navigation() {
 						)}
 					</svg>
 				</button>
+				{theme && theme}
 			</div>
 			{/* Mobile Navigation */}
 			{open && (

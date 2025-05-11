@@ -6,6 +6,15 @@
 
 @import '../../node_modules/rehype-github-alerts/dist/styling/css/index.css';
 
+html.dark {
+  background-color: #0d0950;
+  color: #fff;
+}
+
+.dark .nav-links a {
+  color: #fff;
+}
+
 html {
 	font-family: 'Inter', 'Avenir', Arial, Helvetica, sans-serif;
 	scroll-behavior: smooth;
