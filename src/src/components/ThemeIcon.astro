@@ -67,6 +67,8 @@
 
 		const isDark = element.classList.contains('dark');
 		localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+		console.info('current theme is dark', isDark)
 	};
 
 	document
