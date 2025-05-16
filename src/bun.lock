@@ -6,6 +6,7 @@
         "@astrojs/check": "^0.9.4",
         "@astrojs/mdx": "^4.2.6",
         "@astrojs/preact": "^4.0.11",
+        "@microsoft/applicationinsights-clickanalytics-js": "^3.3.7",
         "@microsoft/applicationinsights-web": "^3.3.7",
         "@tailwindcss/vite": "^4.1.7",
         "astro": "^5.7.13",
@@ -213,6 +214,8 @@
     "@microsoft/applicationinsights-cfgsync-js": ["@microsoft/applicationinsights-cfgsync-js@3.3.7", "", { "dependencies": { "@microsoft/applicationinsights-common": "3.3.7", "@microsoft/applicationinsights-core-js": "3.3.7", "@microsoft/applicationinsights-shims": "3.0.1", "@microsoft/dynamicproto-js": "^2.0.3", "@nevware21/ts-async": ">= 0.5.4 < 2.x", "@nevware21/ts-utils": ">= 0.11.8 < 2.x" }, "peerDependencies": { "tslib": ">= 1.0.0" } }, "sha512-5rT3xJHjLBGBZhFGANXYnZvG1mvBeOdg5fK6V/nRbcwJ66ei8uzvR6zFPDimTgE6zhqPQ5Rfxja2US7ZjJVH4Q=="],
 
     "@microsoft/applicationinsights-channel-js": ["@microsoft/applicationinsights-channel-js@3.3.7", "", { "dependencies": { "@microsoft/applicationinsights-common": "3.3.7", "@microsoft/applicationinsights-core-js": "3.3.7", "@microsoft/applicationinsights-shims": "3.0.1", "@microsoft/dynamicproto-js": "^2.0.3", "@nevware21/ts-async": ">= 0.5.4 < 2.x", "@nevware21/ts-utils": ">= 0.11.8 < 2.x" }, "peerDependencies": { "tslib": ">= 1.0.0" } }, "sha512-yJmAP7cmIoC3dICtfm1bl82yofqT4D10AbdOrA7ECKg37+CHkXX6B9DdGUKWktiEGB0cJ7Hx7t+IKxHz3VHV4g=="],
+
+    "@microsoft/applicationinsights-clickanalytics-js": ["@microsoft/applicationinsights-clickanalytics-js@3.3.7", "", { "dependencies": { "@microsoft/applicationinsights-common": "3.3.7", "@microsoft/applicationinsights-core-js": "3.3.7", "@microsoft/applicationinsights-properties-js": "3.3.7", "@microsoft/applicationinsights-shims": "3.0.1", "@microsoft/dynamicproto-js": "^2.0.3", "@nevware21/ts-utils": ">= 0.11.8 < 2.x" }, "peerDependencies": { "tslib": ">= 1.0.0" } }, "sha512-XC73Al9kyl+CF85yvulwFk4B2VIziaHspjl2PSnphvMRViYwSRQhI+lYBSdBvy5bhq3V749gQkgjFyauCtKn4w=="],
 
     "@microsoft/applicationinsights-common": ["@microsoft/applicationinsights-common@3.3.7", "", { "dependencies": { "@microsoft/applicationinsights-core-js": "3.3.7", "@microsoft/applicationinsights-shims": "3.0.1", "@microsoft/dynamicproto-js": "^2.0.3", "@nevware21/ts-utils": ">= 0.11.8 < 2.x" }, "peerDependencies": { "tslib": ">= 1.0.0" } }, "sha512-PLHwpYF5jtXOXhri5hB/7TYJrpafEYdSdCK+6U6OH/KnMxu3jBrmbayitF9Dgfjjwz7DOEK1pOWphzI/Xs5O7Q=="],
 

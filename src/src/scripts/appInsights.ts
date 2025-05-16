@@ -1,14 +1,23 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js';
 
-const connectionString =
-	'InstrumentationKey=YOUR_INSTRUMENTATION_KEY_OR_CONNECTION_STRING'; // replace!
+const connectionString = import.meta.env.PUBLIC_APPINSIGHTS_CONNECTION_STRING;
 
-export const appInsights = new ApplicationInsights({
-	config: {
-		connectionString,
-		enableAutoRouteTracking: true,
-		// other options as needed
+const clickPluginInstance = new ClickAnalyticsPlugin();
+// Click Analytics configuration
+const clickPluginConfig = {
+	autoCapture: true,
+};
+
+const config = {
+	connectionString,
+	enableAutoRouteTracking: true,
+	extensions: [clickPluginInstance],
+	extensionConfig: {
+		[clickPluginInstance.identifier]: clickPluginConfig,
 	},
-});
+};
 
-appInsights.loadAppInsights();
+export const appInsights = new ApplicationInsights({ config: config });
+
+if (connectionString) appInsights.loadAppInsights();
