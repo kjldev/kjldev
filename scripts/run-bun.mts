@@ -1,9 +1,9 @@
 import { execa } from 'execa';
 
-export const runBun = async (...args: string[]) => {
-	const systemCmds = ['install', 'upgrade'];
+export const runBun = async (folder: string, ...args: string[]) => {
+	const systemCmds = ['install', 'update'];
 	const isSystemCmd = args.length > 0 && systemCmds.includes(args[0] as string);
-	const cwdArgs = ['--cwd', './src'];
+	const cwdArgs = ['--cwd', folder];
 
 	const argsWithCwd = isSystemCmd
 		? [...args, ...cwdArgs]
@@ -15,6 +15,6 @@ export const runBun = async (...args: string[]) => {
 };
 
 export const runBunF =
-	(...args: string[]) =>
+	(folder: string, ...args: string[]) =>
 	() =>
-		runBun(...args);
+		runBun(folder, ...args);
