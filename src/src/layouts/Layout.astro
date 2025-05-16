@@ -2,6 +2,7 @@
 import Footer from '../components/Footer';
 import Header from '../components/Header.astro';
 import Separator from '../components/Separator.astro';
+import AppInsightsInit from '../components/AppInsightsInit.tsx';
 
 import '../styles/global.css';
 
@@ -40,6 +41,7 @@ const defaultTitle = 'KJL Solutions Ltd.';
 		<title>{Astro.props.title ?? defaultTitle}</title>
 	</head>
 	<body>
+		<AppInsightsInit client:load />
 		<Header />
 		<main>
 			<slot />
