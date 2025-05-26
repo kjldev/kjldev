@@ -31,7 +31,7 @@ export default function RemoteReadme({ url, urls }: Props) {
 						const processed = await unified()
 							.use(remarkParse)
 							.use(remarkRehype)
-							.use(rehypeGithubAlerts)
+							.use((any)rehypeGithubAlerts)
 							.use(rehypeExternalLinks, {
 								target: '_blank',
 								rel: ['nofollow', 'noopener', 'noreferrer'],
