@@ -49,12 +49,12 @@ const { frontmatter, headings, filePath, minutesRead } = Astro.props;
 				status={frontmatter.status}
 				size='large'
 			/>
-			<ProjectDiscussionLink
+			<!-- <ProjectDiscussionLink
 				title={frontmatter.title}
 				status={frontmatter.status}
 				filePath={filePath}
 				size='large'
-			/>
+			/> -->
 		</div>
 
 		{
@@ -96,14 +96,24 @@ const { frontmatter, headings, filePath, minutesRead } = Astro.props;
 
 		<slot />
 
-		<div class='flex justify-center mt-4'>
-			<ProjectDiscussionLink
-				text='What to chat about this project'
-				title={frontmatter.title}
-				status={frontmatter.status}
-				filePath={filePath}
-				size='large'
-			/>
-		</div>
-	</div>
+	<script
+		is:inline
+		src='https://giscus.app/client.js'
+		data-repo='kjldev/kjldev'
+		data-repo-id='R_kgDOOdLNAQ'
+		data-category='Q&A'
+		data-category-id='DIC_kwDOOdLNAc4CphyL'
+		data-mapping='pathname'
+		data-strict='0'
+		data-reactions-enabled='1'
+		data-emit-metadata='0'
+		data-input-position='bottom'
+		data-theme='light'
+		data-lang='en'
+		crossorigin='anonymous'
+		async
+	></script>
+</div>
+	
+	
 </Layout>
