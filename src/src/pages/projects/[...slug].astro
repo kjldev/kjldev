@@ -6,106 +6,101 @@ import type { MarkdownHeading } from 'astro';
 
 // Import the client-side component for rendering remote markdown
 import RemoteReadme from '../../components/RemoteReadme.tsx';
-import { undefined } from 'astro:schema';
 
 interface Props {
-	project: CollectionEntry<'projects'>;
-	headings: MarkdownHeading[];
+    project: CollectionEntry<'projects'>;
+    headings: MarkdownHeading[];
 }
 
 export async function getStaticPaths() {
-	const projects = await getCollection('projects');
+    const projects = await getCollection('projects');
 
-	const headings = await Promise.all(
-		projects.map(async (project) => {
-			const data = await render(project);
-			return data.headings;
-		})
-	);
+    const headings = await Promise.all(
+        projects.map(async (project) => {
+            const data = await render(project);
+            return data.headings;
+        })
+    );
 
-	return projects.map((project, index) => ({
-		params: { slug: project.id },
-		props: { project: project, headings: headings[index] },
-	}));
+    return projects.map((project, index) => ({
+        params: { slug: project.id },
+        props: { project: project, headings: headings[index] },
+    }));
 }
 
 const { project, headings } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(project);
 const { minutesRead } = remarkPluginFrontmatter as {
-	minutesRead: number;
+    minutesRead: number;
 };
 
 // Returns an array of valid raw README URLs (main, then master) that actually exist
 async function getValidReadmeRawUrls(
-	project: CollectionEntry<'projects'>
-): Promise<string | undefined> {
-	if (
-		project.data.hasContent === false &&
-		project.data.links &&
-		Array.isArray(project.data.links)
-	) {
-		const github = project.data.links.find(
+    project: CollectionEntry<'projects'>
+): Promise<string[]> {
+    if (
+        project.data.hasContent === false &&
+        project.data.links &&
+        Array.isArray(project.data.links)
+    ) {
+        const github = project.data.links.find(
 			(l) => l.url && l.url.includes('github.com')
-		);
-		if (github) {
-			const match = github.url.match(/github\.com\/([^/]+)\/([^/]+)/);
-			if (match) {
-				const [, owner, repo] = match;
-				const urls = [
-					`https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`,
-					`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`,
-				];
-				// Test each URL and only return those that exist (status 200)
-				const checks = (
-					await Promise.all(
-						urls.map(async (u) => {
-							try {
-								const res = await fetch(u, { method: 'HEAD' });
-								return res.ok ? u : null;
-							} catch {
-								return null;
-							}
-						})
-					)
-				).filter(Boolean);
-
-				if (checks.length > 0) {
-					return checks[0]!; // Return the first valid URL
-				}
-
-				return null!;
-			}
-		}
-	}
+        );
+        if (github) {
+            const match = github.url.match(/github\.com\/([^/]+)\/([^/]+)/);
+            if (match) {
+                const [, owner, repo] = match;
+                const urls = [
+                    `https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`,
+                    `https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`,
+                ];
+                // Test each URL and only return those that exist (status 200)
+                const checks = await Promise.all(
+                    urls.map(async (u) => {
+                        try {
+                            const res = await fetch(u, { method: 'HEAD' });
+                            return res.ok ? u : null;
+                        } catch {
+                            return null;
+                        }
+                    })
+                );
+                return checks.filter(Boolean) as string[];
+            }
+        }
+    }
+    return [];
 }
 
-const remoteReadme =
-	project.data.remoteReadme ?? (await getValidReadmeRawUrls(project));
+const remoteReadmeUrls: string[] =
+    project.data.remoteReadme
+        ? [project.data.remoteReadme]
+        : await getValidReadmeRawUrls(project);
 ---
 
 <ProjectLayout
-	frontmatter={project.data}
-	headings={headings}
-	filePath={project.filePath!}
-	minutesRead={minutesRead}
+    frontmatter={project.data}
+    headings={headings}
+    filePath={project.filePath!}
+    minutesRead={minutesRead}
 >
-	<Prose>
-		{
-			project.data.hasContent === false ?
-				<>
-					{remoteReadme ?
-						<RemoteReadme
-							urls={[remoteReadme]}
-							client:load
-						/>
-					:	<div class='text-gray-500 italic'>
-							No README.md found for this project.
-							<br />
-							Please visit the project links above for more information.
-						</div>
-					}
-				</>
-			:	<Content />
-		}
-	</Prose>
+    <Prose>
+        {
+            project.data.hasContent === false ?
+                <>
+                    {remoteReadmeUrls.length > 0 ?
+                        <RemoteReadme
+                            urls={remoteReadmeUrls}
+                            client:load
+                        />
+                    :	<div class='text-gray-500 italic'>
+                            No README.md found for this project.
+                            <br />
+                            Please visit the project links above for more information.
+                        </div>
+                    }
+                </>
+            :	<Content />
+        }
+    </Prose>
 </ProjectLayout>

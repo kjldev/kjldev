@@ -13,7 +13,6 @@ interface Props {
 
 const { project, slug } = Astro.props;
 
-const firstLink = project.links?.at(0);
 const isRetired = project.status === 'retired';
 
 const outerClasses =
