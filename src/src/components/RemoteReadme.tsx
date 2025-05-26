@@ -7,11 +7,11 @@ import rehypeExternalLinks from 'rehype-external-links';
 import { useEffect, useState } from 'preact/hooks';
 
 interface Props {
-	url?: string;
+	urls?: string[] | undefined;
 }
 
 // This component fetches a remote README (markdown), converts it to HTML using unified/remark/rehype, and renders it as HTML.
-export default function RemoteReadme({ url, urls }: Props) {
+export default function RemoteReadme({ urls }: Props) {
 	const [html, setHtml] = useState<string | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
@@ -20,8 +20,7 @@ export default function RemoteReadme({ url, urls }: Props) {
 		setHtml(null);
 		setError(null);
 
-		const tryUrls = urls && urls.length > 0 ? urls : url ? [url] : [];
-
+		const tryUrls = urls && urls.length > 0 ? urls : [];
 		async function fetchReadme() {
 			for (const u of tryUrls) {
 				try {
@@ -31,11 +30,11 @@ export default function RemoteReadme({ url, urls }: Props) {
 						const processed = await unified()
 							.use(remarkParse)
 							.use(remarkRehype)
-							.use((any)rehypeGithubAlerts)
 							.use(rehypeExternalLinks, {
 								target: '_blank',
 								rel: ['nofollow', 'noopener', 'noreferrer'],
 							})
+							.use([rehypeGithubAlerts])
 							.use(rehypeStringify)
 							.process(text);
 						if (!cancelled) setHtml(processed.toString());
@@ -57,7 +56,7 @@ export default function RemoteReadme({ url, urls }: Props) {
 		return () => {
 			cancelled = true;
 		};
-	}, [url, urls]);
+	}, [urls]);
 
 	if (error) {
 		return <div className='text-red-600'>{error}</div>;

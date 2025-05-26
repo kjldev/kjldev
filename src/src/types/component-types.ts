@@ -9,6 +9,7 @@ export interface Project {
 	links?: LinkProp[];
 	tags?: string[];
 	hasContent: boolean;
+	remoteReadme?: string;
 }
 
 export interface LinkProp {
