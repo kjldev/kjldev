@@ -3,7 +3,6 @@ import Layout from './Layout.astro';
 import ProjectStatus from '../components/projects/ProjectStatus.astro';
 import ProjectTag from '../components/projects/ProjectTag.astro';
 import ProjectLink from '../components/projects/ProjectLink.astro';
-import ProjectDiscussionLink from '../components/projects/ProjectDiscussionLink.astro';
 import { type Project } from '../types/component-types';
 import Pill from '../components/Pill.astro';
 import Tooltip from '../components/Tooltip.astro';
@@ -17,7 +16,7 @@ interface Props {
 	minutesRead: string;
 }
 
-const { frontmatter, headings, filePath, minutesRead } = Astro.props;
+const { frontmatter, headings, minutesRead } = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
@@ -49,12 +48,6 @@ const { frontmatter, headings, filePath, minutesRead } = Astro.props;
 				status={frontmatter.status}
 				size='large'
 			/>
-			<!-- <ProjectDiscussionLink
-				title={frontmatter.title}
-				status={frontmatter.status}
-				filePath={filePath}
-				size='large'
-			/> -->
 		</div>
 
 		{

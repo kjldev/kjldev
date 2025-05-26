@@ -3,7 +3,6 @@ import ProjectLink from './ProjectLink.astro';
 import ProjectTag from './ProjectTag.astro';
 import ProjectTitle from './ProjectTitle';
 import ProjectStatus from './ProjectStatus.astro';
-import ProjectDiscussionLink from './ProjectDiscussionLink.astro';
 import type { Project as Project } from '../../types/component-types';
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
 	filePath: string;
 }
 
-const { project, slug, filePath } = Astro.props;
+const { project, slug } = Astro.props;
 
 const firstLink = project.links?.at(0);
 const isRetired = project.status === 'retired';
@@ -41,11 +40,6 @@ const url = project.hasContent ? `/projects/${slug}` : firstLink?.url;
 			</div>
 			<div class='mt-2 md:mt-0 flex items-center space-x-1 flex-none'>
 				<ProjectStatus status={project.status} />
-				<!-- <ProjectDiscussionLink
-					title={project.title}
-					status={project.status}
-					filePath={filePath}
-				/> -->
 			</div>
 		</div>
 		{
