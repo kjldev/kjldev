@@ -4,10 +4,13 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import Prose from '../../components/Prose.astro';
 import type { MarkdownHeading } from 'astro';
 
+// Import the client-side component for rendering remote markdown
+import RemoteReadme from '../../components/RemoteReadme.tsx';
+
 interface Props {
-  project: CollectionEntry<'projects'>;
-  headings: MarkdownHeading[];
-};
+	project: CollectionEntry<'projects'>;
+	headings: MarkdownHeading[];
+}
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
@@ -28,8 +31,35 @@ export async function getStaticPaths() {
 const { project, headings } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(project);
 const { minutesRead } = remarkPluginFrontmatter as {
-	minutesRead: string;
+	minutesRead: number;
 };
+
+// Returns an array of possible raw README URLs (main, then master)
+function getReadmeRawUrls(project: CollectionEntry<'projects'>): string[] {
+	if (
+		project.data.hasContent === false &&
+		project.data.links &&
+		Array.isArray(project.data.links)
+	) {
+		const github = project.data.links.find(
+			(l) => l.url && l.url.includes('github.com')
+		);
+		if (github) {
+			const match = github.url.match(/github\.com\/([^/]+)\/([^/]+)/);
+			if (match) {
+				const [, owner, repo] = match;
+				return [
+					`https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`,
+					`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`,
+				];
+			}
+		}
+	}
+	return [];
+}
+
+const remoteReadme = project.data.remoteReadme;
+const readmeRawUrls = getReadmeRawUrls(project);
 ---
 
 <ProjectLayout
@@ -39,6 +69,27 @@ const { minutesRead } = remarkPluginFrontmatter as {
 	minutesRead={minutesRead}
 >
 	<Prose>
-		<Content />
+		{
+			project.data.hasContent === false ?
+				<>
+					{remoteReadme ?
+						<RemoteReadme
+							url={remoteReadme}
+							client:load
+						/>
+					: readmeRawUrls.length > 0 ?
+						<RemoteReadme
+							urls={readmeRawUrls}
+							client:load
+						/>
+					:	<div class='text-gray-500 italic'>
+							No README.md found for this project.
+							<br />
+							Please visit the project links above for more information.
+						</div>
+					}
+				</>
+			:	<Content />
+		}
 	</Prose>
 </ProjectLayout>

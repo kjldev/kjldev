@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const randomIndex = Math.floor(Math.random() * projects.length);
+const randomProject = projects[randomIndex];
+---
+
+<Layout title="404: Page Not Found">
+  <section class="flex flex-col items-center justify-center min-h-[60vh] text-center">
+    <h1 class="text-6xl font-bold mb-4">404</h1>
+    <p class="text-2xl mb-6">Oops! You’ve wandered off the map.</p>
+    <div class="mb-8">
+      <span class="inline-block text-4xl mb-2">🧭</span>
+      <p class="text-lg">
+        But don’t worry, adventurer! Here’s a random project quest for you:
+      </p>
+    </div>
+    <a
+      href={`/projects/${randomProject.id}`}
+      class="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition-transform font-semibold text-xl"
+    >
+      🎲 Explore: {randomProject.data.title}
+    </a>
+    <p class="mt-8 text-gray-500">
+      Or <a href="/" class="text-blue-500 hover:underline">return to the homepage</a> and try again!
+    </p>
+  </section>
+</Layout>

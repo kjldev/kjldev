@@ -3,7 +3,6 @@ import Layout from './Layout.astro';
 import ProjectStatus from '../components/projects/ProjectStatus.astro';
 import ProjectTag from '../components/projects/ProjectTag.astro';
 import ProjectLink from '../components/projects/ProjectLink.astro';
-import ProjectDiscussionLink from '../components/projects/ProjectDiscussionLink.astro';
 import { type Project } from '../types/component-types';
 import Pill from '../components/Pill.astro';
 import Tooltip from '../components/Tooltip.astro';
@@ -14,10 +13,10 @@ interface Props {
 	frontmatter: Project;
 	headings: MarkdownHeading[];
 	filePath: string;
-	minutesRead: string;
+	minutesRead: number;
 }
 
-const { frontmatter, headings, filePath, minutesRead } = Astro.props;
+const { frontmatter, headings, minutesRead } = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
@@ -37,24 +36,22 @@ const { frontmatter, headings, filePath, minutesRead } = Astro.props;
 			<h1 class='text-3xl font-bold'>{frontmatter.title}</h1>
 		</div>
 
-		<span
-			class='text-sm text-gray-500 italic whitespace-nowrap'
-			title='Estimated reading time'
-		>
-			⏱️ {minutesRead}
-		</span>
+		{
+			minutesRead > 0 && (
+				<span
+					class='text-sm text-gray-500 italic whitespace-nowrap'
+					title='Estimated reading time'
+				>
+					⏱️ {minutesRead}
+				</span>
+			)
+		}
 
 		<div class='mb-2 mt-2'>
 			<ProjectStatus
 				status={frontmatter.status}
 				size='large'
 			/>
-			<!-- <ProjectDiscussionLink
-				title={frontmatter.title}
-				status={frontmatter.status}
-				filePath={filePath}
-				size='large'
-			/> -->
 		</div>
 
 		{
@@ -96,24 +93,22 @@ const { frontmatter, headings, filePath, minutesRead } = Astro.props;
 
 		<slot />
 
-	<script
-		is:inline
-		src='https://giscus.app/client.js'
-		data-repo='kjldev/kjldev'
-		data-repo-id='R_kgDOOdLNAQ'
-		data-category='Q&A'
-		data-category-id='DIC_kwDOOdLNAc4CphyL'
-		data-mapping='pathname'
-		data-strict='0'
-		data-reactions-enabled='1'
-		data-emit-metadata='0'
-		data-input-position='bottom'
-		data-theme='light'
-		data-lang='en'
-		crossorigin='anonymous'
-		async
-	></script>
-</div>
-	
-	
+		<script
+			is:inline
+			src='https://giscus.app/client.js'
+			data-repo='kjldev/kjldev'
+			data-repo-id='R_kgDOOdLNAQ'
+			data-category='Q&A'
+			data-category-id='DIC_kwDOOdLNAc4CphyL'
+			data-mapping='pathname'
+			data-strict='0'
+			data-reactions-enabled='1'
+			data-emit-metadata='0'
+			data-input-position='bottom'
+			data-theme='light'
+			data-lang='en'
+			crossorigin='anonymous'
+			async
+		></script>
+	</div>
 </Layout>
