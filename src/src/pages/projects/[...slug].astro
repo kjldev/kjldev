@@ -6,7 +6,6 @@ import type { MarkdownHeading } from 'astro';
 
 // Import the client-side component for rendering remote markdown
 import RemoteReadme from '../../components/RemoteReadme.tsx';
-import { undefined } from 'astro:schema';
 
 interface Props {
 	project: CollectionEntry<'projects'>;
@@ -38,7 +37,7 @@ const { minutesRead } = remarkPluginFrontmatter as {
 // Returns an array of valid raw README URLs (main, then master) that actually exist
 async function getValidReadmeRawUrls(
 	project: CollectionEntry<'projects'>
-): Promise<string | undefined> {
+): Promise<string[]> {
 	if (
 		project.data.hasContent === false &&
 		project.data.links &&
@@ -56,31 +55,28 @@ async function getValidReadmeRawUrls(
 					`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`,
 				];
 				// Test each URL and only return those that exist (status 200)
-				const checks = (
-					await Promise.all(
-						urls.map(async (u) => {
-							try {
-								const res = await fetch(u, { method: 'HEAD' });
-								return res.ok ? u : null;
-							} catch {
-								return null;
-							}
-						})
-					)
-				).filter(Boolean);
+				const checks = await Promise.all(
+					urls.map(async (u) => {
+						try {
+							const res = await fetch(u, { method: 'HEAD' });
+							return res.ok ? u : null;
+						} catch {
+							return null;
+						}
+					})
+				);
 
-				if (checks.length > 0) {
-					return checks[0]!; // Return the first valid URL
-				}
-
-				return null!;
+				return (checks.filter(Boolean) as string[]) ?? [];
 			}
 		}
 	}
+	return [];
 }
 
-const remoteReadme =
-	project.data.remoteReadme ?? (await getValidReadmeRawUrls(project));
+const remoteReadmeUrls: string[] =
+	project.data.remoteReadme ?
+		[project.data.remoteReadme]
+	:	await getValidReadmeRawUrls(project);
 ---
 
 <ProjectLayout
@@ -93,9 +89,9 @@ const remoteReadme =
 		{
 			project.data.hasContent === false ?
 				<>
-					{remoteReadme ?
+					{remoteReadmeUrls.length > 0 ?
 						<RemoteReadme
-							urls={[remoteReadme]}
+							urls={remoteReadmeUrls}
 							client:load
 						/>
 					:	<div class='text-gray-500 italic'>
