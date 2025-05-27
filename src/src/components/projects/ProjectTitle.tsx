@@ -7,15 +7,11 @@ export interface ProjectTitleProps {
 
 export default function ProjectTitle(props: ProjectTitleProps) {
 	const { project, url } = props;
-	const { title, hasContent, status } = project;
-	const target = hasContent ? '_self' : '_blank';
-	const rel = hasContent ? 'noopener noreferrer' : undefined;
+	const { title, status } = project;
 
 	const titleElement = url ? (
 		<a
 			href={url}
-			target={target}
-			rel={rel}
 			className='text-blue-500 hover:underline'
 		>
 			{generateTitle(title)}
