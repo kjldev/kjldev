@@ -23,6 +23,7 @@ export default function MailtoLink(props: MailtoLinkProps) {
 	} = props;
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
+	const turnstileRef = useRef<HTMLDivElement>(null);
 
 	const [subject, setSubject] = useState(initialSubject ?? '');
 	const [email, setEmail] = useState('');
@@ -37,6 +38,28 @@ export default function MailtoLink(props: MailtoLinkProps) {
 		document.body.style.overflow = 'hidden';
 		dialogRef.current?.showModal();
 		setTouched(false);
+
+		// Reset CAPTCHA when dialog opens
+		setCaptchaToken(null);
+		setCaptchaReady(false);
+
+		// If Turnstile is loaded, reset the widget
+		setTimeout(() => {
+			if (turnstileRef.current) {
+				turnstileRef.current.innerHTML = '';
+				// @ts-ignore
+				if (window.turnstile && siteKey) {
+					// @ts-ignore
+					window.turnstile.render(turnstileRef.current, {
+						sitekey: siteKey,
+						theme: 'light',
+						callback: (token: string) => setCaptchaToken(token),
+						'expired-callback': () => setCaptchaToken(null),
+						'error-callback': () => setCaptchaToken(null),
+					});
+				}
+			}
+		}, 0);
 	};
 
 	const closeDialog = (submitForm = false) => {
@@ -68,14 +91,14 @@ export default function MailtoLink(props: MailtoLinkProps) {
 
 	// Setup Turnstile callback and reset on dialog open
 	useEffect(() => {
-		if (!dialogRef.current) return;
+		if (!dialogRef.current || !turnstileRef.current) return;
 
 		function onTurnstileReady() {
 			setCaptchaReady(true);
 			// @ts-ignore
 			if (window.turnstile) {
 				// @ts-ignore
-				window.turnstile.render(document.querySelector('.cf-turnstile'), {
+				window.turnstile.render(turnstileRef.current, {
 					sitekey: siteKey,
 					theme: 'light',
 					callback: (token: string) => setCaptchaToken(token),
@@ -85,7 +108,6 @@ export default function MailtoLink(props: MailtoLinkProps) {
 			}
 		}
 
-		// Cloudflare Turnstile emits a global event when ready
 		window.addEventListener('turnstile-loaded', onTurnstileReady);
 
 		return () => {
@@ -93,9 +115,11 @@ export default function MailtoLink(props: MailtoLinkProps) {
 		};
 	}, []);
 
-	// Validation
+	// Modern email validation regex supporting plus addressing and common cases
 	const isValidEmail = (email: string) =>
-		/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+			email
+		);
 
 	const isFormValid =
 		subject.trim().length > 0 &&
@@ -205,6 +229,7 @@ export default function MailtoLink(props: MailtoLinkProps) {
 					{/* Cloudflare Turnstile CAPTCHA */}
 					<div class='flex justify-center'>
 						<div
+							ref={turnstileRef}
 							class='cf-turnstile'
 							data-sitekey={siteKey}
 							data-theme='light'
