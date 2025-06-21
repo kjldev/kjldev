@@ -29,35 +29,71 @@ export default function MailtoLink(props: MailtoLinkProps) {
 	const [email, setEmail] = useState('');
 	const [body, setBody] = useState(initialBody ?? '');
 	const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-	const [captchaReady, setCaptchaReady] = useState(false);
-
 	const [touched, setTouched] = useState(false);
+
+	// Modern email validation regex supporting plus addressing and common cases
+	const isValidEmail = (email: string) =>
+		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+			email
+		);
+
+	const isFormValid =
+		subject.trim().length > 0 &&
+		body.trim().length > 0 &&
+		isValidEmail(email) &&
+		!!captchaToken;
+
+	// Ensure Turnstile script is loaded only once
+	useEffect(() => {
+		const scriptId = 'cf-turnstile-script';
+		if (!document.getElementById(scriptId)) {
+			const script = document.createElement('script');
+			script.id = scriptId;
+			script.src =
+				'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+			script.async = true;
+			script.defer = true;
+			document.body.appendChild(script);
+		}
+	}, []);
+
+	// Render Turnstile widget when dialog opens
+	const renderTurnstile = () => {
+		if (turnstileRef.current) {
+			turnstileRef.current.innerHTML = '';
+			// @ts-ignore
+			if (window.turnstile && siteKey) {
+				// @ts-ignore
+				window.turnstile.render(turnstileRef.current, {
+					sitekey: siteKey,
+					theme: 'light',
+					callback: (token: string) => setCaptchaToken(token),
+					'expired-callback': () => setCaptchaToken(null),
+					'error-callback': () => setCaptchaToken(null),
+				});
+			}
+		}
+	};
 
 	const openDialog = (e: JSX.TargetedMouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
 		document.body.style.overflow = 'hidden';
 		dialogRef.current?.showModal();
 		setTouched(false);
-
-		// Reset CAPTCHA when dialog opens
 		setCaptchaToken(null);
-		setCaptchaReady(false);
 
-		// If Turnstile is loaded, reset the widget
+		// Wait for dialog to open and then render Turnstile
 		setTimeout(() => {
-			if (turnstileRef.current) {
-				turnstileRef.current.innerHTML = '';
-				// @ts-ignore
-				if (window.turnstile && siteKey) {
-					// @ts-ignore
-					window.turnstile.render(turnstileRef.current, {
-						sitekey: siteKey,
-						theme: 'light',
-						callback: (token: string) => setCaptchaToken(token),
-						'expired-callback': () => setCaptchaToken(null),
-						'error-callback': () => setCaptchaToken(null),
-					});
-				}
+			// If script is loaded, render immediately
+			if (window.turnstile && turnstileRef.current) {
+				renderTurnstile();
+			} else {
+				// Otherwise, wait for script to load
+				const handler = () => {
+					renderTurnstile();
+					window.removeEventListener('turnstile-loaded', handler);
+				};
+				window.addEventListener('turnstile-loaded', handler);
 			}
 		}, 0);
 	};
@@ -75,57 +111,6 @@ export default function MailtoLink(props: MailtoLinkProps) {
 			document.body.style.overflow = '';
 		};
 	}, []);
-
-	// Dynamically load Cloudflare Turnstile script on mount (Astro-friendly)
-	useEffect(() => {
-		const scriptId = 'cf-turnstile-script';
-		if (!document.getElementById(scriptId)) {
-			const script = document.createElement('script');
-			script.id = scriptId;
-			script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-			script.async = true;
-			script.defer = true;
-			document.body.appendChild(script);
-		}
-	}, []);
-
-	// Setup Turnstile callback and reset on dialog open
-	useEffect(() => {
-		if (!dialogRef.current || !turnstileRef.current) return;
-
-		function onTurnstileReady() {
-			setCaptchaReady(true);
-			// @ts-ignore
-			if (window.turnstile) {
-				// @ts-ignore
-				window.turnstile.render(turnstileRef.current, {
-					sitekey: siteKey,
-					theme: 'light',
-					callback: (token: string) => setCaptchaToken(token),
-					'expired-callback': () => setCaptchaToken(null),
-					'error-callback': () => setCaptchaToken(null),
-				});
-			}
-		}
-
-		window.addEventListener('turnstile-loaded', onTurnstileReady);
-
-		return () => {
-			window.removeEventListener('turnstile-loaded', onTurnstileReady);
-		};
-	}, []);
-
-	// Modern email validation regex supporting plus addressing and common cases
-	const isValidEmail = (email: string) =>
-		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-			email
-		);
-
-	const isFormValid =
-		subject.trim().length > 0 &&
-		body.trim().length > 0 &&
-		isValidEmail(email) &&
-		!!captchaToken;
 
 	return (
 		<>
