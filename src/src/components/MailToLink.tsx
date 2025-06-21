@@ -1,5 +1,5 @@
 import { type JSX } from 'preact';
-import { useRef, useEffect } from 'preact/hooks';
+import { useRef, useEffect, useState } from 'preact/hooks';
 
 // @ts-ignore
 const siteKey = import.meta.env.PUBLIC_CF_TURNSTILE_SITEKEY;
@@ -14,14 +14,52 @@ interface MailtoLinkProps {
 }
 
 export default function MailtoLink(props: MailtoLinkProps) {
-	const { subject, body, className, title, children } = props;
+	const {
+		subject: initialSubject,
+		body: initialBody,
+		className,
+		title,
+		children,
+	} = props;
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
+	const turnstileRef = useRef<HTMLDivElement>(null);
+
+	const [subject, setSubject] = useState(initialSubject ?? '');
+	const [email, setEmail] = useState('');
+	const [body, setBody] = useState(initialBody ?? '');
+	const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+	const [captchaReady, setCaptchaReady] = useState(false);
+
+	const [touched, setTouched] = useState(false);
 
 	const openDialog = (e: JSX.TargetedMouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
 		document.body.style.overflow = 'hidden';
 		dialogRef.current?.showModal();
+		setTouched(false);
+
+		// Reset CAPTCHA when dialog opens
+		setCaptchaToken(null);
+		setCaptchaReady(false);
+
+		// If Turnstile is loaded, reset the widget
+		setTimeout(() => {
+			if (turnstileRef.current) {
+				turnstileRef.current.innerHTML = '';
+				// @ts-ignore
+				if (window.turnstile && siteKey) {
+					// @ts-ignore
+					window.turnstile.render(turnstileRef.current, {
+						sitekey: siteKey,
+						theme: 'light',
+						callback: (token: string) => setCaptchaToken(token),
+						'expired-callback': () => setCaptchaToken(null),
+						'error-callback': () => setCaptchaToken(null),
+					});
+				}
+			}
+		}, 0);
 	};
 
 	const closeDialog = (submitForm = false) => {
@@ -51,6 +89,44 @@ export default function MailtoLink(props: MailtoLinkProps) {
 		}
 	}, []);
 
+	// Setup Turnstile callback and reset on dialog open
+	useEffect(() => {
+		if (!dialogRef.current || !turnstileRef.current) return;
+
+		function onTurnstileReady() {
+			setCaptchaReady(true);
+			// @ts-ignore
+			if (window.turnstile) {
+				// @ts-ignore
+				window.turnstile.render(turnstileRef.current, {
+					sitekey: siteKey,
+					theme: 'light',
+					callback: (token: string) => setCaptchaToken(token),
+					'expired-callback': () => setCaptchaToken(null),
+					'error-callback': () => setCaptchaToken(null),
+				});
+			}
+		}
+
+		window.addEventListener('turnstile-loaded', onTurnstileReady);
+
+		return () => {
+			window.removeEventListener('turnstile-loaded', onTurnstileReady);
+		};
+	}, []);
+
+	// Modern email validation regex supporting plus addressing and common cases
+	const isValidEmail = (email: string) =>
+		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+			email
+		);
+
+	const isFormValid =
+		subject.trim().length > 0 &&
+		body.trim().length > 0 &&
+		isValidEmail(email) &&
+		!!captchaToken;
+
 	return (
 		<>
 			<a
@@ -72,6 +148,12 @@ export default function MailtoLink(props: MailtoLinkProps) {
 					enctype='multipart/form-data'
 					action='https://formcarry.com/s/7LBSAyOPWY3'
 					class='bg-white rounded-lg p-6 space-y-4 max-w-md w-full relative'
+					onSubmit={(e) => {
+						if (!isFormValid) {
+							e.preventDefault();
+							setTouched(true);
+						}
+					}}
 				>
 					<button
 						type='button'
@@ -91,11 +173,17 @@ export default function MailtoLink(props: MailtoLinkProps) {
 								name='subject'
 								type='text'
 								value={subject}
+								onInput={(e) =>
+									setSubject((e.target as HTMLInputElement).value)
+								}
 								placeholder='How can we help?'
 								required
 								class='mt-1 w-full border rounded px-2 py-1'
 							/>
 						</label>
+						{touched && subject.trim().length === 0 && (
+							<span class='text-red-600 text-sm'>Subject is required.</span>
+						)}
 					</div>
 
 					<div>
@@ -104,12 +192,19 @@ export default function MailtoLink(props: MailtoLinkProps) {
 							<input
 								name='email'
 								type='email'
+								value={email}
+								onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
 								placeholder='Let us know how to contact you...'
 								required
 								autofocus
 								class='mt-1 w-full border rounded px-2 py-1'
 							/>
 						</label>
+						{touched && !isValidEmail(email) && (
+							<span class='text-red-600 text-sm'>
+								Please enter a valid email.
+							</span>
+						)}
 					</div>
 
 					<div>
@@ -117,23 +212,34 @@ export default function MailtoLink(props: MailtoLinkProps) {
 							<span class='font-semibold'>Message</span>
 							<textarea
 								name='body'
+								value={body}
+								onInput={(e) =>
+									setBody((e.target as HTMLTextAreaElement).value)
+								}
 								placeholder='How can we help you?'
 								required
 								class='mt-1 w-full h-24 border rounded p-2'
-							>
-								{body}
-							</textarea>
+							/>
 						</label>
+						{touched && body.trim().length === 0 && (
+							<span class='text-red-600 text-sm'>Message is required.</span>
+						)}
 					</div>
 
 					{/* Cloudflare Turnstile CAPTCHA */}
 					<div class='flex justify-center'>
 						<div
+							ref={turnstileRef}
 							class='cf-turnstile'
 							data-sitekey={siteKey}
 							data-theme='light'
 						></div>
 					</div>
+					{touched && !captchaToken && (
+						<div class='text-red-600 text-sm text-center'>
+							Please complete the CAPTCHA.
+						</div>
+					)}
 
 					<div class='flex justify-end space-x-2'>
 						<button
@@ -144,9 +250,9 @@ export default function MailtoLink(props: MailtoLinkProps) {
 							Cancel
 						</button>
 						<button
-							type='button'
-							class='px-4 py-2 bg-blue-600 text-white rounded'
-							onClick={() => closeDialog(true)}
+							type='submit'
+							class='px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50'
+							disabled={!isFormValid}
 						>
 							Send
 						</button>
