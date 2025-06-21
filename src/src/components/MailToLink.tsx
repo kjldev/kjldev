@@ -1,6 +1,9 @@
 import { type JSX } from 'preact';
 import { useRef, useEffect } from 'preact/hooks';
 
+// @ts-ignore
+const siteKey = import.meta.env.PUBLIC_CF_TURNSTILE_SITEKEY;
+
 interface MailtoLinkProps {
 	to: string;
 	subject?: string;
@@ -127,7 +130,7 @@ export default function MailtoLink(props: MailtoLinkProps) {
 					<div class='flex justify-center'>
 						<div
 							class='cf-turnstile'
-							data-sitekey='0x4AAAAAABhzrM6wiLBTm-af'
+							data-sitekey={siteKey}
 							data-theme='light'
 						></div>
 					</div>
