@@ -1,6 +1,9 @@
 import { type JSX } from 'preact';
 import { useRef, useEffect } from 'preact/hooks';
 
+// @ts-ignore
+const siteKey = import.meta.env.PUBLIC_CF_TURNSTILE_SITEKEY;
+
 interface MailtoLinkProps {
 	to: string;
 	subject?: string;
@@ -21,10 +24,6 @@ export default function MailtoLink(props: MailtoLinkProps) {
 		dialogRef.current?.showModal();
 	};
 
-	/**
-	 * Closes the dialog, restores scrolling, and
-	 * optionally submits the form.
-	 */
 	const closeDialog = (submitForm = false) => {
 		if (submitForm) {
 			formRef.current?.submit();
@@ -33,11 +32,23 @@ export default function MailtoLink(props: MailtoLinkProps) {
 		document.body.style.overflow = '';
 	};
 
-	// ensure overflow is reset if unmounted
 	useEffect(() => {
 		return () => {
 			document.body.style.overflow = '';
 		};
+	}, []);
+
+	// Dynamically load Cloudflare Turnstile script on mount (Astro-friendly)
+	useEffect(() => {
+		const scriptId = 'cf-turnstile-script';
+		if (!document.getElementById(scriptId)) {
+			const script = document.createElement('script');
+			script.id = scriptId;
+			script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+			script.async = true;
+			script.defer = true;
+			document.body.appendChild(script);
+		}
 	}, []);
 
 	return (
@@ -113,6 +124,15 @@ export default function MailtoLink(props: MailtoLinkProps) {
 								{body}
 							</textarea>
 						</label>
+					</div>
+
+					{/* Cloudflare Turnstile CAPTCHA */}
+					<div class='flex justify-center'>
+						<div
+							class='cf-turnstile'
+							data-sitekey={siteKey}
+							data-theme='light'
+						></div>
 					</div>
 
 					<div class='flex justify-end space-x-2'>

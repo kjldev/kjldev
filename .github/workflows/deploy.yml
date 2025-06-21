@@ -26,9 +26,10 @@ jobs:
         with:
           bun-version: latest
       
-      - name: Set App Insights connection string
+      - name: Set Secure Configuration
         run: |
-          echo "PUBLIC_APPINSIGHTS_CONNECTION_STRING=${{ secrets.PUBLIC_APPINSIGHTS_CONNECTION_STRING }}" > ./src/.env
+          echo "PUBLIC_APPINSIGHTS_CONNECTION_STRING=${{ secrets.PUBLIC_APPINSIGHTS_CONNECTION_STRING }}" >> ./src/.env
+          echo "PUBLIC_CF_TURNSTILE_SITEKEY=${{ secrets.PUBLIC_CF_TURNSTILE_SITEKEY }}" >> ./src/.env
 
       - name: Install dependencies
         run: bun install
