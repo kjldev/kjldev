@@ -2,7 +2,15 @@ import { type JSX } from 'preact';
 import { useRef, useEffect, useState } from 'preact/hooks';
 
 // @ts-ignore
-const siteKey = import.meta.env.PUBLIC_CF_TURNSTILE_SITEKEY;
+const siteKey =
+	import.meta.env.PUBLIC_CF_TURNSTILE_SITEKEY || '1x00000000000000000000AA'; // fallback to test key for localhost
+
+declare global {
+	interface Window {
+		turnstile?: any;
+		turnstileLoaded?: () => void;
+	}
+}
 
 interface MailtoLinkProps {
 	to: string;
@@ -30,90 +38,8 @@ export default function MailtoLink(props: MailtoLinkProps) {
 	const [body, setBody] = useState(initialBody ?? '');
 	const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 	const [captchaReady, setCaptchaReady] = useState(false);
-
 	const [touched, setTouched] = useState(false);
-
-	const openDialog = (e: JSX.TargetedMouseEvent<HTMLAnchorElement>) => {
-		e.preventDefault();
-		document.body.style.overflow = 'hidden';
-		dialogRef.current?.showModal();
-		setTouched(false);
-
-		// Reset CAPTCHA when dialog opens
-		setCaptchaToken(null);
-		setCaptchaReady(false);
-
-		// If Turnstile is loaded, reset the widget
-		setTimeout(() => {
-			if (turnstileRef.current) {
-				turnstileRef.current.innerHTML = '';
-				// @ts-ignore
-				if (window.turnstile && siteKey) {
-					// @ts-ignore
-					window.turnstile.render(turnstileRef.current, {
-						sitekey: siteKey,
-						theme: 'light',
-						callback: (token: string) => setCaptchaToken(token),
-						'expired-callback': () => setCaptchaToken(null),
-						'error-callback': () => setCaptchaToken(null),
-					});
-				}
-			}
-		}, 0);
-	};
-
-	const closeDialog = (submitForm = false) => {
-		if (submitForm) {
-			formRef.current?.submit();
-		}
-		dialogRef.current?.close();
-		document.body.style.overflow = '';
-	};
-
-	useEffect(() => {
-		return () => {
-			document.body.style.overflow = '';
-		};
-	}, []);
-
-	// Dynamically load Cloudflare Turnstile script on mount (Astro-friendly)
-	useEffect(() => {
-		const scriptId = 'cf-turnstile-script';
-		if (!document.getElementById(scriptId)) {
-			const script = document.createElement('script');
-			script.id = scriptId;
-			script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-			script.async = true;
-			script.defer = true;
-			document.body.appendChild(script);
-		}
-	}, []);
-
-	// Setup Turnstile callback and reset on dialog open
-	useEffect(() => {
-		if (!dialogRef.current || !turnstileRef.current) return;
-
-		function onTurnstileReady() {
-			setCaptchaReady(true);
-			// @ts-ignore
-			if (window.turnstile) {
-				// @ts-ignore
-				window.turnstile.render(turnstileRef.current, {
-					sitekey: siteKey,
-					theme: 'light',
-					callback: (token: string) => setCaptchaToken(token),
-					'expired-callback': () => setCaptchaToken(null),
-					'error-callback': () => setCaptchaToken(null),
-				});
-			}
-		}
-
-		window.addEventListener('turnstile-loaded', onTurnstileReady);
-
-		return () => {
-			window.removeEventListener('turnstile-loaded', onTurnstileReady);
-		};
-	}, []);
+	const [captchaError, setCaptchaError] = useState(false);
 
 	// Modern email validation regex supporting plus addressing and common cases
 	const isValidEmail = (email: string) =>
@@ -125,7 +51,90 @@ export default function MailtoLink(props: MailtoLinkProps) {
 		subject.trim().length > 0 &&
 		body.trim().length > 0 &&
 		isValidEmail(email) &&
-		!!captchaToken;
+		!!captchaToken &&
+		captchaReady;
+
+	// Load Turnstile script on mount (Astro-friendly)
+	useEffect(() => {
+		const scriptId = 'cf-turnstile-script';
+		if (!document.getElementById(scriptId)) {
+			const script = document.createElement('script');
+			script.id = scriptId;
+			script.src =
+				'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=turnstileLoaded';
+			script.async = true;
+			script.defer = true;
+			document.body.appendChild(script);
+		}
+	}, []);
+
+	// Listen for Turnstile script loaded
+	useEffect(() => {
+		window.turnstileLoaded = () => {
+			setCaptchaReady(true);
+		};
+		return () => {
+			delete window.turnstileLoaded;
+		};
+	}, []);
+
+	// Render Turnstile widget when dialog opens
+	const renderTurnstile = () => {
+		if (turnstileRef.current && siteKey && window.turnstile) {
+			turnstileRef.current.innerHTML = '';
+			try {
+				window.turnstile.render(turnstileRef.current, {
+					sitekey: siteKey,
+					callback: (token: string) => {
+						setCaptchaToken(token);
+						setCaptchaError(false);
+					},
+					'expired-callback': () => setCaptchaToken(null),
+					'error-callback': () => {
+						setCaptchaToken(null);
+						setCaptchaError(true);
+					},
+					theme: 'light',
+				});
+			} catch {
+				setCaptchaError(true);
+			}
+		}
+	};
+
+	// Re-render Turnstile when dialog opens
+	const openDialog = (e: JSX.TargetedMouseEvent<HTMLAnchorElement>) => {
+		e.preventDefault();
+		document.body.style.overflow = 'hidden';
+		dialogRef.current?.showModal();
+		setTouched(false);
+		setCaptchaToken(null);
+		setCaptchaReady(false);
+		setCaptchaError(false);
+		setTimeout(() => {
+			if (window.turnstile && turnstileRef.current) {
+				renderTurnstile();
+				setCaptchaReady(true);
+			}
+		}, 0);
+	};
+
+	const closeDialog = (submitForm = false) => {
+		if (submitForm) {
+			formRef.current?.submit();
+		}
+		dialogRef.current?.close();
+		document.body.style.overflow = '';
+		setCaptchaToken(null);
+		setCaptchaReady(false);
+		setCaptchaError(false);
+	};
+
+	useEffect(() => {
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, []);
 
 	return (
 		<>
@@ -196,7 +205,7 @@ export default function MailtoLink(props: MailtoLinkProps) {
 								onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
 								placeholder='Let us know how to contact you...'
 								required
-								autofocus
+								autoFocus
 								class='mt-1 w-full border rounded px-2 py-1'
 							/>
 						</label>
@@ -235,9 +244,25 @@ export default function MailtoLink(props: MailtoLinkProps) {
 							data-theme='light'
 						></div>
 					</div>
-					{touched && !captchaToken && (
+					{captchaError && (
+						<div class='text-red-600 text-sm text-center'>
+							CAPTCHA failed to load. Please try again later.
+						</div>
+					)}
+					{touched && !captchaToken && !captchaError && (
 						<div class='text-red-600 text-sm text-center'>
 							Please complete the CAPTCHA.
+						</div>
+					)}
+					{!captchaReady && !captchaError && (
+						<div class='text-gray-500 text-xs text-center'>
+							Loading CAPTCHA...
+						</div>
+					)}
+					{siteKey === '1x00000000000000000000AA' && (
+						<div class='text-yellow-600 text-xs text-center mt-2'>
+							Test CAPTCHA key in use. For production, set{' '}
+							<code>PUBLIC_CF_TURNSTILE_SITEKEY</code> in your environment.
 						</div>
 					)}
 
