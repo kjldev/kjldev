@@ -2,8 +2,9 @@ import { type JSX } from 'preact';
 import { useRef, useEffect, useState } from 'preact/hooks';
 
 // @ts-ignore
+const TEST_SITE_KEY = '1x00000000000000000000AA'; // fallback to test key for localhost
 const siteKey =
-	import.meta.env.PUBLIC_CF_TURNSTILE_SITEKEY || '1x00000000000000000000AA'; // fallback to test key for localhost
+	import.meta.env.PUBLIC_CF_TURNSTILE_SITEKEY || TEST_SITE_KEY;
 
 declare global {
 	interface Window {
