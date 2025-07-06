@@ -1,6 +1,6 @@
+import path from 'path';
 import { task } from 'hereby';
-import { execa } from 'execa';
-import { runBun, runBunF } from './scripts/run-bun.mts';
+import { run, runBun, runBuns, helpTask } from './scripts/hereby-exts.mts';
 
 const settings = {
 	root: './',
@@ -9,13 +9,7 @@ const settings = {
 	},
 };
 
-export const help = task({
-	name: 'help',
-	hiddenFromTaskList: true,
-	run: async () => await execa('hereby', ['--tasks'], { stdio: 'inherit' }),
-});
-
-export const run = task({
+export const runDev = task({
 	name: 'run',
 	description: 'Runs the Astro dev server',
 	run: () => {
@@ -31,25 +25,23 @@ export const run = task({
 export const check = task({
 	name: 'check',
 	description: 'Runs the Astro check command',
-	run: runBunF(settings.site.root, 'astro', 'check'),
+	run: () => runBun(settings.site.root, 'astro', 'check'),
 });
 
 export const installDeps = task({
 	name: 'install-deps',
 	description: 'Install dependencies for the Astro project',
-	run: async () => {
-		await runBun(settings.root, 'install');
-		await runBun(settings.site.root, 'install');
-	},
+	run: async () => runBuns([settings.root, settings.site.root], 'install'),
 });
 
 export const updateDeps = task({
 	name: 'update-deps',
 	description: 'Updates dependencies for the Astro project',
 	run: async () => {
-		await runBun(settings.root, 'update');
-		await runBun(settings.site.root, 'update');
+		await runBun(settings.site.root, 'astro-upgrade');
+		await runBuns([settings.root, settings.site.root], 'update');
 	},
 });
 
-export default help;
+// System tasks.
+export default helpTask;
