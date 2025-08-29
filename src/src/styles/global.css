@@ -45,7 +45,7 @@ h6 {
 
 /* Constrain and center prose images without stretching */
 .prose img {
-	@apply block mx-auto rounded-lg shadow-2xl border-2 border-gray-200 dark:border-gray-200;
+	@apply block mx-auto rounded-lg shadow-2xl border-2 border-gray-200 dark:border-gray-700;
 	max-width: 80%;
 	max-height: 60vh;
 	width: auto;
@@ -53,22 +53,22 @@ h6 {
 }
 
 .prose h1 {
-	@apply text-4xl sm:text-5xl font-extrabold mt-8 mb-4 tracking-tight text-gray-900;
+	@apply text-4xl sm:text-5xl font-extrabold mt-8 mb-4 tracking-tight text-gray-900 dark:text-gray-100;
 }
 .prose h2 {
-	@apply text-3xl sm:text-4xl font-bold mt-7 mb-3 tracking-tight text-gray-800;
+	@apply text-3xl sm:text-4xl font-bold mt-7 mb-3 tracking-tight text-gray-800 dark:text-gray-200;
 }
 .prose h3 {
-	@apply text-2xl sm:text-3xl font-semibold mt-6 mb-2 text-gray-700;
+	@apply text-2xl sm:text-3xl font-semibold mt-6 mb-2 text-gray-700 dark:text-gray-300;
 }
 .prose h4 {
-	@apply text-xl sm:text-2xl font-semibold mt-5 mb-1 text-gray-600;
+	@apply text-xl sm:text-2xl font-semibold mt-5 mb-1 text-gray-600 dark:text-gray-400;
 }
 .prose h5 {
-	@apply text-lg font-medium mt-4 mb-1 text-gray-500;
+	@apply text-lg font-medium mt-4 mb-1 text-gray-500 dark:text-gray-500;
 }
 .prose h6 {
-	@apply text-base font-medium mt-3 mb-1 uppercase tracking-wide text-gray-400;
+	@apply text-base font-medium mt-3 mb-1 uppercase tracking-wide text-gray-400 dark:text-gray-600;
 }
 
 .markdown-alert {
