@@ -59,15 +59,19 @@ export default function RemoteReadme({ urls }: Props) {
 	}, [urls]);
 
 	if (error) {
-		return <div className='text-red-600'>{error}</div>;
+		return <div className='text-red-600 dark:text-red-400'>{error}</div>;
 	}
 	if (html === null) {
-		return <div className='text-gray-400 italic'>Loading README…</div>;
+		return <div className='text-gray-400 dark:text-gray-500 italic'>Loading README…</div>;
 	}
 
 	return (
 		<div
-			className='text-left max-w-full overflow-x-auto prose mx-auto my-6'
+			className='text-left max-w-full overflow-x-auto prose dark:prose-invert 
+				prose-h1:font-bold prose-h1:text-xl
+				prose-a:text-blue-600 dark:prose-a:text-blue-400
+				prose-p:text-justify prose-img:rounded-xl
+				prose-headings:underline mx-auto my-6'
 			dangerouslySetInnerHTML={{ __html: html }}
 		/>
 	);
