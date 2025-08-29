@@ -17,13 +17,13 @@ const isRetired = project.status === 'retired';
 
 const outerClasses =
 	isRetired ?
-		'h-full bg-gray-100 border border-gray-200 p-1 rounded-lg shadow-md filter brightness-90'
-	:	'h-full bg-gradient-to-r from-blue-300 to-purple-300 p-1 rounded-lg shadow-lg';
+		'h-full bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 p-1 rounded-lg shadow-md filter brightness-90'
+	:	'h-full bg-gradient-to-r from-blue-300 to-purple-300 dark:from-blue-600 dark:to-purple-600 p-1 rounded-lg shadow-lg';
 
 const innerClasses =
 	isRetired ?
-		'h-full bg-white rounded-lg shadow transition-shadow duration-300 p-6 opacity-90'
-	:	'h-full bg-white rounded-lg shadow hover:shadow-xl transition-shadow duration-300 p-6 transform hover:-translate-y-0.25 hover:-translate-x-0.25';
+		'h-full bg-white dark:bg-gray-800 rounded-lg shadow transition-shadow duration-300 p-6 opacity-90'
+	:	'h-full bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-xl transition-shadow duration-300 p-6 transform hover:-translate-y-0.25 hover:-translate-x-0.25';
 
 const url = `/projects/${slug}`;
 ---
@@ -43,7 +43,7 @@ const url = `/projects/${slug}`;
 		</div>
 		{
 			project.description && (
-				<p class='text-gray-600 mb-4'>{project.description}</p>
+				<p class='text-gray-600 dark:text-gray-300 mb-4'>{project.description}</p>
 			)
 		}
 		{
