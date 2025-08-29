@@ -20,95 +20,99 @@ const { frontmatter, headings, minutesRead } = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
-	<div class='max-w-screen-lg mx-auto p-4'>
-		<div class='mb-4'>
-			<Tooltip tooltip='Go back to the list of projects...'>
-				<Pill
-					text='← Back to Projects'
-					href='/projects'
-					internalLink={true}
+	<div class='min-h-screen bg-white dark:bg-gray-900'>
+		<div class='max-w-screen-lg mx-auto px-6 py-8'>
+			<div class='mb-6'>
+				<Tooltip tooltip='Go back to the list of projects...'>
+					<Pill
+						text='← Back to Projects'
+						href='/projects'
+						internalLink={true}
+						size='large'
+					/>
+				</Tooltip>
+			</div>
+
+			<div class='flex items-baseline space-x-4 mb-4'>
+				<h1 class='text-4xl font-bold text-gray-900 dark:text-white'>{frontmatter.title}</h1>
+			</div>
+
+			{
+				minutesRead > 0 && (
+					<span
+						class='text-sm text-gray-500 dark:text-gray-400 italic whitespace-nowrap'
+						title='Estimated reading time'
+					>
+						⏱️ {minutesRead}
+					</span>
+				)
+			}
+
+			<div class='mb-4 mt-4'>
+				<ProjectStatus
+					status={frontmatter.status}
 					size='large'
 				/>
-			</Tooltip>
+			</div>
+
+			{
+				frontmatter.description && (
+					<blockquote
+						class='
+							bg-blue-50 dark:bg-blue-900/20
+							border-l-4 border-blue-400 dark:border-blue-500
+							italic p-6 mb-6 mt-6 rounded-r-lg
+							text-gray-800 dark:text-gray-200
+						'
+					>
+						{frontmatter.description}
+					</blockquote>
+				)
+			}
+
+			{
+				frontmatter.links && (
+					<div class='mb-6 flex flex-wrap gap-3'>
+						{frontmatter.links.map((link) => (
+							<ProjectLink link={link} />
+						))}
+					</div>
+				)
+			}
+
+			{
+				frontmatter.tags && frontmatter.tags.length > 0 && (
+					<div class='mb-6 flex flex-wrap gap-2'>
+						{frontmatter.tags.map((tag) => (
+							<ProjectTag tag={tag} />
+						))}
+					</div>
+				)
+			}
+
+			<TableOfContents headings={headings} />
+
+			<div class='prose-container'>
+				<slot />
+			</div>
+
+			<script
+				is:inline
+				src='https://giscus.app/client.js'
+				data-repo='kjldev/kjldev'
+				data-repo-id='R_kgDOOdLNAQ'
+				data-category='Q&A'
+				data-category-id='DIC_kwDOOdLNAc4CphyL'
+				data-mapping='pathname'
+				data-strict='0'
+				data-reactions-enabled='1'
+				data-emit-metadata='0'
+				data-input-position='bottom'
+				data-theme='preferred_color_scheme'
+				data-lang='en'
+				crossorigin='anonymous'
+				async
+			></script>
 		</div>
-
-		<div class='flex items-baseline space-x-4 mb-2'>
-			<h1 class='text-3xl font-bold'>{frontmatter.title}</h1>
-		</div>
-
-		{
-			minutesRead > 0 && (
-				<span
-					class='text-sm text-gray-500 dark:text-gray-400 italic whitespace-nowrap'
-					title='Estimated reading time'
-				>
-					⏱️ {minutesRead}
-				</span>
-			)
-		}
-
-		<div class='mb-2 mt-2'>
-			<ProjectStatus
-				status={frontmatter.status}
-				size='large'
-			/>
-		</div>
-
-		{
-			frontmatter.description && (
-				<blockquote
-					class='
-						bg-gray-50 dark:bg-gray-700
-						border-l-4 border-gray-300 dark:border-gray-500
-						italic p-4 mb-4 mt-4
-						text-gray-700 dark:text-gray-300
-					'
-				>
-					{frontmatter.description}
-				</blockquote>
-			)
-		}
-
-		{
-			frontmatter.links && (
-				<div class='mb-4 flex flex-wrap gap-2'>
-					{frontmatter.links.map((link) => (
-						<ProjectLink link={link} />
-					))}
-				</div>
-			)
-		}
-
-		{
-			frontmatter.tags && frontmatter.tags.length > 0 && (
-				<div class='mb-4 flex flex-wrap gap-2'>
-					{frontmatter.tags.map((tag) => (
-						<ProjectTag tag={tag} />
-					))}
-				</div>
-			)
-		}
-
-		<TableOfContents headings={headings} />
-
-		<slot />
-
-		<script
-			is:inline
-			src='https://giscus.app/client.js'
-			data-repo='kjldev/kjldev'
-			data-repo-id='R_kgDOOdLNAQ'
-			data-category='Q&A'
-			data-category-id='DIC_kwDOOdLNAc4CphyL'
-			data-mapping='pathname'
-			data-strict='0'
-			data-reactions-enabled='1'
-			data-emit-metadata='0'
-			data-input-position='bottom'
-			data-theme='preferred_color_scheme'
-			data-lang='en'
-			crossorigin='anonymous'
-			async
-		></script>
 	</div>
 </Layout>

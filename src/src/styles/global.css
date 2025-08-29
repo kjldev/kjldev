@@ -21,74 +21,130 @@ h6 {
 	font-family: 'Raleway', sans-serif;
 }
 
+/* Prose styling improvements */
 .prose {
-	max-width: max-content;
+	max-width: none;
+}
+
+.prose-container .prose {
+	@apply text-gray-700 dark:text-gray-200;
 }
 
 .prose ul {
-	margin-top: 0;
+	margin-top: 0.5rem;
+	margin-bottom: 1rem;
 }
 
 .prose ul li {
-	margin: 0;
+	margin: 0.25rem 0;
 }
 
 .prose hr {
-	margin-top: 0.5em;
-	margin-bottom: 1em;
+	@apply border-gray-300 dark:border-gray-600;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
 
 .prose p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	line-height: 1.7;
 }
 
-/* Constrain and center prose images without stretching */
+/* Enhanced prose image styling */
 .prose img {
-	@apply block mx-auto rounded-lg shadow-2xl border-2 border-gray-200 dark:border-gray-700;
-	max-width: 80%;
+	@apply block mx-auto rounded-xl shadow-xl border border-gray-200 dark:border-gray-700;
+	max-width: 85%;
 	max-height: 60vh;
 	width: auto;
 	height: auto;
 }
 
+/* Enhanced heading styles for better dark mode support */
 .prose h1 {
-	@apply text-4xl sm:text-5xl font-extrabold mt-8 mb-4 tracking-tight text-gray-900 dark:text-gray-100;
+	@apply text-4xl font-extrabold mt-8 mb-6 tracking-tight text-gray-900 dark:text-gray-100;
 }
 .prose h2 {
-	@apply text-3xl sm:text-4xl font-bold mt-7 mb-3 tracking-tight text-gray-800 dark:text-gray-200;
+	@apply text-3xl font-bold mt-8 mb-4 tracking-tight text-gray-800 dark:text-gray-200;
 }
 .prose h3 {
-	@apply text-2xl sm:text-3xl font-semibold mt-6 mb-2 text-gray-700 dark:text-gray-300;
+	@apply text-2xl font-semibold mt-6 mb-3 text-gray-700 dark:text-gray-300;
 }
 .prose h4 {
-	@apply text-xl sm:text-2xl font-semibold mt-5 mb-1 text-gray-600 dark:text-gray-400;
+	@apply text-xl font-semibold mt-5 mb-2 text-gray-600 dark:text-gray-400;
 }
 .prose h5 {
-	@apply text-lg font-medium mt-4 mb-1 text-gray-500 dark:text-gray-500;
+	@apply text-lg font-medium mt-4 mb-2 text-gray-500 dark:text-gray-500;
 }
 .prose h6 {
 	@apply text-base font-medium mt-3 mb-1 uppercase tracking-wide text-gray-400 dark:text-gray-600;
 }
 
+/* Enhanced code styling */
+.prose code {
+	@apply px-1.5 py-0.5 rounded-md text-sm font-mono bg-gray-100 dark:bg-gray-800 text-purple-600 dark:text-purple-400;
+}
+
+.prose pre {
+	@apply rounded-lg border border-gray-200 dark:border-gray-700;
+}
+
+.prose pre code {
+	@apply bg-transparent text-gray-100 p-0;
+}
+
+/* Blockquote improvements */
+.prose blockquote {
+	@apply border-l-4 border-blue-400 dark:border-blue-500 bg-blue-50 dark:bg-blue-900/20 pl-6 py-4 rounded-r-lg;
+}
+
+/* Table improvements */
+.prose table {
+	@apply border-collapse border border-gray-300 dark:border-gray-600;
+}
+
+.prose th, .prose td {
+	@apply border border-gray-300 dark:border-gray-600 px-4 py-2;
+}
+
+.prose th {
+	@apply bg-gray-50 dark:bg-gray-800 font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.prose td {
+	@apply bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200;
+}
+
+/* Alert styling */
 .markdown-alert {
-	padding-left: 0.75em;
+	padding: 1rem 1.5rem;
+	margin: 1.5rem 0;
+	border-radius: 0.5rem;
+	border-left: 4px solid;
 }
 
 .markdown-alert-title {
 	font-weight: bold;
+	margin-bottom: 0.5rem;
+	display: flex;
+	align-items: center;
 }
 
 .prose .markdown-alert p {
-	margin-top: 0;
+	margin: 0.5rem 0;
+}
+
+.prose .markdown-alert p:last-child {
+	margin-bottom: 0;
 }
 
 svg.octicon {
 	width: 20px;
 	height: 20px;
+	margin-right: 0.5rem;
 }
 
-/* Light theme defaults */
+/* Alert color schemes - light mode defaults */
 :root {
 	--color-tip-border: #3b82f6;
 	--color-tip-bg: #eff6ff;
@@ -100,7 +156,7 @@ svg.octicon {
 	--color-danger-bg: #fef2f2;
 }
 
-/* Dark theme overrides */
+/* Alert color schemes - dark mode overrides */
 .dark {
 	--color-tip-border: #60a5fa;
 	--color-tip-bg: #1e3a8a;
@@ -112,16 +168,4 @@ svg.octicon {
 	--color-danger-bg: #581c1c;
 }
 
-/* Force dark mode styles for specific classes */
-.dark .bg-gray-100 {
-	background-color: oklch(0.302 0.013 264.542) !important; /* gray-800 */
-}
-
-.dark .text-gray-900 {
-	color: oklch(0.967 0.003 264.542) !important; /* gray-100 */
-}
-
-.dark body {
-	background-color: oklch(0.182 0.008 264.542) !important; /* gray-900 */
-	color: oklch(0.967 0.003 264.542) !important; /* gray-100 */
-}
+/* Removed forced CSS rules - relying on proper Tailwind classes instead */

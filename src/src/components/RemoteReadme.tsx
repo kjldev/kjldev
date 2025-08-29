@@ -59,19 +59,26 @@ export default function RemoteReadme({ urls }: Props) {
 	}, [urls]);
 
 	if (error) {
-		return <div className='text-red-600 dark:text-red-400'>{error}</div>;
+		return <div className='text-red-600 dark:text-red-400 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800'>{error}</div>;
 	}
 	if (html === null) {
-		return <div className='text-gray-400 dark:text-gray-500 italic'>Loading README…</div>;
+		return <div className='text-gray-500 dark:text-gray-400 italic text-center py-8'>Loading README…</div>;
 	}
 
 	return (
 		<div
-			className='text-left max-w-full overflow-x-auto prose dark:prose-invert 
-				prose-h1:font-bold prose-h1:text-xl
-				prose-a:text-blue-600 dark:prose-a:text-blue-400
-				prose-p:text-justify prose-img:rounded-xl
-				prose-headings:underline mx-auto my-6'
+			className='prose prose-lg dark:prose-invert mx-auto max-w-none
+				prose-headings:text-gray-900 dark:prose-headings:text-gray-100
+				prose-p:text-gray-700 dark:prose-p:text-gray-200
+				prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:hover:text-blue-800 dark:prose-a:hover:text-blue-300
+				prose-strong:text-gray-900 dark:prose-strong:text-gray-100
+				prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800
+				prose-pre:bg-gray-800 dark:prose-pre:bg-gray-900 prose-pre:text-gray-100
+				prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-600
+				prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-300
+				prose-img:rounded-xl prose-img:shadow-lg
+				prose-li:text-gray-700 dark:prose-li:text-gray-200
+				prose-table:text-gray-700 dark:prose-table:text-gray-200'
 			dangerouslySetInnerHTML={{ __html: html }}
 		/>
 	);
