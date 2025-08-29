@@ -101,15 +101,27 @@ svg.octicon {
 }
 
 /* Dark theme overrides */
-@media (prefers-color-scheme: dark) {
-	:root {
-		--color-tip-border: #60a5fa;
-		--color-tip-bg: #1e3a8a;
-		--color-info-border: #34d399;
-		--color-info-bg: #064e3b;
-		--color-warning-border: #fbbf24;
-		--color-warning-bg: #78350f;
-		--color-danger-border: #f87171;
-		--color-danger-bg: #581c1c;
-	}
+.dark {
+	--color-tip-border: #60a5fa;
+	--color-tip-bg: #1e3a8a;
+	--color-info-border: #34d399;
+	--color-info-bg: #064e3b;
+	--color-warning-border: #fbbf24;
+	--color-warning-bg: #78350f;
+	--color-danger-border: #f87171;
+	--color-danger-bg: #581c1c;
+}
+
+/* Force dark mode styles for specific classes */
+.dark .bg-gray-100 {
+	background-color: oklch(0.302 0.013 264.542) !important; /* gray-800 */
+}
+
+.dark .text-gray-900 {
+	color: oklch(0.967 0.003 264.542) !important; /* gray-100 */
+}
+
+.dark body {
+	background-color: oklch(0.182 0.008 264.542) !important; /* gray-900 */
+	color: oklch(0.967 0.003 264.542) !important; /* gray-100 */
 }

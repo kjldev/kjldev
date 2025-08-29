@@ -15,7 +15,7 @@ const { backgroundImgSrc, title, subtitle } = Astro.props;
 	style={`background: url(${backgroundImgSrc.src}) center/cover no-repeat;`}
 >
 	<div
-		class='flex flex-col justify-center items-center bg-[#f1f1f1] px-6 py-20 text-center max-w-4xl mx-auto'
+		class='flex flex-col justify-center items-center bg-gray-100 dark:bg-gray-800 px-6 py-20 text-center max-w-4xl mx-auto text-gray-900 dark:text-gray-100'
 	>
 		<h1 class='text-5xl font-bold mb-10'>{title}</h1>
 		{subtitle && <h2 class='text-2xl mb-10 font-semibold'>{subtitle}</h2>}
