@@ -1,6 +1,5 @@
-import path from 'path';
 import { task } from 'hereby';
-import { run, runBun, runBuns, helpTask } from './scripts/hereby-exts.mts';
+import { runBun, runBuns, helpTask } from './scripts/hereby-exts.mts';
 
 const settings = {
 	root: './',
