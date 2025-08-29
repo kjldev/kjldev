@@ -23,6 +23,7 @@ export default defineConfig({
 	},
 	integrations: [preact(), mdx()],
 	vite: {
+		// @ts-ignore
 		plugins: [tailwindcss()],
 	},
 	markdown: {
