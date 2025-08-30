@@ -39,31 +39,36 @@ const defaultTitle = 'KJL Solutions Ltd.';
 			href='/favicon.svg'
 		/>
 		<title>{Astro.props.title ?? defaultTitle}</title>
-		
+
 		<!-- Theme initialization script to prevent FOUC -->
 		<script is:inline>
 			// Initialize theme before page renders to prevent flash
-			(function() {
+			(function () {
 				const theme = localStorage.getItem('theme') || 'system';
 				const root = document.documentElement;
-				
+
+				// Clean up any existing theme classes
+				root.classList.remove('dark', 'light');
+
 				if (theme === 'dark') {
 					root.classList.add('dark');
 				} else if (theme === 'light') {
-					root.classList.remove('dark');
+					// Light mode - no additional classes needed
 				} else {
-					// System theme
-					const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					// system
+					const systemPrefersDark = window.matchMedia(
+						'(prefers-color-scheme: dark)'
+					).matches;
 					if (systemPrefersDark) {
 						root.classList.add('dark');
-					} else {
-						root.classList.remove('dark');
 					}
 				}
 			})();
 		</script>
 	</head>
-	<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
+	<body
+		class='bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors'
+	>
 		<AppInsightsInit client:load />
 		<Header />
 		<main>

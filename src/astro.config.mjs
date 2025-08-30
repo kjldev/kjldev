@@ -26,16 +26,26 @@ export default defineConfig({
 		expressiveCode({
 			themes: ['github-light', 'github-dark'],
 			useDarkModeMediaQuery: false,
-			themeCssSelector: (theme) => theme.name === 'github-dark' ? '.dark' : ':not(.dark)',
+			themeCssSelector: (theme) => {
+				// Ensure proper theme mapping
+				if (theme.name === 'github-dark') {
+					return '.dark';
+				}
+				if (theme.name === 'github-light') {
+					return ':not(.dark)';
+				}
+				// Fallback
+				return ':root';
+			},
 			styleOverrides: {
 				borderRadius: '0.5rem',
 				frames: {
-					shadowColor: '#0001'
-				}
-			}
+					shadowColor: '#0001',
+				},
+			},
 		}),
-		preact(), 
-		mdx()
+		preact(),
+		mdx(),
 	],
 	vite: {
 		// @ts-ignore

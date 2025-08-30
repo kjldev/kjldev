@@ -4,8 +4,8 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import Prose from '../../components/Prose.astro';
 import type { MarkdownHeading } from 'astro';
 
-// Import the client-side component for rendering remote markdown
-import RemoteReadme from '../../components/RemoteReadme.tsx';
+// Import the Astro component for rendering remote markdown
+import RemoteReadme from '../../components/RemoteReadme.astro';
 
 interface Props {
 	project: CollectionEntry<'projects'>;
@@ -90,10 +90,7 @@ const remoteReadmeUrls: string[] =
 			project.data.hasContent === false ?
 				<>
 					{remoteReadmeUrls.length > 0 ?
-						<RemoteReadme
-							urls={remoteReadmeUrls}
-							client:load
-						/>
+						<RemoteReadme urls={remoteReadmeUrls} />
 					:	<div class='text-gray-500 dark:text-gray-400 italic text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600'>
 							No README.md found for this project.
 							<br />

@@ -21,5 +21,8 @@
 		"extends": [
 			"@commitlint/config-conventional"
 		]
+	},
+	"dependencies": {
+		"rehype-highlight": "^7.0.2"
 	}
 }

@@ -1,0 +1,103 @@
+---
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
+import rehypeExternalLinks from 'rehype-external-links';
+import rehypeExpressiveCode from 'rehype-expressive-code';
+import { rehypeGithubAlerts } from 'rehype-github-alerts';
+
+interface Props {
+	urls?: string[] | undefined;
+}
+
+const { urls } = Astro.props;
+
+let html: string | null = null;
+let error: string | null = null;
+
+if (urls && urls.length > 0) {
+	for (const url of urls) {
+		try {
+			const response = await fetch(url);
+			if (response.ok) {
+				const markdownContent = await response.text();
+
+				// Use the same markdown processor pipeline as configured in astro.config.mjs
+				// This replicates Astro's markdown processing with Expressive Code
+				const processor = unified()
+					.use(remarkParse)
+					.use(remarkGfm)
+					.use(remarkRehype, { allowDangerousHtml: true })
+					.use(rehypeGithubAlerts, true)
+					.use(rehypeExpressiveCode, {
+						themes: ['github-light', 'github-dark'],
+						useDarkModeMediaQuery: false,
+						themeCssSelector: (theme) => {
+							// Ensure proper theme mapping to match astro.config.mjs
+							if (theme.name === 'github-dark') {
+								return '.dark';
+							}
+							if (theme.name === 'github-light') {
+								return ':not(.dark)';
+							}
+							// Fallback
+							return ':root';
+						},
+						styleOverrides: {
+							borderRadius: '0.5rem',
+							frames: {
+								shadowColor: '#0001',
+							},
+						},
+					})
+					.use(rehypeExternalLinks, {
+						target: '_blank',
+						rel: ['nofollow', 'noopener', 'noreferrer'],
+					})
+					.use(rehypeStringify, { allowDangerousHtml: true });
+
+				const result = await processor.process(markdownContent);
+				html = result.toString();
+				break; // Successfully processed, exit the loop
+			}
+		} catch (err) {
+			console.error(`Failed to fetch or process README from ${url}:`, err);
+			// Continue to next URL
+		}
+	}
+
+	if (!html) {
+		error = 'README.md could not be loaded.';
+	}
+} else {
+	error = 'No README.md URL provided.';
+}
+---
+
+{
+	error ?
+		<div class='text-red-600 dark:text-red-400 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800'>
+			{error}
+		</div>
+	: html ?
+		<div
+			class='prose prose-lg dark:prose-invert mx-auto max-w-none
+			prose-headings:text-gray-900 dark:prose-headings:text-gray-100
+			prose-p:text-gray-700 dark:prose-p:text-gray-200
+			prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:hover:text-blue-800 dark:prose-a:hover:text-blue-300
+			prose-strong:text-gray-900 dark:prose-strong:text-gray-100
+			prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800
+			prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-pre:text-gray-200
+			prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-600
+			prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-300
+			prose-img:rounded-xl prose-img:shadow-lg
+			prose-li:text-gray-700 dark:prose-li:text-gray-200
+			prose-table:text-gray-700 dark:prose-table:text-gray-200'
+			set:html={html}
+		/>
+	:	<div class='text-gray-500 dark:text-gray-400 italic text-center py-8'>
+			Loading README…
+		</div>
+}

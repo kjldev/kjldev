@@ -4,7 +4,84 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+/* Tailwind CSS v4 dark mode configuration */
+@variant dark (&:where(.dark, .dark *));
+
 @import '../../node_modules/rehype-github-alerts/dist/styling/css/index.css';
+
+/* Highlight.js styles for syntax highlighting (used by lowlight) */
+/* @import 'highlight.js/styles/github.css'; */
+
+/* Light mode syntax highlighting (explicit overrides) */
+/* :not(.dark) .hljs {
+	background: transparent !important;
+	color: #24292e !important;
+}
+
+:not(.dark) .hljs-keyword {
+	color: #d73a49 !important;
+}
+
+:not(.dark) .hljs-string {
+	color: #032f62 !important;
+}
+
+:not(.dark) .hljs-comment {
+	color: #6a737d !important;
+}
+
+:not(.dark) .hljs-number {
+	color: #005cc5 !important;
+}
+
+:not(.dark) .hljs-function {
+	color: #6f42c1 !important;
+}
+
+:not(.dark) .hljs-variable {
+	color: #e36209 !important;
+} */
+
+/* Enhanced syntax highlighting for dark mode */
+/* .dark .hljs {
+	background: transparent !important;
+	color: #e6edf3 !important;
+} */
+
+/* .dark .hljs-keyword {
+	color: #ff7b72 !important;
+}
+
+.dark .hljs-string {
+	color: #a5d6ff !important;
+}
+
+.dark .hljs-comment {
+	color: #8b949e !important;
+}
+
+.dark .hljs-number {
+	color: #79c0ff !important;
+}
+
+.dark .hljs-function {
+	color: #d2a8ff !important;
+}
+
+.dark .hljs-variable {
+	color: #ffa657 !important;
+} */
+
+/* Ensure syntax highlighted code blocks integrate well with prose styling */
+/* .prose pre code.hljs {
+	padding: 0;
+	background: transparent;
+} */
+
+/* Ensure hljs syntax highlighting takes precedence */
+/* .prose pre code.hljs * {
+	background: transparent !important;
+} */
 
 html {
 	font-family: 'Inter', 'Avenir', Arial, Helvetica, sans-serif;
@@ -90,7 +167,8 @@ h6 {
 }
 
 .prose pre code {
-	@apply bg-transparent text-gray-100 p-0;
+	@apply bg-transparent p-0;
+	/* Expressive Code handles the styling */
 }
 
 /* Blockquote improvements */
@@ -103,7 +181,8 @@ h6 {
 	@apply border-collapse border border-gray-300 dark:border-gray-600;
 }
 
-.prose th, .prose td {
+.prose th,
+.prose td {
 	@apply border border-gray-300 dark:border-gray-600 px-4 py-2;
 }
 

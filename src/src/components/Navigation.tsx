@@ -87,7 +87,7 @@ export default function Navigation() {
 			</div>
 			{/* Mobile Navigation */}
 			{open && (
-				<div class='absolute top-full right-0 w-full bg-white dark:bg-gray-900 shadow-md p-4 md:hidden border-t border-gray-200 dark:border-gray-700'>
+				<div class='absolute top-full right-0 w-full bg-white dark:bg-gray-900 shadow-md p-4 md:hidden border-t border-gray-200 dark:border-gray-700 z-50'>
 					<ul class='flex flex-col space-y-4'>
 						{menuItems.map((item) => (
 							<li key={item.href}>
