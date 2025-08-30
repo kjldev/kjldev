@@ -50,7 +50,7 @@ export default function Footer() {
 					<span>GitHub - Kieron Lanning</span>
 				</a>
 			</div>
-			<div className='mb-4 mt-4 space-y-1 text-gray-500 text-xs'>
+			<div className='mb-4 mt-4 space-y-1 text-gray-500 dark:text-gray-400 text-xs'>
 				<p>&copy; {currentYear} KJL Solutions Ltd.</p>
 				<p className='opacity-75'>
 					Registered in England and Wales: 7455769. All rights reserved.
