@@ -80,7 +80,7 @@ export default function MailtoLink(props: MailtoLinkProps) {
 					ref={formRef}
 					action='https://formspree.io/f/xpwreygd'
 					method='POST'
-					class='bg-white rounded-lg p-6 space-y-4 max-w-md w-full relative'
+					class='bg-white dark:bg-gray-800 rounded-lg p-6 space-y-4 max-w-md w-full relative'
 					onSubmit={(e) => {
 						if (!isFormValid) {
 							e.preventDefault();
@@ -90,7 +90,7 @@ export default function MailtoLink(props: MailtoLinkProps) {
 				>
 					<button
 						type='button'
-						class='absolute top-2 right-2 text-gray-600 hover:text-gray-900'
+						class='absolute top-2 right-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
 						onClick={() => closeDialog(false)}
 						aria-label='Close'
 					>
@@ -99,14 +99,14 @@ export default function MailtoLink(props: MailtoLinkProps) {
 
 					<h3
 						id='contact-dialog-title'
-						class='text-xl font-bold'
+						class='text-xl font-bold text-gray-900 dark:text-white'
 					>
 						Send a Message
 					</h3>
 
 					<div>
 						<label class='block'>
-							<span class='font-semibold'>Subject</span>
+							<span class='font-semibold text-gray-800 dark:text-gray-200'>Subject</span>
 							<input
 								name='subject'
 								type='text'
@@ -116,17 +116,17 @@ export default function MailtoLink(props: MailtoLinkProps) {
 								}
 								placeholder='How can we help?'
 								required
-								class='mt-1 w-full border rounded px-2 py-1'
+								class='mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500'
 							/>
 						</label>
 						{touched && subject.trim().length === 0 && (
-							<span class='text-red-600 text-sm'>Subject is required.</span>
+							<span class='text-red-600 dark:text-red-400 text-sm'>Subject is required.</span>
 						)}
 					</div>
 
 					<div>
 						<label class='block'>
-							<span class='font-semibold'>Email</span>
+							<span class='font-semibold text-gray-800 dark:text-gray-200'>Email</span>
 							<input
 								name='email'
 								type='email'
@@ -135,13 +135,15 @@ export default function MailtoLink(props: MailtoLinkProps) {
 								placeholder='Let us know how to contact you...'
 								required
 								autoFocus
-								class={`mt-1 w-full border rounded px-2 py-1 ${
-									touched && !isValidEmail(email) ? 'border-red-600' : ''
+								class={`mt-1 w-full border rounded px-2 py-1 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+									touched && !isValidEmail(email) ?
+										'border-red-600 dark:border-red-500'
+									:	'border-gray-300 dark:border-gray-600'
 								}`}
 							/>
 						</label>
 						{touched && !isValidEmail(email) && (
-							<span class='text-red-600 text-sm'>
+							<span class='text-red-600 dark:text-red-400 text-sm'>
 								Please enter a valid email.
 							</span>
 						)}
@@ -149,7 +151,7 @@ export default function MailtoLink(props: MailtoLinkProps) {
 
 					<div>
 						<label class='block'>
-							<span class='font-semibold'>Message</span>
+							<span class='font-semibold text-gray-800 dark:text-gray-200'>Message</span>
 							<textarea
 								name='body'
 								value={body}
@@ -158,25 +160,25 @@ export default function MailtoLink(props: MailtoLinkProps) {
 								}
 								placeholder='How can we help you?'
 								required
-								class='mt-1 w-full h-24 border rounded p-2'
+								class='mt-1 w-full h-24 border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500'
 							/>
 						</label>
 						{touched && body.trim().length === 0 && (
-							<span class='text-red-600 text-sm'>Message is required.</span>
+							<span class='text-red-600 dark:text-red-400 text-sm'>Message is required.</span>
 						)}
 					</div>
 
 					<div class='flex justify-end space-x-2'>
 						<button
 							type='button'
-							class='px-4 py-2 rounded border'
+							class='px-4 py-2 rounded border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'
 							onClick={() => closeDialog(false)}
 						>
 							Cancel
 						</button>
 						<button
 							type='submit'
-							class='px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50'
+							class='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded disabled:opacity-50 transition-colors'
 							disabled={!isFormValid}
 						>
 							Send

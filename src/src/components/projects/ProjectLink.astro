@@ -17,11 +17,22 @@ const { link } = Astro.props as Props;
 		class='block bg-gradient-to-r from-blue-400 to-purple-500 p-1 rounded-xl shadow hover:shadow-lg transition-all duration-200'
 	>
 		<div class='flex items-center space-x-1 bg-white rounded-lg px-2 py-1.5'>
-			<Image
-				src={link.image}
-				alt={link.name}
-				class='w-5 h-5 rounded-full'
-			/>
+			{
+				link.emoji ? (
+					<span
+						class='w-5 h-5 flex items-center justify-center text-base leading-none'
+						aria-hidden='true'
+					>
+						{link.emoji}
+					</span>
+				) : (
+					<Image
+						src={link.image!}
+						alt=''
+						class='w-5 h-5 rounded-full'
+					/>
+				)
+			}
 			<span class='text-base text-gray-900 font-semibold'>
 				{link.name}
 			</span>

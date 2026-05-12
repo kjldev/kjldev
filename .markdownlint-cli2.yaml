@@ -1,0 +1,6 @@
+# markdownlint-cli2 configuration
+# Rules are in src/.markdownlint.json (picked up automatically by traversal)
+ignores:
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/.astro/**"

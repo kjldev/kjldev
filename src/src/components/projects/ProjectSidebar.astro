@@ -1,0 +1,63 @@
+---
+import type { MarkdownHeading } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import TableOfContents from '../TableOfContents.astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+	projects: CollectionEntry<'projects'>[];
+	currentId: string;
+}
+
+const { headings, projects, currentId } = Astro.props;
+
+const statusEmoji: Record<string, string> = {
+	thinking: '🤔',
+	'in-progress': '🚧',
+	live: '🚀',
+	retired: '🪦',
+	want: '💖',
+	collaborator: '🤝',
+};
+
+const sortedProjects = [...projects].sort((a, b) => a.data.order - b.data.order);
+---
+
+<div class='flex flex-col gap-8'>
+	{headings.length > 0 && <TableOfContents headings={headings} maxDepth={3} />}
+
+	<nav aria-label='All projects'>
+		<h2 class='text-xs font-semibold uppercase tracking-wider mb-3 text-gray-500 dark:text-gray-400'>
+			All Projects
+		</h2>
+		<ul class='space-y-0.5'>
+			{
+				sortedProjects.map((project) => {
+					const isCurrent = project.id === currentId;
+					const emoji = statusEmoji[project.data.status] ?? '❓';
+					return (
+						<li>
+							<a
+								href={`/projects/${project.id}`}
+								aria-current={isCurrent ? 'page' : undefined}
+								class={
+									isCurrent ?
+										'flex items-start gap-2 px-2 py-1.5 rounded-md text-sm font-semibold bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500 dark:border-blue-400'
+									:	'flex items-start gap-2 px-2 py-1.5 rounded-md text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white transition-colors'
+								}
+							>
+								<span
+									class='shrink-0 mt-0.5'
+									aria-hidden='true'
+								>
+									{emoji}
+								</span>
+								<span class='leading-snug'>{project.data.title}</span>
+							</a>
+						</li>
+					);
+				})
+			}
+		</ul>
+	</nav>
+</div>

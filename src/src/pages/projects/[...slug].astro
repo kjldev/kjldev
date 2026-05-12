@@ -34,15 +34,12 @@ const { minutesRead } = remarkPluginFrontmatter as {
 	minutesRead: number;
 };
 
-// Returns an array of valid raw README URLs (main, then master) that actually exist
+// Returns an array of valid raw README URLs (main, then master) that actually exist.
+// Runs for any project that has a GitHub link (regardless of hasContent).
 async function getValidReadmeRawUrls(
 	project: CollectionEntry<'projects'>
 ): Promise<string[]> {
-	if (
-		project.data.hasContent === false &&
-		project.data.links &&
-		Array.isArray(project.data.links)
-	) {
+	if (project.data.links && Array.isArray(project.data.links)) {
 		const github = project.data.links.find(
 			(l) => l.url && l.url.includes('github.com')
 		);
@@ -54,7 +51,6 @@ async function getValidReadmeRawUrls(
 					`https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`,
 					`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`,
 				];
-				// Test each URL and only return those that exist (status 200)
 				const checks = await Promise.all(
 					urls.map(async (u) => {
 						try {
@@ -84,21 +80,27 @@ const remoteReadmeUrls: string[] =
 	headings={headings}
 	filePath={project.filePath!}
 	minutesRead={minutesRead}
+	projectId={project.id}
 >
 	<Prose>
 		{
-			project.data.hasContent === false ?
+			project.data.hasContent ?
 				<>
-					{remoteReadmeUrls.length > 0 ?
-						<RemoteReadme urls={remoteReadmeUrls} />
-					:	<div class='text-gray-500 dark:text-gray-400 italic text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600'>
-							No README.md found for this project.
-							<br />
-							Please visit the project links above for more information.
-						</div>
-					}
+					<Content />
+					{remoteReadmeUrls.length > 0 && (
+						<>
+							<hr class='my-8 border-gray-200 dark:border-gray-700' />
+							<RemoteReadme urls={remoteReadmeUrls} sourceUrl={remoteReadmeUrls[0]} />
+						</>
+					)}
 				</>
-			:	<Content />
+			: remoteReadmeUrls.length > 0 ?
+				<RemoteReadme urls={remoteReadmeUrls} sourceUrl={remoteReadmeUrls[0]} />
+			:	<div class='text-gray-500 dark:text-gray-400 italic text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600'>
+					No README.md found for this project.
+					<br />
+					Please visit the project links above for more information.
+				</div>
 		}
 	</Prose>
 </ProjectLayout>

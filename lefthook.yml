@@ -1,0 +1,14 @@
+pre-commit:
+  commands:
+    astro-check:
+      glob: "src/**/*.{astro,ts,tsx,mts,mjs}"
+      root: "src/"
+      run: npm run check
+    markdownlint:
+      glob: "src/**/*.md"
+      run: npx --no-install markdownlint-cli2 {staged_files}
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no-install commitlint --edit {1}
