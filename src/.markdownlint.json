@@ -1,8 +1,26 @@
 {
-	"MD013": {
-		"line_length": 80
+	"default": true,
+	"MD013": false,
+	"MD024": {
+		"siblings_only": true
 	},
+	"MD025": false,
+	"MD028": false,
+	"MD060": false,
 	"MD033": {
-		"allowed_elements": ["span", "a"]
-	}
+		"allowed_elements": [
+			"span",
+			"a",
+			"br",
+			"details",
+			"summary",
+			"kbd",
+			"sup",
+			"sub",
+			"div",
+			"iframe",
+			"script"
+		]
+	},
+	"MD041": false
 }

@@ -7,112 +7,126 @@ import { type Project } from '../types/component-types';
 import Pill from '../components/Pill.astro';
 import Tooltip from '../components/Tooltip.astro';
 import type { MarkdownHeading } from 'astro';
-import TableOfContents from '../components/TableOfContents.astro';
+import ProjectSidebar from '../components/projects/ProjectSidebar.astro';
+import { getCollection } from 'astro:content';
 
 interface Props {
 	frontmatter: Project;
 	headings: MarkdownHeading[];
 	filePath: string;
 	minutesRead: number;
+	projectId: string;
 }
 
-const { frontmatter, headings, minutesRead } = Astro.props;
+const { frontmatter, headings, minutesRead, projectId } = Astro.props;
+const allProjects = await getCollection('projects');
 ---
 
 <Layout title={frontmatter.title}>
 	<div class='min-h-screen bg-white dark:bg-gray-900'>
-		<div class='max-w-screen-lg mx-auto px-6 py-8'>
-			<div class='mb-6'>
-				<Tooltip tooltip='Go back to the list of projects...'>
-					<Pill
-						text='← Back to Projects'
-						href='/projects'
-						internalLink={true}
+		<div class='max-w-screen-xl mx-auto px-4 sm:px-6 py-8'>
+			<!-- Full-width header meta -->
+			<div class='mb-6 lg:mb-8'>
+				<div class='mb-4'>
+					<Tooltip tooltip='Go back to the list of projects...'>
+						<Pill
+							text='← Back to Projects'
+							href='/projects'
+							internalLink={true}
+							size='large'
+						/>
+					</Tooltip>
+				</div>
+
+				<h1 class='text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3'>
+					{frontmatter.title}
+				</h1>
+
+				<div class='flex flex-wrap items-center gap-3 mb-4'>
+					<ProjectStatus
+						status={frontmatter.status}
 						size='large'
 					/>
-				</Tooltip>
+					{
+						minutesRead > 0 && (
+							<span
+								class='text-sm text-gray-500 dark:text-gray-400 italic'
+								title='Estimated reading time'
+							>
+								⏱️ {minutesRead}
+							</span>
+						)
+					}
+				</div>
+
+				{
+					frontmatter.description && (
+						<blockquote class='bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 dark:border-blue-500 italic p-4 mb-4 rounded-r-lg text-gray-800 dark:text-gray-200'>
+							{frontmatter.description}
+						</blockquote>
+					)
+				}
+
+				{
+					frontmatter.links && (
+						<div class='mb-4 flex flex-wrap gap-3'>
+							{frontmatter.links.map((link) => (
+								<ProjectLink link={link} />
+							))}
+						</div>
+					)
+				}
+
+				{
+					frontmatter.tags && frontmatter.tags.length > 0 && (
+						<div class='flex flex-wrap gap-2'>
+							{frontmatter.tags.map((tag) => (
+								<ProjectTag tag={tag} />
+							))}
+						</div>
+					)
+				}
 			</div>
 
-			<div class='flex items-baseline space-x-4 mb-4'>
-				<h1 class='text-4xl font-bold text-gray-900 dark:text-white'>{frontmatter.title}</h1>
-			</div>
-
-			{
-				minutesRead > 0 && (
-					<span
-						class='text-sm text-gray-500 dark:text-gray-400 italic whitespace-nowrap'
-						title='Estimated reading time'
-					>
-						⏱️ {minutesRead}
-					</span>
-				)
-			}
-
-			<div class='mb-4 mt-4'>
-				<ProjectStatus
-					status={frontmatter.status}
-					size='large'
-				/>
-			</div>
-
-			{
-				frontmatter.description && (
-					<blockquote
-						class='
-							bg-blue-50 dark:bg-blue-900/20
-							border-l-4 border-blue-400 dark:border-blue-500
-							italic p-6 mb-6 mt-6 rounded-r-lg
-							text-gray-800 dark:text-gray-200
-						'
-					>
-						{frontmatter.description}
-					</blockquote>
-				)
-			}
-
-			{
-				frontmatter.links && (
-					<div class='mb-6 flex flex-wrap gap-3'>
-						{frontmatter.links.map((link) => (
-							<ProjectLink link={link} />
-						))}
+			<!-- Two-column: prose + sticky sidebar -->
+			<div class='flex flex-col lg:flex-row gap-8 lg:gap-12 items-start'>
+				<!-- Main content -->
+				<div class='flex-1 min-w-0'>
+					<div class='prose-container'>
+						<slot />
 					</div>
-				)
-			}
 
-			{
-				frontmatter.tags && frontmatter.tags.length > 0 && (
-					<div class='mb-6 flex flex-wrap gap-2'>
-						{frontmatter.tags.map((tag) => (
-							<ProjectTag tag={tag} />
-						))}
-					</div>
-				)
-			}
+					<script
+						is:inline
+						src='https://giscus.app/client.js'
+						data-repo='kjldev/kjldev'
+						data-repo-id='R_kgDOOdLNAQ'
+						data-category='Q&A'
+						data-category-id='DIC_kwDOOdLNAc4CphyL'
+						data-mapping='pathname'
+						data-strict='0'
+						data-reactions-enabled='1'
+						data-emit-metadata='0'
+						data-input-position='bottom'
+						data-theme='preferred_color_scheme'
+						data-lang='en'
+						crossorigin='anonymous'
+						async
+					></script>
+				</div>
 
-			<TableOfContents headings={headings} />
-
-			<div class='prose-container'>
-				<slot />
+				<!-- Sidebar: sticky on desktop, stacked below content on mobile -->
+				<aside
+					aria-label='Page navigation'
+					class='w-full lg:w-56 xl:w-68 shrink-0 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto'
+				>
+					<ProjectSidebar
+						headings={headings}
+						projects={allProjects}
+						currentId={projectId}
+					/>
+				</aside>
 			</div>
-
-			<script
-				is:inline
-				src='https://giscus.app/client.js'
-				data-repo='kjldev/kjldev'
-				data-repo-id='R_kgDOOdLNAQ'
-				data-category='Q&A'
-				data-category-id='DIC_kwDOOdLNAc4CphyL'
-				data-mapping='pathname'
-				data-strict='0'
-				data-reactions-enabled='1'
-				data-emit-metadata='0'
-				data-input-position='bottom'
-				data-theme='preferred_color_scheme'
-				data-lang='en'
-				crossorigin='anonymous'
-				async
-			></script>
 		</div>
 	</div>
 </Layout>

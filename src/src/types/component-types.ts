@@ -15,5 +15,8 @@ export interface Project {
 export interface LinkProp {
 	name: string;
 	url: string;
-	image: ImageMetadata;
+	/** Mutually exclusive with `emoji`. Required if `emoji` is absent. */
+	image?: ImageMetadata;
+	/** Single-character emoji. Mutually exclusive with `image`. Required if `image` is absent. */
+	emoji?: string;
 }

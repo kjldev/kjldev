@@ -6,21 +6,18 @@ interface Props {
 	maxDepth?: number;
 }
 
-const { headings, maxDepth } = Astro.props;
-const filteredHeadings = headings.filter(
-	(heading) => heading.depth <= (maxDepth ?? 2)
-);
+const { headings, maxDepth = 3 } = Astro.props;
+const filteredHeadings = headings.filter((heading) => heading.depth <= maxDepth);
 
-// map each heading depth to a Tailwind indent and font size
 const indentMap: Record<number, string> = {
 	2: 'ml-0',
-	3: 'ml-4',
-	4: 'ml-8',
-	5: 'ml-12',
+	3: 'ml-3',
+	4: 'ml-6',
+	5: 'ml-9',
 };
 const fontMap: Record<number, string> = {
-	2: 'text-base',
-	3: 'text-sm',
+	2: 'text-sm font-medium',
+	3: 'text-xs',
 	4: 'text-xs',
 	5: 'text-xs',
 };
@@ -28,14 +25,16 @@ const fontMap: Record<number, string> = {
 
 {
 	filteredHeadings.length > 0 && (
-		<nav class='bg-gray-50 p-4 rounded-lg border border-gray-200'>
-			<h2 class='text-lg font-semibold mb-3'>Table of Contents</h2>
-			<ul class='space-y-2'>
+		<nav aria-label='Table of contents'>
+			<h2 class='text-xs font-semibold uppercase tracking-wider mb-3 text-gray-500 dark:text-gray-400'>
+				On This Page
+			</h2>
+			<ul class='space-y-1.5'>
 				{filteredHeadings.map((heading) => (
-					<li class={`flex ${indentMap[heading.depth]}`}>
+					<li class={indentMap[heading.depth] ?? 'ml-0'}>
 						<a
 							href={`#${heading.slug}`}
-							class={`${fontMap[heading.depth]} text-gray-700 hover:text-gray-900 transition-colors`}
+							class={`${fontMap[heading.depth] ?? 'text-xs'} block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors leading-snug`}
 						>
 							{heading.text}
 						</a>

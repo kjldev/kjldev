@@ -28,3 +28,7 @@ I've been noodling one the variations above for years (and years, and years). I'
 But having a consistent append-only, transactional mechanism for event storage _and_ rich querying for snapshots has always been a challenge.
 
 ...time for a re-think?
+
+## Update 2026-05-12
+
+I've actually completely updated my existing Event Store to support SQL Server with JSON columns. As a lot of the work I do is in Azure/ Enterprise environments, SQL Server is a much more common choice for an Event Store than Postgres, and the JSON column support is pretty solid.

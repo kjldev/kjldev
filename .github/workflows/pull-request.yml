@@ -11,15 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+          cache-dependency-path: src/package-lock.json
                 
       - name: Install dependencies
         working-directory: ./src
-        run: bun install
+        run: npm install
 
       - name: Run astro check
         working-directory: ./src
-        run: bun check
+        run: npm run check

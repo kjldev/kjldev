@@ -192,7 +192,7 @@ but still more effort required.
 
 <div style="padding:85.33% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1083436111?h=198fb52949&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Azure DevOps Wiki Extension"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
 
-## 2025-05-04 ... OK, I'm really leaving it for now!
+## 2025-05-04 ... OK, I'm really leaving it for now
 
 I managed to add a few really nice features like the lazy loading of
 the mermaid diagrams, and some more processing options for the admonitions.
