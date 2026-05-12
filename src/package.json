@@ -19,14 +19,14 @@
 		"@expressive-code/plugin-text-markers": "^0.41.3",
 		"@microsoft/applicationinsights-clickanalytics-js": "^3.3.9",
 		"@microsoft/applicationinsights-web": "^3.3.9",
-		"@tailwindcss/vite": "^4.1.12",
+		"@tailwindcss/vite": "~4.1.12",
 		"astro": "^6.3.1",
 		"astro-expressive-code": "^0.41.3",
 		"preact": "^10.27.1",
 		"rehype-expressive-code": "^0.41.3",
 		"rehype-external-links": "^3.0.0",
 		"rehype-github-alerts": "^4.1.1",
-		"tailwindcss": "^4.1.12",
+		"tailwindcss": "~4.1.12",
 		"typescript": "^5.9.2"
 	},
 	"devDependencies": {
