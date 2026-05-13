@@ -6,6 +6,7 @@ import type { MarkdownHeading } from 'astro';
 
 // Import the Astro component for rendering remote markdown
 import RemoteReadme from '../../components/RemoteReadme.astro';
+import ContentTabs from '../../components/ContentTabs.astro';
 
 interface Props {
 	project: CollectionEntry<'projects'>;
@@ -84,16 +85,17 @@ const remoteReadmeUrls: string[] =
 >
 	<Prose>
 		{
-			project.data.hasContent ?
-				<>
-					<Content />
-					{remoteReadmeUrls.length > 0 && (
-						<>
-							<hr class='my-8 border-gray-200 dark:border-gray-700' />
-							<RemoteReadme urls={remoteReadmeUrls} sourceUrl={remoteReadmeUrls[0]} />
-						</>
-					)}
-				</>
+			project.data.hasContent && remoteReadmeUrls.length > 0 ?
+				<ContentTabs>
+					<div slot='overview'>
+						<Content />
+					</div>
+					<div slot='readme'>
+						<RemoteReadme urls={remoteReadmeUrls} sourceUrl={remoteReadmeUrls[0]} />
+					</div>
+				</ContentTabs>
+			: project.data.hasContent ?
+				<Content />
 			: remoteReadmeUrls.length > 0 ?
 				<RemoteReadme urls={remoteReadmeUrls} sourceUrl={remoteReadmeUrls[0]} />
 			:	<div class='text-gray-500 dark:text-gray-400 italic text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600'>
