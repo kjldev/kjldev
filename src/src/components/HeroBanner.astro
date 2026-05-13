@@ -12,7 +12,7 @@ const { backgroundImgSrc, title, subtitle } = Astro.props;
 
 <section
 	aria-label={title}
-	class='w-full flex items-center justify-center relative overflow-hidden py-16 sm:py-20 lg:py-24'
+	class='w-full flex items-center justify-center relative overflow-hidden py-8 sm:py-10 lg:py-12'
 >
 	<!-- Background image (decorative) -->
 	<div
@@ -31,22 +31,22 @@ const { backgroundImgSrc, title, subtitle } = Astro.props;
 	<!-- Content container -->
 	<div class='relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6'>
 		<div
-			class='bg-white/95 dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl shadow-2xl border-2 border-blue-200 dark:border-purple-500 p-6 sm:p-8 lg:p-12'
+			class='bg-white/95 dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl shadow-2xl border-2 border-blue-200 dark:border-purple-500 p-4 sm:p-6 lg:p-8'
 		>
 			<h1
-				class='text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white'
+				class='text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white'
 			>
 				{title}
 			</h1>
 			{
 				subtitle && (
-					<p class='text-lg sm:text-xl lg:text-2xl mb-6 sm:mb-8 text-gray-600 dark:text-gray-200 font-medium'>
+					<p class='text-base sm:text-lg lg:text-xl mb-4 sm:mb-6 text-gray-600 dark:text-gray-200 font-medium'>
 						{subtitle}
 					</p>
 				)
 			}
 			<div
-				class='text-gray-700 dark:text-gray-100 text-base sm:text-lg leading-relaxed'
+				class='text-gray-700 dark:text-gray-100 text-sm sm:text-base leading-relaxed'
 			>
 				<slot />
 			</div>
