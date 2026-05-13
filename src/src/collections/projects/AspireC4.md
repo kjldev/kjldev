@@ -38,7 +38,7 @@ You can find the source code and installation instructions on the [GitHub reposi
 
 For more information on LikeC4, visit the [LikeC4 website][1].
 
-All of this was made possible by the excellent hardwork of the Aspire and LikeC4 teams, and the rest of the open-source community. AspireC4 is licensed under the MIT License, allowing you to freely use, modify, and distribute it in your projects.
+All of this was made possible by the excellent hard work of the Aspire and LikeC4 teams, and the rest of the open-source community. AspireC4 is licensed under the MIT License, allowing you to freely use, modify, and distribute it in your projects.
 
 ## Examples
 
